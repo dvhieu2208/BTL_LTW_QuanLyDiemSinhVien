@@ -1,0 +1,103 @@
+﻿@model QuanLyDiemDaiHoc.Models.SinhVien
+
+@{
+    ViewData["Title"] = "Hồ sơ cá nhân";
+    Layout = "~/Areas/Student/Views/Shared/_StudentLayout.cshtml";
+}
+
+<div class="container-fluid px-4 py-3">
+    <!-- Tiêu đề trang -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-1 text-muted small">
+                    <li class="breadcrumb-item">CỔNG SINH VIÊN</li>
+                </ol>
+            </nav>
+            <h2 class="fw-bold text-dark mb-1">Hồ sơ cá nhân</h2>
+            <p class="text-muted small mb-0">Thông tin lý lịch và chi tiết học tập</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Cột thông tin avatar và tóm tắt -->
+        <div class="col-md-4 mb-4">
+            <div class="card border-0 shadow-sm rounded-4 text-center p-4 bg-white">
+                <div class="position-relative d-inline-block mx-auto mb-3">
+                    <div class="avatar-circle bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold shadow-sm" style="width: 100px; height: 100px; font-size: 36px;">
+                        @(string.IsNullOrEmpty(Model?.TenSv) ? "SV" : Model.TenSv.Substring(0, 1).ToUpper())
+                    </div>
+                </div>
+                <h4 class="fw-bold text-dark mb-1">@(Model?.TenSv ?? "Chưa cập nhật")</h4>
+                <p class="text-primary fw-semibold mb-2">@(Model?.MaSv ?? "N/A")</p>
+                <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill fw-semibold">
+                    @(Model?.MaChucVuNavigation?.TenChucVu ?? "Sinh viên")
+                </span>
+                
+                <hr class="my-4 text-muted opacity-25">
+
+                <div class="text-start small text-muted">
+                    <p class="mb-2 d-flex justify-content-between">
+                        <span class="fw-semibold">Lớp:</span> 
+                        <span class="text-dark">@(Model?.MaLopNavigation?.TenLop ?? Model?.MaLop ?? "N/A")</span>
+                    </p>
+                    <p class="mb-2 d-flex justify-content-between">
+                        <span class="fw-semibold">Khoa:</span> 
+                        <span class="text-dark">@(Model?.MaKhoaNavigation?.TenKhoa ?? Model?.MaKhoa ?? "N/A")</span>
+                    </p>
+                    <p class="mb-0 d-flex justify-content-between">
+                        <span class="fw-semibold">Hệ đào tạo:</span> 
+                        <span class="text-dark">@(Model?.MaHeDtNavigation?.TenHeDt ?? Model?.MaHeDt ?? "N/A")</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cột thông tin chi tiết lý lịch -->
+        <div class="col-md-8">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
+                <h5 class="fw-bold text-dark mb-4 pb-2 border-bottom">
+                    <i class="fas fa-user-graduate text-primary me-2"></i> Thông tin chi tiết sinh viên
+                </h5>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="text-muted small fw-semibold">Mã sinh viên</label>
+                        <p class="fw-semibold text-dark fs-6 mb-0">@(Model?.MaSv ?? "N/A")</p>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="text-muted small fw-semibold">Họ và tên</label>
+                        <p class="fw-semibold text-dark fs-6 mb-0">@(Model?.TenSv ?? "N/A")</p>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="text-muted small fw-semibold">Giới tính</label>
+                        <p class="fw-semibold text-dark fs-6 mb-0">@(Model?.GioiTinh ?? "N/A")</p>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="text-muted small fw-semibold">Ngày sinh</label>
+                        <p class="fw-semibold text-dark fs-6 mb-0">@(Model?.NgaySinh?.ToString("dd/MM/yyyy") ?? "Chưa cập nhật")</p>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="text-muted small fw-semibold">Dân tộc</label>
+                        <p class="fw-semibold text-dark fs-6 mb-0">@(Model?.MaDanTocNavigation?.TenDanToc ?? "Kinh")</p>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="text-muted small fw-semibold">Quê quán</label>
+                        <p class="fw-semibold text-dark fs-6 mb-0">@(Model?.MaQueNavigation?.TenQue ?? "Chưa cập nhật")</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Khung hỗ trợ đổi mật khẩu hoặc liên hệ -->
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-primary bg-opacity-10 text-primary">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-shield-alt fa-2x me-3"></i>
+                    <div>
+                        <h6 class="fw-bold mb-1">Bảo mật tài khoản</h6>
+                        <p class="small mb-0 text-muted">Để thay đổi mật khẩu hoặc cập nhật thông tin cá nhân bổ sung, vui lòng liên hệ trực tiếp với Phòng Đào tạo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

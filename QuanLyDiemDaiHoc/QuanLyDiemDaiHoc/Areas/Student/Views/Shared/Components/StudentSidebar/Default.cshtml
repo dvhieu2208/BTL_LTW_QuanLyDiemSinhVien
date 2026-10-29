@@ -1,0 +1,43 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+ <div class="sidebar d-flex flex-column justify-content-between py-3">
+        <div>
+            <div class="px-4 mb-4 d-flex align-items-center">
+                <div class="bg-primary text-white rounded-3 p-2 me-2 font-weight-bold">ES</div>
+                <div>
+                    <h5 class="m-0 fw-bold">EduScore</h5>
+                    <small class="text-muted fs-7">STUDENT PORTAL</small>
+                </div>
+            </div>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Home" ? "active" : "")" 
+                       asp-area="Student" asp-controller="Home" asp-action="Index">
+                        <i class="fas fa-home me-2"></i> Trang chủ
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Diem" ? "active" : "")" 
+                       asp-area="Student" asp-controller="Diem" asp-action="Index">
+                        <i class="fas fa-graduation-cap me-2"></i> Xem bảng điểm
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "ThoiKhoaBieu" ? "active" : "")" 
+                       asp-area="Student" asp-controller="ThoiKhoaBieu" asp-action="Index">
+                        <i class="fas fa-calendar-alt me-2"></i> Thời khóa biểu
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "HoSo" ? "active" : "")" 
+                       asp-area="Student" asp-controller="HoSo" asp-action="Index">
+                        <i class="fas fa-user-circle me-2"></i> Hồ sơ cá nhân
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="px-3">
+            <a asp-area="" asp-controller="Account" asp-action="Logout" class="btn btn-outline-light w-100 rounded-3">
+                <i class="fas fa-sign-out-alt me-2"></i> Đăng xuất
+            </a>
+        </div>
+    </div>

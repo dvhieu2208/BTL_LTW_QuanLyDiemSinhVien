@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Đăng nhập hệ thống";
+    Layout = "_Layout"; // Sử dụng layout riêng cho trang đăng nhập nếu có
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-4">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white text-center">
+                <h4>ĐĂNG NHẬP HỆ THỐNG</h4>
+            </div>
+            <div class="card-body">
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert alert-danger" role="alert">
+                        @ViewBag.Error
+                    </div>
+                }
+
+                <form asp-action="Login" method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Tên đăng nhập</label>
+                        <input type="text" name="tenDangNhap" class="form-control" required placeholder="Nhập tên đăng nhập..." />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mật khẩu</label>
+                        <input type="password" name="matKhau" class="form-control" required placeholder="Nhập mật khẩu..." />
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Đăng nhập</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

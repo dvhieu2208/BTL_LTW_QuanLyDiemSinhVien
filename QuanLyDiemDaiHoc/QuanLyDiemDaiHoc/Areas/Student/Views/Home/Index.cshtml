@@ -1,0 +1,38 @@
+﻿@model QuanLyDiemDaiHoc.Models.SinhVien
+
+@{
+    ViewData["Title"] = "Trang chủ";
+    Layout = "~/Areas/Student/Views/Shared/_StudentLayout.cshtml";
+}
+
+<div class="row g-4 mb-4">
+    <div class="col-md-4">
+        <div class="card card-custom p-3 bg-white border-start border-primary border-4">
+            <span class="text-muted small">MÃ SINH VIÊN</span>
+            <h4 class="fw-bold text-dark mt-1">@(Model?.MaSv ?? "Chưa cập nhật")</h4>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card card-custom p-3 bg-white border-start border-success border-4">
+            <span class="text-muted small">DẠY HỌC & TÍN CHỈ TÍCH LŨY</span>
+            <h4 class="fw-bold text-success mt-1">@ViewBag.TongTinChi Tín chỉ</h4>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card card-custom p-3 bg-white border-start border-warning border-4">
+            <span class="text-muted small">DIỂM TRUNG BÌNH (GPA)</span>
+            <h4 class="fw-bold text-warning mt-1">@ViewBag.GPA / 10</h4>
+        </div>
+    </div>
+</div>
+
+<div class="card card-custom p-4 bg-white">
+    <h5 class="fw-bold mb-3"><i class="fas fa-id-card text-primary me-2"></i>Thông tin sinh viên</h5>
+    <div class="row g-3">
+        <div class="col-md-6"><strong>Họ và tên:</strong> @Model?.TenSv</div>
+        <div class="col-md-6"><strong>Giới tính:</strong> @Model?.GioiTinh</div>
+        <div class="col-md-6"><strong>Ngày sinh:</strong> @(Model?.NgaySinh?.ToString("dd/MM/yyyy") ?? "N/A")</div>
+        <div class="col-md-6"><strong>Lớp học:</strong> @(Model?.MaLopNavigation?.TenLop ?? Model?.MaLop)</div>
+        <div class="col-md-6"><strong>Khoa:</strong> @(Model?.MaKhoaNavigation?.TenKhoa ?? Model?.MaKhoa)</div>
+    </div>
+</div>

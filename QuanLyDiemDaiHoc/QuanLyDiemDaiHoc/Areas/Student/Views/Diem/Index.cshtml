@@ -1,0 +1,53 @@
+﻿@model IEnumerable<QuanLyDiemDaiHoc.Models.Diem>
+
+@{
+    ViewData["Title"] = "Bảng điểm cá nhân";
+    Layout = "~/Areas/Student/Views/Shared/_StudentLayout.cshtml";
+}
+
+<div class="card card-custom bg-white p-4">
+    <h4 class="fw-bold mb-3"><i class="fas fa-graduation-cap text-primary me-2"></i>Bảng điểm chi tiết</h4>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Mã môn</th>
+                    <th>Tên môn học</th>
+                    <th>Số ĐVHT</th>
+                    <th>Điểm tổng kết</th>
+                    <th>Đánh giá</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="fw-bold">@item.MaMon</td>
+                            <td>@(item.MaMonNavigation?.TenMon ?? item.MaMon)</td>
+                            <td>@(item.MaMonNavigation?.Dvht ?? 0)</td>
+                            <td class="fw-bold text-primary">@item.Diem1</td>
+                            <td>
+                                @if (item.Diem1 >= 5.0m)
+                                {
+                                    <span class="badge bg-success">Đạt</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">Học lại</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5" class="text-center text-muted">Chưa có kết quả điểm học tập.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

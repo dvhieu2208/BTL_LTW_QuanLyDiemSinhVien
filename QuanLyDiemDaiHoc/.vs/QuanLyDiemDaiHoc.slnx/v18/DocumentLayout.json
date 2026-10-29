@@ -1,0 +1,249 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\My Laptop\\Documents\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|c:\\users\\my laptop\\documents\\btl_ltw_nh\u00F3m 6\\quanlydiemdaihoc\\quanlydiemdaihoc\\wwwroot\\css\\admin-style.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|solutionrelative:quanlydiemdaihoc\\wwwroot\\css\\admin-style.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|c:\\users\\my laptop\\documents\\btl_ltw_nh\u00F3m 6\\quanlydiemdaihoc\\quanlydiemdaihoc\\areas\\admin\\views\\shared\\_adminlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|solutionrelative:quanlydiemdaihoc\\areas\\admin\\views\\shared\\_adminlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|c:\\users\\my laptop\\documents\\btl_ltw_nh\u00F3m 6\\quanlydiemdaihoc\\quanlydiemdaihoc\\areas\\admin\\views\\sinhvien\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|solutionrelative:quanlydiemdaihoc\\areas\\admin\\views\\sinhvien\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|c:\\users\\my laptop\\documents\\btl_ltw_nh\u00F3m 6\\quanlydiemdaihoc\\quanlydiemdaihoc\\areas\\student\\views\\shared\\_studentlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|solutionrelative:quanlydiemdaihoc\\areas\\student\\views\\shared\\_studentlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|c:\\users\\my laptop\\documents\\btl_ltw_nh\u00F3m 6\\quanlydiemdaihoc\\quanlydiemdaihoc\\areas\\admin\\views\\shared\\components\\admintopbar\\default.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|solutionrelative:quanlydiemdaihoc\\areas\\admin\\views\\shared\\components\\admintopbar\\default.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|c:\\users\\my laptop\\documents\\btl_ltw_nh\u00F3m 6\\quanlydiemdaihoc\\quanlydiemdaihoc\\areas\\student\\controllers\\thoikhoabieucontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|solutionrelative:quanlydiemdaihoc\\areas\\student\\controllers\\thoikhoabieucontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|c:\\users\\my laptop\\documents\\btl_ltw_nh\u00F3m 6\\quanlydiemdaihoc\\quanlydiemdaihoc\\areas\\admin\\views\\shared\\components\\adminsidebar\\default.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|solutionrelative:quanlydiemdaihoc\\areas\\admin\\views\\shared\\components\\adminsidebar\\default.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|c:\\users\\my laptop\\documents\\btl_ltw_nh\u00F3m 6\\quanlydiemdaihoc\\quanlydiemdaihoc\\areas\\student\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|solutionrelative:quanlydiemdaihoc\\areas\\student\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|c:\\users\\my laptop\\documents\\btl_ltw_nh\u00F3m 6\\quanlydiemdaihoc\\quanlydiemdaihoc\\areas\\student\\views\\hoso\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|solutionrelative:quanlydiemdaihoc\\areas\\student\\views\\hoso\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|c:\\users\\my laptop\\documents\\btl_ltw_nh\u00F3m 6\\quanlydiemdaihoc\\quanlydiemdaihoc\\areas\\student\\controllers\\hosocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|solutionrelative:quanlydiemdaihoc\\areas\\student\\controllers\\hosocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|c:\\users\\my laptop\\documents\\btl_ltw_nh\u00F3m 6\\quanlydiemdaihoc\\quanlydiemdaihoc\\areas\\student\\controllers\\diemcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|solutionrelative:quanlydiemdaihoc\\areas\\student\\controllers\\diemcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|c:\\users\\my laptop\\documents\\btl_ltw_nh\u00F3m 6\\quanlydiemdaihoc\\quanlydiemdaihoc\\areas\\student\\views\\diem\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|solutionrelative:quanlydiemdaihoc\\areas\\student\\views\\diem\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|c:\\users\\my laptop\\documents\\btl_ltw_nh\u00F3m 6\\quanlydiemdaihoc\\quanlydiemdaihoc\\areas\\student\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|solutionrelative:quanlydiemdaihoc\\areas\\student\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|c:\\users\\my laptop\\documents\\btl_ltw_nh\u00F3m 6\\quanlydiemdaihoc\\quanlydiemdaihoc\\areas\\admin\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|solutionrelative:quanlydiemdaihoc\\areas\\admin\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{25f7e850-ffa1-11d0-b63f-00a0c922e851}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\My Laptop\\Documents\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Admin\\Views\\SinhVien\\Index.cshtml",
+              "RelativeDocumentMoniker": "QuanLyDiemDaiHoc\\Areas\\Admin\\Views\\SinhVien\\Index.cshtml",
+              "ToolTip": "C:\\Users\\My Laptop\\Documents\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Admin\\Views\\SinhVien\\Index.cshtml",
+              "RelativeToolTip": "QuanLyDiemDaiHoc\\Areas\\Admin\\Views\\SinhVien\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHIAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-10-29T02:55:36.737Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "admin-style.css",
+              "DocumentMoniker": "C:\\Users\\My Laptop\\Documents\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\wwwroot\\css\\admin-style.css",
+              "RelativeDocumentMoniker": "QuanLyDiemDaiHoc\\wwwroot\\css\\admin-style.css",
+              "ToolTip": "C:\\Users\\My Laptop\\Documents\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\wwwroot\\css\\admin-style.css",
+              "RelativeToolTip": "QuanLyDiemDaiHoc\\wwwroot\\css\\admin-style.css",
+              "ViewState": "AgIAAFwAAAAAAAAAAAAAABMAAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-10-29T02:43:07.408Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Default.cshtml",
+              "DocumentMoniker": "C:\\Users\\My Laptop\\Documents\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Admin\\Views\\Shared\\Components\\AdminTopbar\\Default.cshtml",
+              "RelativeDocumentMoniker": "QuanLyDiemDaiHoc\\Areas\\Admin\\Views\\Shared\\Components\\AdminTopbar\\Default.cshtml",
+              "ToolTip": "C:\\Users\\My Laptop\\Documents\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Admin\\Views\\Shared\\Components\\AdminTopbar\\Default.cshtml",
+              "RelativeToolTip": "QuanLyDiemDaiHoc\\Areas\\Admin\\Views\\Shared\\Components\\AdminTopbar\\Default.cshtml",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAAACoAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-10-28T16:39:59.062Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\My Laptop\\Documents\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Student\\Views\\HoSo\\Index.cshtml",
+              "RelativeDocumentMoniker": "QuanLyDiemDaiHoc\\Areas\\Student\\Views\\HoSo\\Index.cshtml",
+              "ToolTip": "C:\\Users\\My Laptop\\Documents\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Student\\Views\\HoSo\\Index.cshtml",
+              "RelativeToolTip": "QuanLyDiemDaiHoc\\Areas\\Student\\Views\\HoSo\\Index.cshtml",
+              "ViewState": "AgIAAEMAAAAAAAAAAAAAwGYAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-10-28T16:18:01.855Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "HoSoController.cs",
+              "DocumentMoniker": "C:\\Users\\My Laptop\\Documents\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Student\\Controllers\\HoSoController.cs",
+              "RelativeDocumentMoniker": "QuanLyDiemDaiHoc\\Areas\\Student\\Controllers\\HoSoController.cs",
+              "ToolTip": "C:\\Users\\My Laptop\\Documents\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Student\\Controllers\\HoSoController.cs",
+              "RelativeToolTip": "QuanLyDiemDaiHoc\\Areas\\Student\\Controllers\\HoSoController.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAYwBEAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-28T16:13:09.784Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ThoiKhoaBieuController.cs",
+              "DocumentMoniker": "C:\\Users\\My Laptop\\Documents\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Student\\Controllers\\ThoiKhoaBieuController.cs",
+              "RelativeDocumentMoniker": "QuanLyDiemDaiHoc\\Areas\\Student\\Controllers\\ThoiKhoaBieuController.cs",
+              "ToolTip": "C:\\Users\\My Laptop\\Documents\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Student\\Controllers\\ThoiKhoaBieuController.cs",
+              "RelativeToolTip": "QuanLyDiemDaiHoc\\Areas\\Student\\Controllers\\ThoiKhoaBieuController.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAYwBEAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-28T16:12:35.306Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\My Laptop\\Documents\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Student\\Views\\Diem\\Index.cshtml",
+              "RelativeDocumentMoniker": "QuanLyDiemDaiHoc\\Areas\\Student\\Views\\Diem\\Index.cshtml",
+              "ToolTip": "C:\\Users\\My Laptop\\Documents\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Student\\Views\\Diem\\Index.cshtml",
+              "RelativeToolTip": "QuanLyDiemDaiHoc\\Areas\\Student\\Views\\Diem\\Index.cshtml",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAwDQAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-10-28T16:12:03.744Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "DiemController.cs",
+              "DocumentMoniker": "C:\\Users\\My Laptop\\Documents\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Student\\Controllers\\DiemController.cs",
+              "RelativeDocumentMoniker": "QuanLyDiemDaiHoc\\Areas\\Student\\Controllers\\DiemController.cs",
+              "ToolTip": "C:\\Users\\My Laptop\\Documents\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Student\\Controllers\\DiemController.cs",
+              "RelativeToolTip": "QuanLyDiemDaiHoc\\Areas\\Student\\Controllers\\DiemController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADUAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-28T16:11:45.784Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\My Laptop\\Documents\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Student\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "QuanLyDiemDaiHoc\\Areas\\Student\\Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\My Laptop\\Documents\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Student\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "QuanLyDiemDaiHoc\\Areas\\Student\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAUwCUAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-10-28T16:11:13.405Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\My Laptop\\Documents\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Student\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "QuanLyDiemDaiHoc\\Areas\\Student\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\My Laptop\\Documents\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Student\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "QuanLyDiemDaiHoc\\Areas\\Student\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAACAAAAAAAAAAAAAwwDwAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-28T16:10:40.573Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "_StudentLayout.cshtml",
+              "DocumentMoniker": "C:\\Users\\My Laptop\\Documents\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Student\\Views\\Shared\\_StudentLayout.cshtml",
+              "RelativeDocumentMoniker": "QuanLyDiemDaiHoc\\Areas\\Student\\Views\\Shared\\_StudentLayout.cshtml",
+              "ToolTip": "C:\\Users\\My Laptop\\Documents\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Student\\Views\\Shared\\_StudentLayout.cshtml",
+              "RelativeToolTip": "QuanLyDiemDaiHoc\\Areas\\Student\\Views\\Shared\\_StudentLayout.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAABwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-10-28T16:10:17.046Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Default.cshtml",
+              "DocumentMoniker": "C:\\Users\\My Laptop\\Documents\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Admin\\Views\\Shared\\Components\\AdminSidebar\\Default.cshtml",
+              "RelativeDocumentMoniker": "QuanLyDiemDaiHoc\\Areas\\Admin\\Views\\Shared\\Components\\AdminSidebar\\Default.cshtml",
+              "ToolTip": "C:\\Users\\My Laptop\\Documents\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Admin\\Views\\Shared\\Components\\AdminSidebar\\Default.cshtml",
+              "RelativeToolTip": "QuanLyDiemDaiHoc\\Areas\\Admin\\Views\\Shared\\Components\\AdminSidebar\\Default.cshtml",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAACoAAABPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-10-28T16:00:33.315Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\My Laptop\\Documents\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Admin\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "QuanLyDiemDaiHoc\\Areas\\Admin\\Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\My Laptop\\Documents\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Admin\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "QuanLyDiemDaiHoc\\Areas\\Admin\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-10-28T15:58:57.834Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "_AdminLayout.cshtml",
+              "DocumentMoniker": "C:\\Users\\My Laptop\\Documents\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Admin\\Views\\Shared\\_AdminLayout.cshtml",
+              "RelativeDocumentMoniker": "QuanLyDiemDaiHoc\\Areas\\Admin\\Views\\Shared\\_AdminLayout.cshtml",
+              "ToolTip": "C:\\Users\\My Laptop\\Documents\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Admin\\Views\\Shared\\_AdminLayout.cshtml",
+              "RelativeToolTip": "QuanLyDiemDaiHoc\\Areas\\Admin\\Views\\Shared\\_AdminLayout.cshtml",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAACMAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-10-26T12:49:43.942Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
