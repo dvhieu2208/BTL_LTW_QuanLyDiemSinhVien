@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<QuanLyDiemDaiHoc.Models.PhongHoc>
-
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "Quản lý phòng học";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
@@ -22,15 +22,29 @@
             </a>
         </div>
     </div>
-
-    <form asp-action="Index" method="get" class="card border-0 shadow-sm rounded-4 mb-4 p-3 bg-white">
-        <div class="input-group input-group-lg bg-light rounded-3 px-2 border">
-            <span class="input-group-text bg-transparent border-0 text-muted">
-                <i class="fas fa-search"></i>
-            </span>
-            <input type="text" name="searchString" value="@Context.Request.Query["searchString"]" class="form-control bg-transparent border-0 shadow-none text-dark" placeholder="Tìm theo mã phòng hoặc tên phòng...">
+     @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show rounded-3 shadow-sm" role="alert">
+            <i class="fas fa-check-circle me-2"></i> @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-    </form>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show rounded-3 shadow-sm" role="alert">
+            <i class="fas fa-exclamation-circle me-2"></i> @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <form asp-action="Index" method="get" id="searchForm" class="card border-0 shadow-sm rounded-4 mb-4 p-3 bg-white">
+    <div class="input-group input-group-lg bg-light rounded-3 px-2 border">
+        <span class="input-group-text bg-transparent border-0 text-muted">
+            <i class="fas fa-search"></i>
+        </span>
+        <input type="text" name="searchString" id="searchString" value="@Context.Request.Query["searchString"]" class="form-control bg-transparent border-0 shadow-none text-dark" placeholder="Tìm theo mã phòng hoặc tên phòng..." autocomplete="off">
+    </div>
+</form>
 
     <div class="card border-0 shadow-sm rounded-4 bg-white overflow-hidden">
         <div class="table-responsive">
@@ -70,9 +84,30 @@
                                     <a asp-action="Edit" asp-route-id="@item.MaPhong" class="btn btn-sm btn-light text-primary me-1 rounded-2 p-2" title="Sửa">
                                         <i class="fas fa-pen fa-xs"></i>
                                     </a>
-                                    <a asp-action="Delete" asp-route-id="@item.MaPhong" class="btn btn-sm btn-light text-danger rounded-2 p-2" title="Xóa">
+                                    <button type="button" class="btn btn-sm btn-light text-danger rounded-2 p-2" data-bs-toggle="modal" data-bs-target="#deleteModal-@item.MaPhong" title="Xóa">
                                         <i class="fas fa-trash fa-xs"></i>
-                                    </a>
+                                    </button>
+
+                                    <!-- Modal Xác nhận xóa -->
+                                    <div class="modal fade" id="deleteModal-@item.MaPhong" tabindex="-1" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content text-start">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Xác nhận xóa phòng học</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Bạn có chắc chắn muốn xóa phòng học <strong class="text-danger">@item.TenPhong (@item.MaPhong)</strong> này không?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                                    <form asp-action="Delete" asp-route-id="@item.MaPhong" method="post" class="d-inline">
+                                                        <button type="submit" class="btn btn-danger">Xóa</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         }
@@ -88,3 +123,23 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchForm = document.getElementById('searchForm');
+            const searchInput = document.getElementById('searchString');
+            let timeout = null;
+
+            if (searchInput && searchForm) {
+                searchInput.addEventListener('input', function () {
+                 
+                    clearTimeout(timeout);
+                  
+                    timeout = setTimeout(function () {
+                        searchForm.submit();
+                    }, 400);
+                });
+            }
+        });
+    </script>
+}

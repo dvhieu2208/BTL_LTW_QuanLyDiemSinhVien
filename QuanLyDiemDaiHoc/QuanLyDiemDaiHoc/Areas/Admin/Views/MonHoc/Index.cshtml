@@ -1,11 +1,12 @@
 ﻿@model IEnumerable<QuanLyDiemDaiHoc.Models.MonHoc>
-
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "Quản lý môn học";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="container-fluid px-4 py-3">
+    <!-- Header Section -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <nav aria-label="breadcrumb">
@@ -23,15 +24,33 @@
         </div>
     </div>
 
-    <form asp-action="Index" method="get" class="card border-0 shadow-sm rounded-4 mb-4 p-3 bg-white">
-        <div class="input-group input-group-lg bg-light rounded-3 px-2 border">
-            <span class="input-group-text bg-transparent border-0 text-muted">
-                <i class="fas fa-search"></i>
-            </span>
-            <input type="text" name="searchString" value="@Context.Request.Query["searchString"]" class="form-control bg-transparent border-0 shadow-none text-dark" placeholder="Tìm theo mã môn hoặc tên môn...">
+    <!-- Thông báo TempData -->
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show rounded-3 shadow-sm" role="alert">
+            <i class="fas fa-check-circle me-2"></i> @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-    </form>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show rounded-3 shadow-sm" role="alert">
+            <i class="fas fa-exclamation-circle me-2"></i> @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
 
+    <!-- Search Bar -->
+    <form asp-action="Index" method="get" id="searchForm" class="card border-0 shadow-sm rounded-4 mb-4 p-3 bg-white">
+    <div class="input-group input-group-lg bg-light rounded-3 px-2 border">
+        <span class="input-group-text bg-transparent border-0 text-muted">
+            <i class="fas fa-search"></i>
+        </span>
+        <input type="text" name="searchString" id="searchString" value="@Context.Request.Query["searchString"]" class="form-control bg-transparent border-0 shadow-none text-dark" placeholder="Tìm theo mã môn hoặc tên môn..." autocomplete="off">
+    </div>
+</form>
+
+    <!-- Table Section -->
     <div class="card border-0 shadow-sm rounded-4 bg-white overflow-hidden">
         <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
@@ -48,16 +67,12 @@
                     {
                         foreach (var item in Model)
                         {
-                            var initials = !string.IsNullOrEmpty(item.TenMon) 
-                                ? string.Concat(item.TenMon.Split(' ').Where(s => s.Length > 0).Take(2).Select(s => s[0])).ToUpper() 
-                                : "MH";
-
                             <tr>
                                 <td class="px-4 fw-semibold text-secondary">@item.MaMon</td>
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="avatar-circle bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold me-3" style="width: 38px; height: 38px; font-size: 14px;">
-                                            @initials
+                                            @item.MaMon.Substring(0, Math.Min(2, item.MaMon.Length)).ToUpper()
                                         </div>
                                         <div>
                                             <h6 class="mb-0 fw-bold text-dark">@item.TenMon</h6>
@@ -65,15 +80,35 @@
                                         </div>
                                     </div>
                                 </td>
-                                <!-- Sử dụng thuộc tính Dvht đúng với Model đã scaffold -->
-                                <td class="fw-semibold text-dark">@item.Dvht</td>
+                                <td class="fw-semibold text-dark">@item.Dvht</td> <!-- Hoặc item.Dvht tùy tên cột trong Model của bạn -->
                                 <td class="text-end px-4">
                                     <a asp-action="Edit" asp-route-id="@item.MaMon" class="btn btn-sm btn-light text-primary me-1 rounded-2 p-2" title="Sửa">
                                         <i class="fas fa-pen fa-xs"></i>
                                     </a>
-                                    <a asp-action="Delete" asp-route-id="@item.MaMon" class="btn btn-sm btn-light text-danger rounded-2 p-2" title="Xóa">
+                                    <button type="button" class="btn btn-sm btn-light text-danger rounded-2 p-2" data-bs-toggle="modal" data-bs-target="#deleteModal-@item.MaMon" title="Xóa">
                                         <i class="fas fa-trash fa-xs"></i>
-                                    </a>
+                                    </button>
+
+                                    <!-- Modal Xác nhận xóa -->
+                                    <div class="modal fade" id="deleteModal-@item.MaMon" tabindex="-1" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content text-start">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Xác nhận xóa môn học</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Bạn có chắc chắn muốn xóa môn học <strong class="text-danger">@item.TenMon (@item.MaMon)</strong> này không?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                                    <form asp-action="Delete" asp-route-id="@item.MaMon" method="post" class="d-inline">
+                                                        <button type="submit" class="btn btn-danger">Xóa</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         }
@@ -89,3 +124,24 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchForm = document.getElementById('searchForm');
+            const searchInput = document.getElementById('searchString');
+            let timeout = null;
+
+            if (searchInput && searchForm) {
+                searchInput.addEventListener('input', function () {
+                    // Hủy bỏ thời gian chờ trước đó nếu người dùng vẫn đang gõ liên tục
+                    clearTimeout(timeout);
+                    
+                    // Chờ 400ms sau khi người dùng dừng gõ phím thì tự động submit form
+                    timeout = setTimeout(function () {
+                        searchForm.submit();
+                    }, 400);
+                });
+            }
+        });
+    </script>
+}

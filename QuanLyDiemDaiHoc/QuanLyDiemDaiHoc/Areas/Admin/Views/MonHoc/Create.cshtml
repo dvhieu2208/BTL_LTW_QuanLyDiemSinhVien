@@ -1,0 +1,44 @@
+﻿@model QuanLyDiemDaiHoc.Models.MonHoc
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Thêm mới môn học";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid px-4 py-3">
+    <h3 class="fw-bold text-dark mb-1">Thêm mới Môn học</h3>
+    <ol class="breadcrumb mb-4 text-muted small">
+        <li class="breadcrumb-item"><a asp-action="Index">Quản lý môn học</a></li>
+        <li class="breadcrumb-item active">Thêm mới</li>
+    </ol>
+
+    <div class="card border-0 shadow-sm rounded-4 bg-white p-4">
+        <form asp-action="Create" method="post">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label asp-for="MaMon" class="form-label fw-bold">Mã Môn <span class="text-danger">*</span></label>
+                    <input asp-for="MaMon" class="form-control rounded-3" placeholder="Nhập mã môn (VD: JAVA)" required />
+                    <span asp-validation-for="MaMon" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="TenMon" class="form-label fw-bold">Tên Môn Học <span class="text-danger">*</span></label>
+                    <input asp-for="TenMon" class="form-control rounded-3" placeholder="Nhập tên môn học đầy đủ" required />
+                    <span asp-validation-for="TenMon" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label asp-for="Dvht" class="form-label fw-bold">Đơn Vị Học Trình (DVHT) / Tín Chỉ <span class="text-danger">*</span></label>
+                    <input asp-for="Dvht" type="number" class="form-control rounded-3" placeholder="Nhập số tín chỉ (VD: 3)" required />
+                    <span asp-validation-for="Dvht" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="pt-3 border-top d-flex justify-content-end gap-2">
+                <a asp-action="Index" class="btn btn-light px-4 rounded-3">Hủy</a>
+                <button type="submit" class="btn btn-primary px-4 rounded-3 shadow-sm">Lưu Môn Học</button>
+            </div>
+        </form>
+    </div>
+</div>

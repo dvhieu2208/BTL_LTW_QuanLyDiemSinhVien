@@ -1,4 +1,5 @@
-﻿@{
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
     ViewData["Title"] = "Tổng quan đào tạo";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
@@ -7,7 +8,7 @@
     <div>
         <h6 class="text-uppercase text-muted fs-8 mb-1">PHÒNG ĐÀO TẠO</h6>
         <h2 class="fw-bold">Tổng quan đào tạo</h2>
-        <p class="text-muted">Năm học 2024-2025 • Dữ liệu được cập nhật theo thời gian thực</p>
+        <p class="text-muted" id="namHocText">Năm học Đang cập nhật...</p>
     </div>
     <a asp-area="Admin" asp-controller="Diem" asp-action="Index"
     class="btn btn-primary d-flex align-items-center shadow-sm">
@@ -133,6 +134,14 @@
 </div>
 
 @section Scripts {
+    <script>
+        const d = new Date();
+        let year = d.getFullYear();
+        // Nếu muốn sang tháng 9 mới đổi năm học thì thêm logic kiểm tra tháng (d.getMonth() >= 8)
+        let nextYear = year + 1;
+
+        document.getElementById("namHocText").innerText = "Năm học " + year + "-" + nextYear;
+    </script>
     <script>
         // Cấu hình Chart.js hiển thị biểu đồ phân bổ điểm
         const ctx = document.getElementById('gradeDistributionChart').getContext('2d');

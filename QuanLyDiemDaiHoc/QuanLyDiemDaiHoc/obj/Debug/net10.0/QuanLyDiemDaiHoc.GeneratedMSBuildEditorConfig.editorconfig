@@ -39,12 +39,36 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/My Laptop/Documents/BTL_LTW_Nhóm 6/QuanLyDiemDaiHoc/QuanLyDiemDaiHoc/Areas/Admin/Views/Khoalop/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcS2hvYWxvcFxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/My Laptop/Documents/BTL_LTW_Nhóm 6/QuanLyDiemDaiHoc/QuanLyDiemDaiHoc/Areas/Admin/Views/Khoalop/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcS2hvYWxvcFxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/My Laptop/Documents/BTL_LTW_Nhóm 6/QuanLyDiemDaiHoc/QuanLyDiemDaiHoc/Areas/Admin/Views/Khoalop/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcS2hvYWxvcFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/My Laptop/Documents/BTL_LTW_Nhóm 6/QuanLyDiemDaiHoc/QuanLyDiemDaiHoc/Areas/Admin/Views/MonHoc/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTW9uSG9jXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/My Laptop/Documents/BTL_LTW_Nhóm 6/QuanLyDiemDaiHoc/QuanLyDiemDaiHoc/Areas/Admin/Views/MonHoc/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTW9uSG9jXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/My Laptop/Documents/BTL_LTW_Nhóm 6/QuanLyDiemDaiHoc/QuanLyDiemDaiHoc/Areas/Admin/Views/MonHoc/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTW9uSG9jXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/My Laptop/Documents/BTL_LTW_Nhóm 6/QuanLyDiemDaiHoc/QuanLyDiemDaiHoc/Areas/Admin/Views/PhongHoc/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUGhvbmdIb2NcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/My Laptop/Documents/BTL_LTW_Nhóm 6/QuanLyDiemDaiHoc/QuanLyDiemDaiHoc/Areas/Admin/Views/PhongHoc/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUGhvbmdIb2NcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/My Laptop/Documents/BTL_LTW_Nhóm 6/QuanLyDiemDaiHoc/QuanLyDiemDaiHoc/Areas/Admin/Views/PhongHoc/Index.cshtml]
@@ -63,12 +87,28 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2hhcmVkXF9BZG1pbkxheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/My Laptop/Documents/BTL_LTW_Nhóm 6/QuanLyDiemDaiHoc/QuanLyDiemDaiHoc/Areas/Admin/Views/SinhVien/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2luaFZpZW5cQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/My Laptop/Documents/BTL_LTW_Nhóm 6/QuanLyDiemDaiHoc/QuanLyDiemDaiHoc/Areas/Admin/Views/SinhVien/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2luaFZpZW5cRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/My Laptop/Documents/BTL_LTW_Nhóm 6/QuanLyDiemDaiHoc/QuanLyDiemDaiHoc/Areas/Admin/Views/SinhVien/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2luaFZpZW5cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/My Laptop/Documents/BTL_LTW_Nhóm 6/QuanLyDiemDaiHoc/QuanLyDiemDaiHoc/Areas/Admin/Views/TaiKhoan/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVGFpS2hvYW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/My Laptop/Documents/BTL_LTW_Nhóm 6/QuanLyDiemDaiHoc/QuanLyDiemDaiHoc/Areas/Admin/Views/ThoiKhoaBieu/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVGhvaUtob2FCaWV1XENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/My Laptop/Documents/BTL_LTW_Nhóm 6/QuanLyDiemDaiHoc/QuanLyDiemDaiHoc/Areas/Admin/Views/ThoiKhoaBieu/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVGhvaUtob2FCaWV1XEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/My Laptop/Documents/BTL_LTW_Nhóm 6/QuanLyDiemDaiHoc/QuanLyDiemDaiHoc/Areas/Admin/Views/ThoiKhoaBieu/Index.cshtml]

@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<QuanLyDiemDaiHoc.Models.Lop>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
     ViewData["Title"] = "Quản lý Khoa & Lớp học";
@@ -23,6 +24,21 @@
             </a>
         </div>
     </div>
+      <!-- Thông báo TempData -->
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show rounded-3 shadow-sm" role="alert">
+            <i class="fas fa-check-circle me-2"></i> @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show rounded-3 shadow-sm" role="alert">
+            <i class="fas fa-exclamation-circle me-2"></i> @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
 
     <!-- Search and Filter Bar -->
     <form asp-action="Index" method="get" class="card border-0 shadow-sm rounded-4 mb-4 p-3 bg-white">
@@ -90,9 +106,32 @@
                                     <a asp-action="Edit" asp-route-id="@item.MaLop" class="btn btn-sm btn-light text-primary me-1 rounded-2 p-2" title="Sửa">
                                         <i class="fas fa-pen fa-xs"></i>
                                     </a>
-                                    <a asp-action="Delete" asp-route-id="@item.MaLop" class="btn btn-sm btn-light text-danger rounded-2 p-2" title="Xóa">
+
+                                    <!-- Nút kích hoạt Modal Xóa -->
+                                    <button type="button" class="btn btn-sm btn-light text-danger rounded-2 p-2" data-bs-toggle="modal" data-bs-target="#deleteModal-@item.MaLop" title="Xóa">
                                         <i class="fas fa-trash fa-xs"></i>
-                                    </a>
+                                    </button>
+
+                                    <!-- Modal Xác nhận xóa -->
+                                    <div class="modal fade" id="deleteModal-@item.MaLop" tabindex="-1" aria-labelledby="deleteModalLabel-@item.MaLop" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content text-start">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="deleteModalLabel-@item.MaLop">Xác nhận xóa lớp học</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Bạn có chắc chắn muốn xóa lớp <strong class="text-danger">@item.TenLop (@item.MaLop)</strong> này không?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                                    <form asp-action="Delete" asp-route-id="@item.MaLop" method="post" class="d-inline">
+                                                        <button type="submit" class="btn btn-danger">Xóa</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         }
@@ -108,3 +147,34 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchInput = document.querySelector("input[name='searchString']");
+
+            if (searchInput) {
+                searchInput.addEventListener("input", function () {
+                    const keyword = this.value.toLowerCase().trim();
+                    const tableRows = document.querySelectorAll("table tbody tr");
+
+                    tableRows.forEach(row => {
+                        // Bỏ qua dòng thông báo "Chưa có dữ liệu"
+                        if (row.cells.length <= 1) return;
+
+                        let match = false;
+                        // Duyệt qua các ô trong hàng (trừ cột thao tác cuối cùng)
+                        for (let i = 0; i < row.cells.length - 1; i++) {
+                            if (row.cells[i].textContent.toLowerCase().includes(keyword)) {
+                                match = true;
+                                break;
+                            }
+                        }
+
+                        // Hiện hoặc ẩn dòng tùy thuộc vào kết quả khớp từ khóa
+                        row.style.display = match ? "" : "none";
+                    });
+                });
+            }
+        });
+    </script>
+}

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace QuanLyDiemDaiHoc.Models;
 
@@ -16,6 +17,7 @@ public partial class Lop
     public int? SiSo { get; set; }
 
     public virtual ICollection<Diem> Diems { get; set; } = new List<Diem>();
+    [ValidateNever]
 
     public virtual Khoa MaKhoaNavigation { get; set; } = null!;
 

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using QuanLyDiemDaiHoc.Areas.Admin.Models;
 using QuanLyDiemDaiHoc.Models;
 
 namespace QuanLyDiemDaiHoc.Areas.Admin.Controllers
@@ -35,7 +36,7 @@ namespace QuanLyDiemDaiHoc.Areas.Admin.Controllers
                 ViewBag.SelectedMaMon = maMon;
                 ViewBag.SelectedHocKy = hocKy ?? 1;
 
-                if (string.IsNullOrEmpty(maLop) || string.IsNullOrEmpty(maMon))
+            if (string.IsNullOrEmpty(maLop) || string.IsNullOrEmpty(maMon))
                 {
                     return View(new List<DiemModelItem>());
                 }
@@ -66,64 +67,51 @@ namespace QuanLyDiemDaiHoc.Areas.Admin.Controllers
                 return View(model);
             }
 
-            // POST: /Admin/Diem/SaveGrades
-            [HttpPost]
-            [ValidateAntiForgeryToken]
-            public async Task<IActionResult> SaveGrades(string maLop, string maMon, int hocKy, List<DiemModelItem> items)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SaveGrades(string maLop, string maMon, int hocKy, List<DiemModelItem> items)
+        {
+            if (string.IsNullOrEmpty(maLop) || string.IsNullOrEmpty(maMon))
             {
-                if (string.IsNullOrEmpty(maLop) || string.IsNullOrEmpty(maMon))
-                {
-                    TempData["Error"] = "Vui lòng chọn lớp và môn học!";
-                    return RedirectToAction("Index");
-                }
+                TempData["Error"] = "Vui lòng chọn lớp và môn học!";
+                return RedirectToAction("Index");
+            }
 
-                foreach (var item in items)
+            foreach (var item in items)
+            {
+                if (item.Diem.HasValue)
                 {
-                    if (item.Diem.HasValue)
+                    if (item.Diem < 0 || item.Diem > 10) continue;
+
+                    var diemExisting = await _context.Diems
+                        .FirstOrDefaultAsync(d => d.MaSv == item.MaSv && d.MaLop == maLop && d.MaMon == maMon && d.HocKy == hocKy);
+
+                    if (diemExisting != null)
                     {
-                        // Kiểm tra ràng buộc điểm từ 0 đến 10
-                        if (item.Diem < 0 || item.Diem > 10) continue;
-
-                        var diemExisting = await _context.Diems.FirstOrDefaultAsync(d => d.MaSv == item.MaSv && d.MaLop == maLop && d.MaMon == maMon);
-
-                        if (diemExisting != null)
+                        diemExisting.Diem1 = item.Diem;
+                        diemExisting.LanThi = item.LanThi;
+                        _context.Update(diemExisting);
+                    }
+                    else
+                    {
+                        var diemMoi = new Diem
                         {
-                            // Cập nhật điểm đã tồn tại
-                            diemExisting.Diem1 = item.Diem;
-                            diemExisting.HocKy = hocKy;
-                            diemExisting.LanThi = item.LanThi;
-                            _context.Update(diemExisting);
-                        }
-                        else
-                        {
-                            // Thêm điểm mới
-                            var diemMoi = new Diem
-                            {
-                                MaSv = item.MaSv,
-                                MaLop = maLop,
-                                MaMon = maMon,
-                                HocKy = hocKy,
-                                LanThi = item.LanThi,
-                                Diem1 = item.Diem
-                            };
-                            _context.Add(diemMoi);
-                        }
+                            MaSv = item.MaSv,
+                            MaLop = maLop,
+                            MaMon = maMon,
+                            HocKy = hocKy,
+                            LanThi = item.LanThi,
+                            Diem1 = item.Diem
+                        };
+                        _context.Add(diemMoi);
                     }
                 }
-
-                await _context.SaveChangesAsync();
-                TempData["Success"] = "Lưu điểm thành công!";
-
-                return RedirectToAction("Index", new { maLop = maLop, maMon = maMon, hocKy = hocKy });
             }
-        }
 
-        // ViewModel hỗ trợ nhập điểm theo từng sinh viên
-        public class DiemModelItem
-        {
-            public string MaSv { get; set; } = string.Empty;
-            public string TenSv { get; set; } = string.Empty;
-            public decimal? Diem { get; set; }
-            public int LanThi { get; set; } = 1;
+            await _context.SaveChangesAsync();
+            TempData["Success"] = "Lưu điểm thành công!";
+
+            return RedirectToAction("Index", new { maLop = maLop, maMon = maMon, hocKy = hocKy });
         }
+    }
     }

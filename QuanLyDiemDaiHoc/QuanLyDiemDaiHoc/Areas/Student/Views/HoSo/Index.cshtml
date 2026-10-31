@@ -89,12 +89,50 @@
             </div>
 
             <!-- Khung hỗ trợ đổi mật khẩu hoặc liên hệ -->
+            <!-- Khung hỗ trợ đổi mật khẩu -->
             <div class="card border-0 shadow-sm rounded-4 p-4 bg-primary bg-opacity-10 text-primary">
-                <div class="d-flex align-items-center">
-                    <i class="fas fa-shield-alt fa-2x me-3"></i>
-                    <div>
-                        <h6 class="fw-bold mb-1">Bảo mật tài khoản</h6>
-                        <p class="small mb-0 text-muted">Để thay đổi mật khẩu hoặc cập nhật thông tin cá nhân bổ sung, vui lòng liên hệ trực tiếp với Phòng Đào tạo.</p>
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-shield-alt fa-2x me-3"></i>
+                        <div>
+                            <h6 class="fw-bold mb-1">Bảo mật tài khoản</h6>
+                            <p class="small mb-0 text-muted">Đổi mật khẩu định kỳ giúp bảo vệ tài khoản sinh viên của bạn.</p>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary rounded-pill px-4 py-2 fw-semibold" data-bs-toggle="modal" data-bs-target="#modalDoiMatKhau">
+                        <i class="fas fa-key me-2"></i>Đặt lại mật khẩu
+                    </button>
+                </div>
+            </div>
+
+            <!-- Modal Đặt lại / Đổi mật khẩu -->
+            <div class="modal fade" id="modalDoiMatKhau" tabindex="-1" aria-labelledby="modalDoiMatKhauLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content rounded-4 border-0 shadow">
+                        <div class="modal-header border-bottom-0 pb-0">
+                            <h5 class="modal-title fw-bold" id="modalDoiMatKhauLabel">Đổi mật khẩu</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form asp-area="Student" asp-controller="Student" asp-action="DoiMatKhau" method="post">
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold small text-muted">Mật khẩu hiện tại</label>
+                                    <input type="password" name="matKhauHienTai" class="form-control rounded-3" required />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold small text-muted">Mật khẩu mới</label>
+                                    <input type="password" name="matKhauMoi" class="form-control rounded-3" required />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold small text-muted">Xác nhận mật khẩu mới</label>
+                                    <input type="password" name="xacNhanMatKhau" class="form-control rounded-3" required />
+                                </div>
+                            </div>
+                            <div class="modal-footer border-top-0 pt-0">
+                                <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Hủy</button>
+                                <button type="submit" class="btn btn-primary rounded-pill px-4">Lưu thay đổi</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

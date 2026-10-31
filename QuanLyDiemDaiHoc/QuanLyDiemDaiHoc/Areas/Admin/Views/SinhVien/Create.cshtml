@@ -1,0 +1,195 @@
+﻿@model QuanLyDiemDaiHoc.Models.SinhVien
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Thêm sinh viên mới";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid px-4">
+    <!-- Tiêu đề trang -->
+    <h1 class="mt-4 text-primary fw-bold">Quản Lý Sinh Viên</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="SinhVien" asp-action="Index">Danh sách sinh viên</a></li>
+        <li class="breadcrumb-item active">Thêm mới sinh viên</li>
+    </ol>
+
+    <!-- Card chứa form -->
+    <div class="card shadow-sm border-0 rounded-4 mb-4">
+        <div class="card-header bg-white py-3">
+            <h5 class="m-0 font-weight-bold text-dark">
+                <i class="fas fa-user-plus me-2 text-primary"></i> Nhập thông tin sinh viên mới
+            </h5>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="row">
+                    <!-- Mã sinh viên -->
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="MaSv" class="form-label fw-bold">Mã Sinh Viên <span class="text-danger">*</span></label>
+                        <input asp-for="MaSv" class="form-control rounded-3" placeholder="Nhập mã sinh viên" required />
+                        <span asp-validation-for="MaSv" class="text-danger"></span>
+                    </div>
+
+                    <!-- Họ tên -->
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="TenSv" class="form-label fw-bold">Họ và Tên <span class="text-danger">*</span></label>
+                        <input asp-for="TenSv" class="form-control rounded-3" placeholder="Nhập họ và tên đầy đủ" required />
+                        <span asp-validation-for="TenSv" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Ngày sinh -->
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="NgaySinh" class="form-label fw-bold">Ngày Sinh</label>
+                        <input asp-for="NgaySinh" type="date" class="form-control rounded-3" />
+                        <span asp-validation-for="NgaySinh" class="text-danger"></span>
+                    </div>
+
+                    <!-- Giới tính -->
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="GioiTinh" class="form-label fw-bold">Giới Tính</label>
+                        <select asp-for="GioiTinh" class="form-select rounded-3">
+                            <option value="">-- Chọn giới tính --</option>
+                            <option value="Nam">Nam</option>
+                            <option value="Nữ">Nữ</option>
+                        </select>
+                        <span asp-validation-for="GioiTinh" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Lớp -->
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="MaLop" class="form-label fw-bold">Lớp <span class="text-danger">*</span></label>
+                        <select asp-for="MaLop" class="form-select rounded-3" asp-items="ViewBag.MaLop" required>
+                            <option value="">-- Chọn lớp --</option>
+                        </select>
+                        <span asp-validation-for="MaLop" class="text-danger fs-8"></span>
+                    </div>
+
+                    <!-- Khoa / Ngành -->
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="MaKhoa" class="form-label fw-bold">Khoa <span class="text-danger">*</span></label>
+                        <select asp-for="MaKhoa" class="form-select rounded-3" asp-items="ViewBag.MaKhoa" required>
+                            <option value="">-- Chọn khoa --</option>
+                        </select>
+                        <span asp-validation-for="MaKhoa" class="text-danger fs-8"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                   <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="MaChuyenNganh" class="form-label fw-bold">Chuyên Ngành</label>
+                        <select asp-for="MaChuyenNganh" class="form-select rounded-3" asp-items="ViewBag.MaChuyenNganh">
+                            <option value="">-- Chọn chuyên ngành --</option>
+                        </select>
+                        <span asp-validation-for="MaChuyenNganh" class="text-danger fs-8"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="MaHeDt" class="form-label fw-bold">Hệ Đào Tạo</label>
+                        <select asp-for="MaHeDt" class="form-select rounded-3" asp-items="ViewBag.MaHeDt">
+                            <option value="">-- Chọn hệ đào tạo --</option>
+                        </select>
+                        <span asp-validation-for="MaHeDt" class="text-danger fs-8"></span>
+                    </div>
+                </div>
+
+                <!-- Hàng 5: Quê quán & Dân tộc -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="MaQue" class="form-label fw-bold">Quê Quán</label>
+                        <select asp-for="MaQue" class="form-select rounded-3" asp-items="ViewBag.MaQue">
+                            <option value="">-- Chọn quê quán --</option>
+                        </select>
+                        <span asp-validation-for="MaQue" class="text-danger fs-8"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="MaDanToc" class="form-label fw-bold">Dân Tộc</label>
+                        <select asp-for="MaDanToc" class="form-select rounded-3" asp-items="ViewBag.MaDanToc">
+                            <option value="">-- Chọn dân tộc --</option>
+                        </select>
+                        <span asp-validation-for="MaDanToc" class="text-danger fs-8"></span>
+                    </div>
+                </div>
+
+                <!-- Hàng 6: Chức vụ -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label asp-for="MaChucVu" class="form-label fw-bold">Chức Vụ</label>
+                        <select asp-for="MaChucVu" class="form-select rounded-3" asp-items="ViewBag.MaChucVu">
+                            <option value="">-- Chọn chức vụ (nếu có) --</option>
+                        </select>
+                        <span asp-validation-for="MaChucVu" class="text-danger fs-8"></span>
+                    </div>
+                </div>
+
+                <!-- Nút thao tác -->
+                <div class="mt-4 pt-2 border-top d-flex justify-content-end gap-2">
+                    <a asp-action="Index" class="btn btn-secondary px-4 rounded-3">
+                        <i class="fas fa-arrow-left me-1"></i> Quay lại
+                    </a>
+                    <button type="submit" class="btn btn-primary px-4 rounded-3 shadow-sm">
+                        <i class="fas fa-save me-1"></i> Lưu sinh viên
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+     <script>
+        document.getElementById('ddlKhoa').addEventListener('change', function () {
+            var maKhoa = this.value;
+            var ddlLop = document.getElementById('ddlLop');
+            var ddlChuyenNganh = document.getElementById('ddlChuyenNganh');
+
+            // Reset và khóa lại nếu chưa chọn Khoa
+            ddlLop.innerHTML = '<option value="">-- Chọn lớp --</option>';
+            ddlChuyenNganh.innerHTML = '<option value="">-- Chọn chuyên ngành --</option>';
+
+            if (!maKhoa) {
+                ddlLop.disabled = true;
+                ddlChuyenNganh.disabled = true;
+                return;
+            }
+
+            // Gọi API lấy Lớp theo Khoa
+            fetch(`/Admin/SinhVien/GetLopByKhoa?maKhoa=${maKhoa}`)
+                .then(response => response.json())
+                .then(data => {
+                    ddlLop.disabled = false;
+                    data.forEach(item => {
+                        var option = document.createElement('option');
+                        option.value = item.maLop;
+                        option.text = item.tenLop;
+                        ddlLop.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Lỗi khi tải lớp:', error));
+
+            // Gọi API lấy Chuyên Ngành theo Khoa
+            fetch(`/Admin/SinhVien/GetChuyenNganhByKhoa?maKhoa=${maKhoa}`)
+                .then(response => response.json())
+                .then(data => {
+                    ddlChuyenNganh.disabled = false;
+                    data.forEach(item => {
+                        var option = document.createElement('option');
+                        option.value = item.maChuyenNganh;
+                        option.text = item.tenChuyenNganh;
+                        ddlChuyenNganh.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Lỗi khi tải chuyên ngành:', error));
+        });
+    </script>
+}
+ 

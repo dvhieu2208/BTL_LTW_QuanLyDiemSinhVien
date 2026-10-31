@@ -1,0 +1,74 @@
+﻿@model QuanLyDiemDaiHoc.Models.ThoiKhoaBieu
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Chỉnh sửa lịch học";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid px-4 py-3">
+    <h3 class="fw-bold text-dark mb-1">Thời khóa biểu</h3>
+    <ol class="breadcrumb mb-4 text-muted small">
+        <li class="breadcrumb-item"><a asp-action="Index">Danh sách lịch học</a></li>
+        <li class="breadcrumb-item active">Chỉnh sửa thông tin</li>
+    </ol>
+
+    <div class="card border-0 shadow-sm rounded-4 bg-white p-4">
+        <!-- Hiển thị toàn bộ lỗi ModelState để dễ debug nếu còn vướng -->
+        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+        <form asp-action="Edit" method="post">
+            <!-- Truyền ẩn hai khóa chính để Controller nhận diện đúng bản ghi -->
+            <input type="hidden" asp-for="MaLop" />
+            <input type="hidden" asp-for="MaMon" />
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Lớp Học</label>
+                    <input class="form-control rounded-3 bg-light" value="@Model.MaLop" disabled />
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Môn Học</label>
+                    <input class="form-control rounded-3 bg-light" value="@Model.MaMon" disabled />
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label asp-for="HocKy" class="form-label fw-bold">Học Kỳ <span class="text-danger">*</span></label>
+                    <input asp-for="HocKy" type="number" class="form-control rounded-3" required />
+                    <span asp-validation-for="HocKy" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="ThuHoc" class="form-label fw-bold">Thứ Học <span class="text-danger">*</span></label>
+                    <input asp-for="ThuHoc" type="number" class="form-control rounded-3" required />
+                    <span asp-validation-for="ThuHoc" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label asp-for="CaHoc" class="form-label fw-bold">Ca Học <span class="text-danger">*</span></label>
+                    <input asp-for="CaHoc" type="number" class="form-control rounded-3" required />
+                    <span asp-validation-for="CaHoc" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="MaPhong" class="form-label fw-bold">Phòng Học <span class="text-danger">*</span></label>
+                    <select asp-for="MaPhong" class="form-select rounded-3" asp-items="ViewBag.MaPhong" required>
+                        <option value="">-- Chọn phòng học --</option>
+                    </select>
+                    <span asp-validation-for="MaPhong" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="pt-3 border-top d-flex justify-content-end gap-2">
+                <a asp-action="Index" class="btn btn-light px-4 rounded-3">Hủy</a>
+                <button type="submit" class="btn btn-primary px-4 rounded-3 shadow-sm">Lưu Thay Đổi</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

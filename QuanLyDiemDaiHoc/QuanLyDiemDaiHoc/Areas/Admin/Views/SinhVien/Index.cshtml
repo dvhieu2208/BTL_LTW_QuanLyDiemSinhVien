@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<QuanLyDiemDaiHoc.Models.SinhVien>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "Quản lý Điểm Sinh Viên";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
@@ -25,31 +26,30 @@
 
     <!-- Thanh tìm kiếm và bộ lọc -->
     <div class="card shadow-sm border-0 mb-4 rounded-4">
-        <div class="card-body">
-            <form method="get" asp-action="Index" class="row g-3">
-                <div class="col-md-5">
-                    <div class="input-group">
-                        <span class="input-group-text bg-white"><i class="fas fa-search text-muted"></i></span>
-                        <input type="text" name="searchString" class="form-control border-start-0" value="@ViewBag.CurrentFilter" placeholder="Tìm theo mã hoặc tên sinh viên..." />
-                    </div>
+    <div class="card-body">
+        <form method="get" asp-action="Index" id="searchForm" class="row g-3">
+            <div class="col-md-5">
+                <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="fas fa-search text-muted"></i></span>
+                    <input type="text" name="searchString" id="searchString" class="form-control border-start-0" value="@ViewBag.CurrentFilter" placeholder="Tìm theo mã hoặc tên sinh viên..." autocomplete="off" />
                 </div>
-                <div class="col-md-4">
-                    <select name="maLop" class="form-select" asp-items="ViewBag.MaLop">
-                        <option value="">-- Tất cả các lớp --</option>
-                    </select>
-                </div>
-                <div class="col-md-3 d-flex gap-2">
-                    <button type="submit" class="btn btn-primary flex-grow-1">
-                        <i class="fas fa-filter me-1"></i> Lọc
-                    </button>
-                    <a asp-action="Index" class="btn btn-outline-secondary" title="Đặt lại bộ lọc">
-                        <i class="fas fa-redo"></i>
-                    </a>
-                </div>
-            </form>
-        </div>
+            </div>
+            <div class="col-md-4">
+                <select name="maLop" id="lopFilter" class="form-select" asp-items="ViewBag.MaLop">
+                    <option value="">-- Tất cả các lớp --</option>
+                </select>
+            </div>
+            <div class="col-md-3 d-flex gap-2">
+                <button type="submit" class="btn btn-primary flex-grow-1">
+                    <i class="fas fa-filter me-1"></i> Lọc
+                </button>
+                <a asp-action="Index" class="btn btn-outline-secondary" title="Đặt lại bộ lọc">
+                    <i class="fas fa-redo"></i>
+                </a>
+            </div>
+        </form>
     </div>
-
+</div>
     <!-- Bảng danh sách sinh viên -->
     <div class="card shadow-sm border-0 rounded-4 mb-4">
         <div class="card-body p-0">
@@ -87,20 +87,23 @@
                                     <td>@(item.MaKhoaNavigation?.TenKhoa ?? item.MaKhoa)</td>
                                     <td>@(item.MaQueNavigation?.TenQue ?? item.MaQue)</td>
                                     <td class="text-end pe-4">
+                                      
                                         <a asp-action="Edit" asp-route-id="@item.MaSv" class="btn btn-sm btn-outline-primary me-1" title="Sửa">
                                             <i class="fas fa-edit"></i>
                                         </a>
+
+                                      
                                         <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-@item.MaSv" title="Xóa">
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
 
-                                        <!-- Modal Xác nhận xóa -->
-                                        <div class="modal fade" id="deleteModal-@item.MaSv" tabindex="-1">
+                                     
+                                        <div class="modal fade" id="deleteModal-@item.MaSv" tabindex="-1" aria-labelledby="deleteModalLabel-@item.MaSv" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content text-start">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title">Xác nhận xóa sinh viên</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                        <h5 class="modal-title" id="deleteModalLabel-@item.MaSv">Xác nhận xóa sinh viên</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
                                                         Bạn có chắc chắn muốn xóa sinh viên <strong class="text-danger">@item.TenSv (@item.MaSv)</strong> này không?
@@ -130,3 +133,31 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchForm = document.getElementById('searchForm');
+            const searchInput = document.getElementById('searchString');
+            const lopFilter = document.getElementById('lopFilter');
+
+            let timeout = null;
+
+            // 1. Tự động tìm kiếm khi gõ phím (Debounce 400ms)
+            if (searchInput && searchForm) {
+                searchInput.addEventListener('input', function () {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(function () {
+                        searchForm.submit();
+                    }, 400);
+                });
+            }
+
+            // 2. Tự động lọc ngay lập tức khi thay đổi lựa chọn lớp học trong dropdown
+            if (lopFilter && searchForm) {
+                lopFilter.addEventListener('change', function () {
+                    searchForm.submit();
+                });
+            }
+        });
+    </script>
+}

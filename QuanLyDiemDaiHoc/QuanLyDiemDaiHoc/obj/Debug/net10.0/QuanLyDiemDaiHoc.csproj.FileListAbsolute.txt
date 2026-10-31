@@ -150,12 +150,14 @@ C:\Users\My Laptop\Documents\BTL_LTW_Nhóm 6\QuanLyDiemDaiHoc\QuanLyDiemDaiHoc\o
 C:\Users\My Laptop\Documents\BTL_LTW_Nhóm 6\QuanLyDiemDaiHoc\QuanLyDiemDaiHoc\obj\Debug\net10.0\QuanLyDiemDaiHoc.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\My Laptop\Documents\BTL_LTW_Nhóm 6\QuanLyDiemDaiHoc\QuanLyDiemDaiHoc\obj\Debug\net10.0\QuanLyDiemDaiHoc.RazorAssemblyInfo.cache
 C:\Users\My Laptop\Documents\BTL_LTW_Nhóm 6\QuanLyDiemDaiHoc\QuanLyDiemDaiHoc\obj\Debug\net10.0\QuanLyDiemDaiHoc.RazorAssemblyInfo.cs
+C:\Users\My Laptop\Documents\BTL_LTW_Nhóm 6\QuanLyDiemDaiHoc\QuanLyDiemDaiHoc\obj\Debug\net10.0\QuanLyDiemDaiHoc.sourcelink.json
 C:\Users\My Laptop\Documents\BTL_LTW_Nhóm 6\QuanLyDiemDaiHoc\QuanLyDiemDaiHoc\obj\Debug\net10.0\rjimswa.dswa.cache.json
 C:\Users\My Laptop\Documents\BTL_LTW_Nhóm 6\QuanLyDiemDaiHoc\QuanLyDiemDaiHoc\obj\Debug\net10.0\rjsmrazor.dswa.cache.json
 C:\Users\My Laptop\Documents\BTL_LTW_Nhóm 6\QuanLyDiemDaiHoc\QuanLyDiemDaiHoc\obj\Debug\net10.0\rjsmcshtml.dswa.cache.json
 C:\Users\My Laptop\Documents\BTL_LTW_Nhóm 6\QuanLyDiemDaiHoc\QuanLyDiemDaiHoc\obj\Debug\net10.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 C:\Users\My Laptop\Documents\BTL_LTW_Nhóm 6\QuanLyDiemDaiHoc\QuanLyDiemDaiHoc\obj\Debug\net10.0\scopedcss\bundle\QuanLyDiemDaiHoc.styles.css
 C:\Users\My Laptop\Documents\BTL_LTW_Nhóm 6\QuanLyDiemDaiHoc\QuanLyDiemDaiHoc\obj\Debug\net10.0\scopedcss\projectbundle\QuanLyDiemDaiHoc.bundle.scp.css
+C:\Users\My Laptop\Documents\BTL_LTW_Nhóm 6\QuanLyDiemDaiHoc\QuanLyDiemDaiHoc\obj\Debug\net10.0\compressed\jz9rqmhuqi-{0}-ks8u164ow6-ks8u164ow6.gz
 C:\Users\My Laptop\Documents\BTL_LTW_Nhóm 6\QuanLyDiemDaiHoc\QuanLyDiemDaiHoc\obj\Debug\net10.0\compressed\z4wku8o3ov-{0}-b9sayid5wm-b9sayid5wm.gz
 C:\Users\My Laptop\Documents\BTL_LTW_Nhóm 6\QuanLyDiemDaiHoc\QuanLyDiemDaiHoc\obj\Debug\net10.0\compressed\24w2isy79d-{0}-61n19gt1b8-61n19gt1b8.gz
 C:\Users\My Laptop\Documents\BTL_LTW_Nhóm 6\QuanLyDiemDaiHoc\QuanLyDiemDaiHoc\obj\Debug\net10.0\compressed\gctyzbqypv-{0}-xtxxf3hu2r-xtxxf3hu2r.gz
@@ -232,4 +234,3 @@ C:\Users\My Laptop\Documents\BTL_LTW_Nhóm 6\QuanLyDiemDaiHoc\QuanLyDiemDaiHoc\o
 C:\Users\My Laptop\Documents\BTL_LTW_Nhóm 6\QuanLyDiemDaiHoc\QuanLyDiemDaiHoc\obj\Debug\net10.0\QuanLyDiemDaiHoc.pdb
 C:\Users\My Laptop\Documents\BTL_LTW_Nhóm 6\QuanLyDiemDaiHoc\QuanLyDiemDaiHoc\obj\Debug\net10.0\QuanLyDiemDaiHoc.genruntimeconfig.cache
 C:\Users\My Laptop\Documents\BTL_LTW_Nhóm 6\QuanLyDiemDaiHoc\QuanLyDiemDaiHoc\obj\Debug\net10.0\ref\QuanLyDiemDaiHoc.dll
-C:\Users\My Laptop\Documents\BTL_LTW_Nhóm 6\QuanLyDiemDaiHoc\QuanLyDiemDaiHoc\obj\Debug\net10.0\compressed\jz9rqmhuqi-{0}-ks8u164ow6-ks8u164ow6.gz

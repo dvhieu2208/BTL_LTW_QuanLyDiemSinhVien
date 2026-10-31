@@ -71,7 +71,7 @@ namespace QuanLyDiemDaiHoc.Controllers
             ViewBag.Error = "Quyền truy cập không hợp lệ.";
             return View();
         }
-
+        [HttpPost]
         [HttpGet]
         public IActionResult Logout()
         {

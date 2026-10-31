@@ -1,3 +1,4 @@
+wwwroot\css\admin-style.css
 wwwroot\css\site.css
 wwwroot\favicon.ico
 wwwroot\js\site.js
@@ -61,7 +62,7 @@ wwwroot\lib\jquery\dist\jquery.slim.js
 wwwroot\lib\jquery\dist\jquery.slim.min.js
 wwwroot\lib\jquery\dist\jquery.slim.min.map
 wwwroot\lib\jquery\LICENSE.txt
-wwwroot\css\admin-style.css
+C:\Users\My Laptop\Documents\BTL_LTW_Nhóm 6\QuanLyDiemDaiHoc\QuanLyDiemDaiHoc\wwwroot\css\admin-style.css
 C:\Users\My Laptop\Documents\BTL_LTW_Nhóm 6\QuanLyDiemDaiHoc\QuanLyDiemDaiHoc\wwwroot\css\site.css
 C:\Users\My Laptop\Documents\BTL_LTW_Nhóm 6\QuanLyDiemDaiHoc\QuanLyDiemDaiHoc\wwwroot\favicon.ico
 C:\Users\My Laptop\Documents\BTL_LTW_Nhóm 6\QuanLyDiemDaiHoc\QuanLyDiemDaiHoc\wwwroot\js\site.js
@@ -124,4 +125,3 @@ C:\Users\My Laptop\Documents\BTL_LTW_Nhóm 6\QuanLyDiemDaiHoc\QuanLyDiemDaiHoc\w
 C:\Users\My Laptop\Documents\BTL_LTW_Nhóm 6\QuanLyDiemDaiHoc\QuanLyDiemDaiHoc\wwwroot\lib\jquery\dist\jquery.slim.min.js
 C:\Users\My Laptop\Documents\BTL_LTW_Nhóm 6\QuanLyDiemDaiHoc\QuanLyDiemDaiHoc\wwwroot\lib\jquery\dist\jquery.slim.min.map
 C:\Users\My Laptop\Documents\BTL_LTW_Nhóm 6\QuanLyDiemDaiHoc\QuanLyDiemDaiHoc\wwwroot\lib\jquery\LICENSE.txt
-C:\Users\My Laptop\Documents\BTL_LTW_Nhóm 6\QuanLyDiemDaiHoc\QuanLyDiemDaiHoc\wwwroot\css\admin-style.css

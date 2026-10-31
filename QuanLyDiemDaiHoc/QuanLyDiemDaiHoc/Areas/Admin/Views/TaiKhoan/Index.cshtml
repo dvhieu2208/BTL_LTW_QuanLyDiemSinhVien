@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<QuanLyDiemDaiHoc.Models.TaiKhoan>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
     ViewData["Title"] = "Quản lý tài khoản";
@@ -6,23 +7,25 @@
 }
 
 <div class="container-fluid px-4 py-3">
+    <!-- Tiêu đề trang -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb mb-1 text-muted small">
-                    <li class="breadcrumb-item">PHÒNG ĐÀO TẠO</li>
-                </ol>
-            </nav>
-            <h2 class="fw-bold text-dark mb-1">Quản lý tài khoản</h2>
-            <p class="text-muted small mb-0">Phân quyền và kiểm soát trạng thái truy cập</p>
-        </div>
-        <div>
-            <a asp-action="Create" class="btn btn-primary px-3 py-2 shadow-sm d-flex align-items-center rounded-3">
-                <i class="fas fa-plus me-2"></i> Thêm tài khoản
-            </a>
+            <p class="text-muted small mb-1 text-uppercase fw-bold">Phòng Đào Tạo</p>
+            <h3 class="fw-bold text-dark mb-1">Quản lý tài khoản</h3>
+            <p class="text-muted small mb-0">Phân quyền và kiểm soát trạng thái truy cập hệ thống</p>
         </div>
     </div>
 
+    <!-- Thông báo TempData -->
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show rounded-3 shadow-sm" role="alert">
+            <i class="fas fa-check-circle me-2"></i> @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <!-- Bảng danh sách tài khoản -->
     <div class="card border-0 shadow-sm rounded-4 bg-white overflow-hidden">
         <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
@@ -38,38 +41,49 @@
                 <tbody>
                     @if (Model != null && Model.Any())
                     {
-                        foreach (var item in Model)
+                        foreach (var tk in Model)
                         {
                             <tr>
-                                <td class="px-4 fw-semibold text-dark">@item.TenDangNhap</td>
+                                <td class="px-4 fw-bold text-dark">@tk.TenDangNhap</td>
                                 <td>
-                                    @if (item.PhanQuyen == 1)
+                                    @if (tk.PhanQuyen == 0 )
                                     {
-                                        <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill">Quản trị viên</span>
+                                        <span class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill fw-semibold">Quản trị viên</span>
                                     }
                                     else
                                     {
-                                        <span class="badge bg-info bg-opacity-10 text-info px-3 py-2 rounded-pill">Sinh viên</span>
+                                        <span class="badge bg-info-subtle text-info px-3 py-2 rounded-pill fw-semibold">Sinh viên</span>
                                     }
                                 </td>
-                                <td class="text-muted">@(item.MaSv ?? "ADMIN")</td>
+                                <td class="text-secondary fw-semibold">@tk.MaSv</td> <!-- Thay bằng trường mã liên kết thực tế của bạn -->
                                 <td>
-                                    @if (item.TrangThai)
+                                    @if (tk.TrangThai)
                                     {
-                                        <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill fw-semibold">Hoạt động</span>
+                                        <span class="badge bg-success-subtle text-success px-3 py-2 rounded-pill fw-semibold">
+                                            <i class="fas fa-circle small me-1"></i> Hoạt động
+                                        </span>
                                     }
                                     else
                                     {
-                                        <span class="badge bg-danger bg-opacity-10 text-danger px-3 py-2 rounded-pill fw-semibold">Đã khóa</span>
+                                        <span class="badge bg-danger-subtle text-danger px-3 py-2 rounded-pill fw-semibold">
+                                            <i class="fas fa-circle small me-1"></i> Đã khóa
+                                        </span>
                                     }
                                 </td>
                                 <td class="text-end px-4">
-                                    <a asp-action="ToggleStatus" asp-route-id="@item.TenDangNhap" class="btn btn-sm btn-light text-warning me-1 rounded-2 px-2 py-1" title="Khóa/Mở khóa">
-                                        <i class="fas fa-lock fa-xs"></i> Khóa tài khoản
-                                    </a>
-                                    <a asp-action="ResetPassword" asp-route-id="@item.TenDangNhap" class="btn btn-sm btn-light text-primary rounded-2 px-2 py-1" title="Đặt lại mật khẩu">
-                                        <i class="fas fa-key fa-xs"></i> Đặt lại mật khẩu
-                                    </a>
+                                    <div class="d-flex justify-content-end gap-2">
+                                        <!-- Form khóa/mở khóa tài khoản -->
+                                        <form asp-action="ToggleStatus" asp-route-id="@tk.TenDangNhap" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm @(tk.TrangThai ? "btn-outline-warning" : "btn-outline-success") rounded-3 px-3">
+                                                <i class="fas @(tk.TrangThai ? "fa-lock" : "fa-unlock") me-1"></i> @(tk.TrangThai ? "Khóa tài khoản" : "Mở khóa")
+                                            </button>
+                                        </form>
+                                        
+                                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-3 px-3" data-bs-toggle="modal" data-bs-target="#resetPasswordModal" data-tendangnhap="@tk.TenDangNhap">
+                                                <i class="fas fa-key me-1"></i> Đặt lại mật khẩu
+                                            </button>
+                                    </div>
                                 </td>
                             </tr>
                         }
@@ -77,7 +91,7 @@
                     else
                     {
                         <tr>
-                            <td colspan="5" class="text-center py-4 text-muted">Chưa có dữ liệu tài khoản trong cơ sở dữ liệu.</td>
+                            <td colspan="5" class="text-center py-4 text-muted">Chưa có tài khoản nào trong hệ thống.</td>
                         </tr>
                     }
                 </tbody>
@@ -85,3 +99,56 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="resetPasswordModal" tabindex="-1" aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow rounded-4">
+            <form asp-action="ResetPassword" method="post">
+                @Html.AntiForgeryToken()
+                <div class="modal-header bg-light border-0 px-4 py-3 rounded-top-4">
+                    <h5 class="modal-title fw-bold text-dark" id="resetPasswordModalLabel">
+                        <i class="fas fa-key text-warning me-2"></i> Đặt lại mật khẩu tài khoản
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body px-4 py-4">
+                    <!-- Input ẩn chứa tên đăng nhập tài khoản cần đổi mật khẩu -->
+                    <input type="hidden" id="resetTenDangNhap" name="tenDangNhap" />
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold text-secondary">Tài khoản:</label>
+                        <input type="text" id="displayTenDangNhap" class="form-control rounded-3 bg-light" disabled />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold text-secondary">Mật khẩu mới <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <input type="text" name="matKhauMoi" class="form-control rounded-3" placeholder="Nhập mật khẩu mới..." required />
+                        </div>
+                        <small class="text-muted">Mật khẩu nên chứa ít nhất 6 ký tự bao gồm chữ và số.</small>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 px-4 pb-4">
+                    <button type="button" class="btn btn-light px-4 rounded-3" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-warning px-4 rounded-3 text-white fw-semibold shadow-sm">Xác nhận đổi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Script truyền dữ liệu vào Modal khi người dùng bấm nút Đặt lại mật khẩu
+        var resetPasswordModal = document.getElementById('resetPasswordModal');
+        resetPasswordModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var tenDangNhap = button.getAttribute('data-tendangnhap');
+
+            var inputTenDangNhap = resetPasswordModal.querySelector('#resetTenDangNhap');
+            var displayTenDangNhap = resetPasswordModal.querySelector('#displayTenDangNhap');
+
+            inputTenDangNhap.value = tenDangNhap;
+            displayTenDangNhap.value = tenDangNhap;
+        });
+    </script>
+}
