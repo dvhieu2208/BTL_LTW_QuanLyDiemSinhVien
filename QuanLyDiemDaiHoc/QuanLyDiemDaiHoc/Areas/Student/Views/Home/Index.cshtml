@@ -1,0 +1,316 @@
+﻿@using QuanLyDiemDaiHoc.Areas.Student.Models
+@model QuanLyDiemDaiHoc.Models.SinhVien
+
+@{
+    ViewData["Title"] = "Trang chủ";
+    Layout = "~/Areas/Student/Views/Shared/_StudentLayout.cshtml";
+
+    double gpa = ViewBag.GPA ?? 0d;
+    int tongTinChi = ViewBag.TongTinChi ?? 0;
+    int soMonCoDiem = ViewBag.SoMonCoDiem ?? 0;
+    int soMonDat = ViewBag.SoMonDat ?? 0;
+    int soMonChuaDat = ViewBag.SoMonChuaDat ?? 0;
+    int soHocPhanDaDangKy = ViewBag.SoHocPhanDaDangKy ?? 0;
+    var diemTheoHocKy = ViewBag.DiemTheoHocKy as List<DiemHocKyItem> ?? new List<DiemHocKyItem>();
+    var diemGanDay = ViewBag.DiemGanDay as List<QuanLyDiemDaiHoc.Models.Diem> ?? new List<QuanLyDiemDaiHoc.Models.Diem>();
+
+    var now = DateTime.Now;
+    int namBatDau = now.Month >= 9 ? now.Year : now.Year - 1;
+    string namHoc = namBatDau + " - " + (namBatDau + 1);
+    string hocKyTheoLich = (now.Month >= 9 || now.Month == 1) ? "Học kỳ 1" : (now.Month <= 6 ? "Học kỳ 2" : "Học kỳ hè");
+
+    DateTime? dotBatDau = ViewBag.DotDangKyBatDau as DateTime?;
+    DateTime? dotKetThuc = ViewBag.DotDangKyKetThuc as DateTime?;
+    bool coCauHinhDot = dotBatDau.HasValue && dotKetThuc.HasValue;
+    bool dotDangMo = coCauHinhDot && now >= dotBatDau!.Value && now < dotKetThuc!.Value.AddMinutes(1);
+    bool dotDaHet = coCauHinhDot && now >= dotKetThuc!.Value.AddMinutes(1);
+
+    var tenSv = Model?.TenSv ?? "Sinh viên";
+    int tiLeDat = soMonCoDiem > 0 ? (int)Math.Round(soMonDat * 100.0 / soMonCoDiem) : 0;
+}
+
+<!-- Lời chào -->
+<div class="hero-card mb-4">
+    <div class="row g-3 align-items-center position-relative" style="z-index:1">
+        <div class="col-lg-7">
+            <div class="hero-sub fs-7 mb-1">Xin chào,</div>
+            <h3 class="fw-800 mb-2">@tenSv</h3>
+            <div class="d-flex flex-wrap gap-2">
+                <span class="hero-chip"><i class="fas fa-id-badge"></i> @(Model?.MaSv ?? "Chưa cập nhật")</span>
+                <span class="hero-chip"><i class="fas fa-users"></i> @(Model?.MaLopNavigation?.TenLop ?? Model?.MaLop ?? "Chưa xếp lớp")</span>
+                <span class="hero-chip"><i class="fas fa-building-columns"></i> @(Model?.MaKhoaNavigation?.TenKhoa ?? Model?.MaKhoa ?? "—")</span>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="d-flex flex-wrap gap-2 justify-content-lg-end">
+                <span class="hero-chip"><i class="fas fa-graduation-cap"></i> Năm học @namHoc</span>
+                <span class="hero-chip" title="Ước tính theo lịch năm học (tháng 9 – tháng 8)" data-tooltip><i class="fas fa-layer-group"></i> @hocKyTheoLich</span>
+                <span class="hero-chip"><i class="far fa-calendar"></i> <span data-today>@now.ToString("dd/MM/yyyy")</span></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Thẻ thống kê kết quả học tập -->
+<div class="row g-3 g-xl-4 mb-4 stagger">
+    <div class="col-6 col-xl-3">
+        <div class="card stat-card">
+            <div class="stat-top">
+                <span class="stat-label">Điểm trung bình</span>
+                <span class="stat-icon tone-warning"><i class="fas fa-star"></i></span>
+            </div>
+            <div class="stat-value"><span data-countup="@(gpa.ToString("0.00", CultureInfo.InvariantCulture))" data-decimals="2">@gpa.ToString("0.00")</span><small>/ 10</small></div>
+            <div class="stat-foot">Trung bình các môn đã có điểm</div>
+        </div>
+    </div>
+    <div class="col-6 col-xl-3">
+        <div class="card stat-card">
+            <div class="stat-top">
+                <span class="stat-label">Tín chỉ tích lũy</span>
+                <span class="stat-icon tone-success"><i class="fas fa-layer-group"></i></span>
+            </div>
+            <div class="stat-value"><span data-countup="@tongTinChi">@tongTinChi</span><small>tín chỉ</small></div>
+            <div class="stat-foot">Tổng ĐVHT các môn trong bảng điểm</div>
+        </div>
+    </div>
+    <div class="col-6 col-xl-3">
+        <div class="card stat-card">
+            <div class="stat-top">
+                <span class="stat-label">Môn đạt</span>
+                <span class="stat-icon tone-primary"><i class="fas fa-circle-check"></i></span>
+            </div>
+            <div class="stat-value"><span data-countup="@soMonDat">@soMonDat</span><small>/ @soMonCoDiem môn</small></div>
+            <div class="stat-foot">
+                @if (soMonChuaDat > 0)
+                {
+                    <span class="text-danger fw-semibold"><i class="fas fa-rotate-right"></i> @soMonChuaDat môn cần học lại</span>
+                }
+                else
+                {
+                    <span>Tỉ lệ đạt @tiLeDat%</span>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-xl-3">
+        <div class="card stat-card">
+            <div class="stat-top">
+                <span class="stat-label">Học phần đã đăng ký</span>
+                <span class="stat-icon tone-violet"><i class="fas fa-clipboard-list"></i></span>
+            </div>
+            <div class="stat-value"><span data-countup="@soHocPhanDaDangKy">@soHocPhanDaDangKy</span><small>học phần</small></div>
+            <div class="stat-foot"><a asp-area="Student" asp-controller="MonHoc" asp-action="Index">Xem đăng ký <i class="fas fa-arrow-right fa-xs"></i></a></div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <!-- Biểu đồ điểm trung bình theo học kỳ -->
+    <div class="col-xl-8">
+        <div class="card h-100">
+            <div class="card-head">
+                <h5><span class="head-icon"><i class="fas fa-chart-line"></i></span>Điểm trung bình theo học kỳ</h5>
+                <span class="card-hint">Thang điểm 10</span>
+            </div>
+            <div class="card-body-pad">
+                @if (diemTheoHocKy.Any())
+                {
+                    <div class="chart-box"><canvas id="gpaChart" role="img" aria-label="Biểu đồ điểm trung bình theo học kỳ"></canvas></div>
+                }
+                else
+                {
+                    <div class="empty-state">
+                        <div class="empty-icon"><i class="fas fa-chart-line"></i></div>
+                        <div class="empty-title">Chưa có dữ liệu điểm</div>
+                        <p>Biểu đồ sẽ hiển thị khi bạn có kết quả học tập.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Thông báo học tập -->
+    <div class="col-xl-4">
+        <div class="card h-100">
+            <div class="card-head">
+                <h5><span class="head-icon"><i class="fas fa-bell"></i></span>Thông báo học tập</h5>
+            </div>
+            <div class="card-body-pad">
+                @if (!coCauHinhDot)
+                {
+                    <div class="notice notice-warning">
+                        <span class="notice-icon"><i class="fas fa-calendar-xmark"></i></span>
+                        <div><div class="notice-title">Chưa có đợt đăng ký học phần</div>Nhà trường chưa thiết lập thời hạn đăng ký.</div>
+                    </div>
+                }
+                else if (dotDangMo)
+                {
+                    <div class="notice notice-success">
+                        <span class="notice-icon"><i class="fas fa-calendar-check"></i></span>
+                        <div>
+                            <div class="notice-title">Đang mở đăng ký học phần</div>
+                            Hạn cuối: @(dotKetThuc?.ToString("dd/MM/yyyy HH:mm")).
+                            <a asp-area="Student" asp-controller="MonHoc" asp-action="Index" class="fw-semibold">Đăng ký ngay</a>
+                        </div>
+                    </div>
+                }
+                else if (dotDaHet)
+                {
+                    <div class="notice notice-info">
+                        <span class="notice-icon"><i class="fas fa-calendar-minus"></i></span>
+                        <div><div class="notice-title">Đợt đăng ký đã kết thúc</div>Kết thúc lúc @(dotKetThuc?.ToString("dd/MM/yyyy HH:mm")).</div>
+                    </div>
+                }
+                else
+                {
+                    <div class="notice notice-info">
+                        <span class="notice-icon"><i class="fas fa-hourglass-start"></i></span>
+                        <div><div class="notice-title">Sắp mở đăng ký học phần</div>Bắt đầu lúc @(dotBatDau?.ToString("dd/MM/yyyy HH:mm")).</div>
+                    </div>
+                }
+
+                @if (soMonChuaDat > 0)
+                {
+                    <div class="notice notice-danger">
+                        <span class="notice-icon"><i class="fas fa-triangle-exclamation"></i></span>
+                        <div>
+                            <div class="notice-title">@soMonChuaDat môn chưa đạt</div>
+                            Bạn cần đăng ký học lại các môn này. <a asp-area="Student" asp-controller="Diem" asp-action="Index" class="fw-semibold">Xem bảng điểm</a>
+                        </div>
+                    </div>
+                }
+                else if (soMonCoDiem > 0)
+                {
+                    <div class="notice notice-success">
+                        <span class="notice-icon"><i class="fas fa-award"></i></span>
+                        <div><div class="notice-title">Tất cả môn đều đạt</div>Tiếp tục duy trì kết quả học tập nhé!</div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Thông tin sinh viên -->
+    <div class="col-lg-6">
+        <div class="card h-100">
+            <div class="card-head">
+                <h5><span class="head-icon"><i class="fas fa-id-card"></i></span>Thông tin sinh viên</h5>
+                <a asp-area="Student" asp-controller="HoSo" asp-action="Index" class="btn btn-sm btn-soft-primary">Hồ sơ đầy đủ</a>
+            </div>
+            <div class="card-body-pad">
+                <dl class="info-list">
+                    <div class="info-row"><dt>Họ và tên</dt><dd>@Model?.TenSv</dd></div>
+                    <div class="info-row"><dt>Giới tính</dt><dd>@Model?.GioiTinh</dd></div>
+                    <div class="info-row"><dt>Ngày sinh</dt><dd>@(Model?.NgaySinh?.ToString("dd/MM/yyyy") ?? "N/A")</dd></div>
+                    <div class="info-row"><dt>Lớp học</dt><dd>@(Model?.MaLopNavigation?.TenLop ?? Model?.MaLop)</dd></div>
+                    <div class="info-row"><dt>Khoa</dt><dd>@(Model?.MaKhoaNavigation?.TenKhoa ?? Model?.MaKhoa)</dd></div>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kết quả gần đây + Lối tắt -->
+    <div class="col-lg-6">
+        <div class="card mb-4">
+            <div class="card-head">
+                <h5><span class="head-icon"><i class="fas fa-square-poll-vertical"></i></span>Kết quả gần đây</h5>
+                <a asp-area="Student" asp-controller="Diem" asp-action="Index" class="btn btn-sm btn-soft-primary">Xem tất cả</a>
+            </div>
+            @if (diemGanDay.Any())
+            {
+                <ul class="activity-list py-2">
+                    @foreach (var d in diemGanDay)
+                    {
+                        var diem = d.Diem1 ?? 0m;
+                        <li class="activity-item align-items-center">
+                            <span class="activity-icon @(diem >= 5.0m ? "tone-success" : "tone-danger")"><i class="fas @(diem >= 5.0m ? "fa-check" : "fa-rotate-right")"></i></span>
+                            <div class="min-w-0 flex-grow-1">
+                                <div class="activity-title text-truncate">@(d.MaMonNavigation?.TenMon ?? d.MaMon)</div>
+                                <div class="activity-meta">@d.MaMon · Học kỳ @d.HocKy</div>
+                            </div>
+                            <span class="score @(diem >= 8.0m ? "score-high" : diem >= 5.0m ? "score-mid" : "score-low")">@diem.ToString("0.0")</span>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <div class="empty-state py-4">
+                    <div class="empty-icon"><i class="fas fa-file-lines"></i></div>
+                    <div class="empty-title">Chưa có kết quả</div>
+                </div>
+            }
+        </div>
+
+        <div class="row g-3">
+            <div class="col-sm-6">
+                <a asp-area="Student" asp-controller="ThoiKhoaBieu" asp-action="Index" class="quick-link">
+                    <span class="stat-icon tone-primary"><i class="fas fa-calendar-alt"></i></span> Thời khóa biểu
+                    <i class="fas fa-arrow-right ql-arrow"></i>
+                </a>
+            </div>
+            <div class="col-sm-6">
+                <a asp-area="Student" asp-controller="MonHoc" asp-action="Index" class="quick-link">
+                    <span class="stat-icon tone-violet"><i class="fas fa-book"></i></span> Đăng ký học phần
+                    <i class="fas fa-arrow-right ql-arrow"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @if (diemTheoHocKy.Any())
+    {
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+        <script>
+            (function () {
+                if (!window.Chart) { return; }
+                UMS.applyChartTheme(Chart);
+                var labels = @Json.Serialize(diemTheoHocKy.Select(x => x.HocKy > 0 ? "Học kỳ " + x.HocKy : "Chưa rõ HK"));
+                var values = @Json.Serialize(diemTheoHocKy.Select(x => x.DiemTrungBinh));
+                var counts = @Json.Serialize(diemTheoHocKy.Select(x => x.SoMon));
+                var ctx = document.getElementById('gpaChart');
+                var g = ctx.getContext('2d').createLinearGradient(0, 0, 0, 260);
+                g.addColorStop(0, 'rgba(37, 99, 235, .28)');
+                g.addColorStop(1, 'rgba(37, 99, 235, 0)');
+                new Chart(ctx, {
+                    type: labels.length > 1 ? 'line' : 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Điểm trung bình',
+                            data: values,
+                            borderColor: '#2563EB',
+                            backgroundColor: labels.length > 1 ? g : '#2563EB',
+                            fill: true,
+                            tension: .35,
+                            borderWidth: 2.5,
+                            pointRadius: 5,
+                            pointHoverRadius: 7,
+                            pointBackgroundColor: '#fff',
+                            pointBorderColor: '#2563EB',
+                            pointBorderWidth: 2,
+                            borderRadius: 8,
+                            maxBarThickness: 64
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: { min: 0, max: 10, ticks: { stepSize: 2 }, grid: { color: '#EEF2F7' }, border: { display: false } },
+                            x: { grid: { display: false }, border: { display: false } }
+                        },
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { callbacks: { label: function (c) { return ' ĐTB: ' + c.parsed.y.toFixed(2) + ' (' + counts[c.dataIndex] + ' môn)'; } } }
+                        }
+                    }
+                });
+            })();
+        </script>
+    }
+}

@@ -1,0 +1,140 @@
+﻿@model IEnumerable<QuanLyDiemDaiHoc.Models.Diem>
+
+@{
+    ViewData["Title"] = "Bảng điểm cá nhân";
+    Layout = "~/Areas/Student/Views/Shared/_StudentLayout.cshtml";
+
+    // Quy tắc giữ nguyên như bản gốc: Đạt khi điểm tổng kết >= 5.0, ngược lại Học lại
+    var ds = Model?.ToList() ?? new List<QuanLyDiemDaiHoc.Models.Diem>();
+    double gpa = ViewBag.GPA ?? 0d;
+    int tongTinChi = ViewBag.TongTinChi ?? 0;
+    int soCoDiem = ds.Count(d => d.Diem1.HasValue);
+    int soDat = ds.Count(d => d.Diem1 >= 5.0m);
+    int soHocLai = ds.Count(d => d.Diem1.HasValue && d.Diem1 < 5.0m);
+    var nhomHocKy = ds.GroupBy(d => d.HocKy ?? 0).OrderBy(g => g.Key).ToList();
+}
+
+<div class="page-header">
+    <div>
+        <div class="page-eyebrow"><i class="fas fa-graduation-cap"></i> Kết quả học tập</div>
+        <h2 class="page-title">Bảng điểm chi tiết</h2>
+        <p class="page-subtitle">Điểm tổng kết các môn học theo từng học kỳ.</p>
+    </div>
+    <div class="page-actions">
+        <button type="button" class="btn btn-light" onclick="window.print()"><i class="fas fa-print"></i> In bảng điểm</button>
+    </div>
+</div>
+
+<div class="row g-3 mb-4 stagger">
+    <div class="col-6 col-lg-3">
+        <div class="card stat-card">
+            <div class="stat-top"><span class="stat-label">Điểm trung bình</span><span class="stat-icon tone-warning"><i class="fas fa-star"></i></span></div>
+            <div class="stat-value"><span data-countup="@(gpa.ToString("0.00", CultureInfo.InvariantCulture))" data-decimals="2">@gpa.ToString("0.00")</span><small>/ 10</small></div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card stat-card">
+            <div class="stat-top"><span class="stat-label">Tín chỉ tích lũy</span><span class="stat-icon tone-success"><i class="fas fa-layer-group"></i></span></div>
+            <div class="stat-value"><span data-countup="@tongTinChi">@tongTinChi</span><small>ĐVHT</small></div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card stat-card">
+            <div class="stat-top"><span class="stat-label">Môn đạt</span><span class="stat-icon tone-primary"><i class="fas fa-circle-check"></i></span></div>
+            <div class="stat-value"><span data-countup="@soDat">@soDat</span><small>/ @soCoDiem</small></div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card stat-card">
+            <div class="stat-top"><span class="stat-label">Học lại</span><span class="stat-icon tone-danger"><i class="fas fa-rotate-right"></i></span></div>
+            <div class="stat-value"><span data-countup="@soHocLai">@soHocLai</span><small>môn</small></div>
+        </div>
+    </div>
+</div>
+
+<div class="card table-card">
+    <div class="card-head">
+        <h5><span class="head-icon"><i class="fas fa-table-list"></i></span>Bảng điểm</h5>
+        <div class="d-flex gap-2 flex-wrap fs-8 text-muted align-items-center">
+            <span class="score score-high">≥ 8.0</span> Giỏi
+            <span class="score score-mid ms-2">5.0 – 7.9</span> Đạt
+            <span class="score score-low ms-2">&lt; 5.0</span> Học lại
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th class="px-4">Mã môn</th>
+                    <th>Tên môn học</th>
+                    <th class="text-center">Số ĐVHT</th>
+                    <th class="text-center">Lần thi</th>
+                    <th class="text-center">Điểm tổng kết</th>
+                    <th>Đánh giá</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (ds.Any())
+                {
+                    foreach (var nhom in nhomHocKy)
+                    {
+                        var coDiemTrongKy = nhom.Where(d => d.Diem1.HasValue).ToList();
+                        var tbKy = coDiemTrongKy.Any() ? coDiemTrongKy.Average(d => d.Diem1!.Value) : (decimal?)null;
+                        var moTaKy = nhom.Count() + " môn" + (tbKy.HasValue ? " · ĐTB " + tbKy.Value.ToString("0.00") : "");
+                        <tr class="term-row">
+                            <td colspan="6" class="px-4">
+                                <i class="fas fa-layer-group me-2"></i>@(nhom.Key > 0 ? "Học kỳ " + nhom.Key : "Chưa xác định học kỳ")
+                                <span class="ms-2 fw-normal text-muted">· @moTaKy</span>
+                            </td>
+                        </tr>
+                        foreach (var item in nhom.OrderBy(d => d.MaMon))
+                        {
+                            <tr>
+                                <td class="px-4"><span class="cell-code">@item.MaMon</span></td>
+                                <td class="cell-title">@(item.MaMonNavigation?.TenMon ?? item.MaMon)</td>
+                                <td class="text-center">@(item.MaMonNavigation?.Dvht ?? 0)</td>
+                                <td class="text-center text-muted">@item.LanThi</td>
+                                <td class="text-center">
+                                    @if (item.Diem1.HasValue)
+                                    {
+                                        <span class="score @(item.Diem1 >= 8.0m ? "score-high" : item.Diem1 >= 5.0m ? "score-mid" : "score-low")">@item.Diem1</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="score score-none">—</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (!item.Diem1.HasValue)
+                                    {
+                                        <span class="badge badge-soft-secondary">Chưa có điểm</span>
+                                    }
+                                    else if (item.Diem1 >= 5.0m)
+                                    {
+                                        <span class="badge badge-soft-success badge-soft"><i class="fas fa-check"></i> Đạt</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-soft-danger badge-soft"><i class="fas fa-rotate-right"></i> Học lại</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+                else
+                {
+                    <tr class="empty-row">
+                        <td colspan="6">
+                            <div class="empty-state">
+                                <div class="empty-icon"><i class="fas fa-file-circle-question"></i></div>
+                                <div class="empty-title">Chưa có kết quả điểm học tập</div>
+                                <p>Điểm sẽ hiển thị tại đây khi được nhà trường cập nhật.</p>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

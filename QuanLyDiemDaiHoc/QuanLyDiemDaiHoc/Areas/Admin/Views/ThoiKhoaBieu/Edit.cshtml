@@ -1,0 +1,79 @@
+@model QuanLyDiemDaiHoc.Models.ThoiKhoaBieu
+@{
+    ViewData["Title"] = "Chỉnh sửa lịch học";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb ums-breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index">Danh sách lịch học</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Chỉnh sửa thông tin</li>
+            </ol>
+        </nav>
+        <h2 class="page-title">Chỉnh sửa lịch học</h2>
+        <p class="page-subtitle">Lớp <span class="cell-code">@Model.MaLop</span> · Môn <span class="cell-code">@Model.MaMon</span></p>
+    </div>
+</div>
+
+<div class="card">
+    <form asp-action="Edit" method="post">
+        <!-- Truyền ẩn hai khóa chính để Controller nhận diện đúng bản ghi -->
+        <input type="hidden" asp-for="MaLop" />
+        <input type="hidden" asp-for="MaMon" />
+
+        <div class="form-section">
+            <!-- Hiển thị toàn bộ lỗi ModelState -->
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+            <div class="form-section-title"><i class="fas fa-calendar-plus"></i> Thông tin lịch học</div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Lớp học</label>
+                    <input class="form-control" value="@Model.MaLop" disabled />
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Môn học</label>
+                    <input class="form-control" value="@Model.MaMon" disabled />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="HocKy" class="form-label">Học kỳ <span class="text-danger">*</span></label>
+                    <input asp-for="HocKy" type="number" class="form-control" required />
+                    <span asp-validation-for="HocKy" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="ThuHoc" class="form-label">Thứ học <span class="text-danger">*</span></label>
+                    <input asp-for="ThuHoc" type="number" class="form-control" required />
+                    <span asp-validation-for="ThuHoc" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <div class="form-section-title"><i class="fas fa-clock"></i> Ca học &amp; phòng học</div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="CaHoc" class="form-label">Ca học <span class="text-danger">*</span></label>
+                    <input asp-for="CaHoc" type="number" class="form-control" required />
+                    <span asp-validation-for="CaHoc" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="MaPhong" class="form-label">Phòng học <span class="text-danger">*</span></label>
+                    <select asp-for="MaPhong" class="form-select" asp-items="ViewBag.MaPhong" required>
+                        <option value="">-- Chọn phòng học --</option>
+                    </select>
+                    <span asp-validation-for="MaPhong" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <a asp-action="Index" class="btn btn-light">Hủy</a>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Lưu thay đổi</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

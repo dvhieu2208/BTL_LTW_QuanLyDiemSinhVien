@@ -1,0 +1,149 @@
+@model IEnumerable<QuanLyDiemDaiHoc.Areas.Admin.Controllers.PhongHocTrangThaiViewModel>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Quản lý phòng học";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var tongSo = Model?.Count() ?? 0;
+}
+
+<div class="page-header">
+    <div>
+        <div class="page-eyebrow"><i class="fas fa-door-open"></i> Phòng đào tạo</div>
+        <h2 class="page-title">Quản lý phòng học</h2>
+        <p class="page-subtitle">Theo dõi phòng học và trạng thái sử dụng theo thời khóa biểu</p>
+    </div>
+    <div class="page-actions">
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Thêm phòng học
+        </a>
+    </div>
+</div>
+
+<!-- Thanh bộ lọc kết hợp Tìm kiếm, Thứ và Ca học -->
+<form asp-action="Index" method="get" id="searchForm" class="card filter-bar mb-4 p-4">
+    <div class="row g-3 align-items-end">
+        <div class="col-md-4">
+            <label class="form-label fw-bold small text-muted">Tìm kiếm phòng</label>
+            <div class="search-box mb-0">
+                <i class="fas fa-search"></i>
+                <input type="text" name="searchString" id="searchString" value="@ViewBag.SearchString" class="form-control"
+                       placeholder="Mã phòng hoặc tên phòng..." autocomplete="off" aria-label="Tìm phòng học">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label fw-bold small text-muted">Chọn Thứ</label>
+            <select name="thu" class="form-select rounded-3" asp-items="ViewBag.DanhSachThu">
+                <option value="">-- Tất cả các thứ --</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label fw-bold small text-muted">Chọn Ca học</label>
+            <select name="ca" class="form-select rounded-3" asp-items="ViewBag.DanhSachCa">
+                <option value="">-- Tất cả các ca --</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100 rounded-3 shadow-sm py-2">
+                <i class="fas fa-filter me-1"></i> Lọc / Kiểm tra
+            </button>
+        </div>
+    </div>
+</form>
+
+<div class="card table-card">
+    <div class="card-head">
+        <h5><span class="head-icon"><i class="fas fa-door-open"></i></span>Danh sách phòng học</h5>
+        <span class="badge badge-soft-primary">@tongSo phòng</span>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0" id="tblPhongHoc" data-paginate="10" data-paginate-label="phòng học">
+            <thead class="table-light">
+                <tr>
+                    <th class="px-4">Mã phòng</th>
+                    <th>Tên phòng</th>
+                    <th>Trạng thái sử dụng</th>
+                    <th class="text-end px-4">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="px-4"><span class="cell-code">@item.MaPhong</span></td>
+                            <td>
+                                <div class="d-flex align-items-center gap-3">
+                                    <span class="avatar avatar-sm avatar-square tone-info"><i class="fas fa-door-closed"></i></span>
+                                    <div>
+                                        <div class="cell-title">@item.TenPhong</div>
+                                        <div class="cell-sub">@item.MaPhong</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                @if (item.TrangThai == "Sẵn sàng")
+                                {
+                                    <span class="badge badge-soft-success badge-soft"><span class="status-dot"></span> Sẵn sàng (Trống)</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-soft-danger badge-soft"><span class="status-dot"></span> Đang bận (@item.ChiTietBan)</span>
+                                }
+                            </td>
+                            <td class="text-end px-4">
+                                <div class="action-group">
+                                    <a asp-action="Edit" asp-route-id="@item.MaPhong" class="btn btn-icon btn-soft-primary" title="Sửa phòng học">
+                                        <i class="fas fa-pen"></i>
+                                    </a>
+                                    <form asp-action="Delete" asp-route-id="@item.MaPhong" method="post" class="d-inline">
+                                        <button type="button" class="btn btn-icon btn-soft-danger" title="Xóa phòng học"
+                                                data-confirm-trigger
+                                                data-confirm-title="Xóa phòng học?"
+                                                data-confirm-message="Bạn có chắc chắn muốn xóa phòng học này không?"
+                                                data-confirm-name="@item.TenPhong (@item.MaPhong)"
+                                                data-confirm-ok="Xóa phòng">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr class="empty-row">
+                        <td colspan="4">
+                            <div class="empty-state">
+                                <div class="empty-icon"><i class="fas fa-door-closed"></i></div>
+                                <div class="empty-title">Chưa có dữ liệu phòng học</div>
+                                <p>Không có phòng học nào phù hợp với bộ lọc trong cơ sở dữ liệu.</p>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchForm = document.getElementById('searchForm');
+            const searchInput = document.getElementById('searchString');
+            let timeout = null;
+
+            if (searchInput && searchForm) {
+                searchInput.addEventListener('input', function () {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(function () {
+                        document.documentElement.classList.add('is-navigating');
+                        searchForm.submit();
+                    }, 400);
+                });
+            }
+        });
+    </script>
+}

@@ -1,0 +1,126 @@
+@model IEnumerable<QuanLyDiemDaiHoc.Models.MonHoc>
+@{
+    ViewData["Title"] = "Quản lý môn học";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var tongSo = Model?.Count() ?? 0;
+    var tongDvht = Model?.Sum(m => m.Dvht ?? 0) ?? 0;
+}
+
+<div class="page-header">
+    <div>
+        <div class="page-eyebrow"><i class="fas fa-book"></i> Phòng đào tạo</div>
+        <h2 class="page-title">Quản lý môn học</h2>
+        <p class="page-subtitle">Danh mục học phần trong chương trình đào tạo</p>
+    </div>
+    <div class="page-actions">
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Thêm môn học
+        </a>
+    </div>
+</div>
+
+<!-- Search Bar -->
+<form asp-action="Index" method="get" id="searchForm" class="card filter-bar mb-4">
+    <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" name="searchString" id="searchString" value="@Context.Request.Query["searchString"]" class="form-control"
+               placeholder="Tìm theo mã môn hoặc tên môn..." autocomplete="off" aria-label="Tìm môn học" data-autofocus-end>
+    </div>
+</form>
+
+<!-- Table Section -->
+<div class="card table-card">
+    <div class="card-head">
+        <h5><span class="head-icon"><i class="fas fa-book-open"></i></span>Danh sách môn học</h5>
+        <div class="d-flex gap-2 flex-wrap">
+            <span class="badge badge-soft-primary">@tongSo môn học</span>
+            <span class="badge badge-soft-info">@tongDvht ĐVHT</span>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0" id="tblMonHoc" data-paginate="10" data-paginate-label="môn học">
+            <thead class="table-light">
+                <tr>
+                    <th class="px-4">Mã môn</th>
+                    <th>Tên môn học</th>
+                    <th>Đơn vị học trình (ĐVHT)</th>
+                    <th class="text-end px-4">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="px-4"><span class="cell-code">@item.MaMon</span></td>
+                            <td>
+                                <div class="d-flex align-items-center gap-3">
+                                    <span class="avatar avatar-sm avatar-square tone-success">@item.MaMon.Substring(0, Math.Min(2, item.MaMon.Length)).ToUpper()</span>
+                                    <div>
+                                        <div class="cell-title">@item.TenMon</div>
+                                        <div class="cell-sub">@item.MaMon</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><span class="badge badge-soft-info">@item.Dvht ĐVHT</span></td>
+                            <td class="text-end px-4">
+                                <div class="action-group">
+                                    <a asp-action="Edit" asp-route-id="@item.MaMon" class="btn btn-icon btn-soft-primary" title="Sửa môn học">
+                                        <i class="fas fa-pen"></i>
+                                    </a>
+                                    <form asp-action="Delete" asp-route-id="@item.MaMon" method="post">
+                                        <button type="button" class="btn btn-icon btn-soft-danger" title="Xóa môn học"
+                                                data-confirm-trigger
+                                                data-confirm-title="Xóa môn học?"
+                                                data-confirm-message="Bạn có chắc chắn muốn xóa môn học này không?"
+                                                data-confirm-name="@item.TenMon (@item.MaMon)"
+                                                data-confirm-note="Môn học đã có dữ liệu điểm sẽ không thể xóa."
+                                                data-confirm-ok="Xóa môn học">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr class="empty-row">
+                        <td colspan="4">
+                            <div class="empty-state">
+                                <div class="empty-icon"><i class="fas fa-book"></i></div>
+                                <div class="empty-title">Chưa có dữ liệu môn học</div>
+                                <p>Không có môn học nào phù hợp trong cơ sở dữ liệu.</p>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchForm = document.getElementById('searchForm');
+            const searchInput = document.getElementById('searchString');
+            let timeout = null;
+
+            if (searchInput && searchForm) {
+                searchInput.addEventListener('input', function () {
+                    // Hủy bỏ thời gian chờ trước đó nếu người dùng vẫn đang gõ liên tục
+                    clearTimeout(timeout);
+
+                    // Chờ 400ms sau khi người dùng dừng gõ phím thì tự động submit form
+                    timeout = setTimeout(function () {
+                        document.documentElement.classList.add('is-navigating');
+                        searchForm.submit();
+                    }, 400);
+                });
+            }
+        });
+    </script>
+}

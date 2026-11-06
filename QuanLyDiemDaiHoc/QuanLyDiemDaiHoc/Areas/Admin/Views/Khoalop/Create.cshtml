@@ -1,0 +1,56 @@
+@model QuanLyDiemDaiHoc.Models.Lop
+@{
+    ViewData["Title"] = "Thêm mới lớp học";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb ums-breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index">Quản lý Khoa &amp; Lớp học</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Thêm mới</li>
+            </ol>
+        </nav>
+        <h2 class="page-title">Thêm mới lớp học</h2>
+        <p class="page-subtitle">Sĩ số được tính tự động theo số sinh viên thuộc lớp.</p>
+    </div>
+</div>
+
+<div class="card">
+    <form asp-action="Create" method="post">
+        <div class="form-section">
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+            <div class="form-section-title"><i class="fas fa-chalkboard"></i> Thông tin lớp học</div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="MaLop" class="form-label">Mã lớp <span class="text-danger">*</span></label>
+                    <input asp-for="MaLop" class="form-control" placeholder="Nhập mã lớp" required />
+                    <span asp-validation-for="MaLop" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="TenLop" class="form-label">Tên lớp <span class="text-danger">*</span></label>
+                    <input asp-for="TenLop" class="form-control" placeholder="Nhập tên lớp đầy đủ" required />
+                    <span asp-validation-for="TenLop" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="MaKhoa" class="form-label">Thuộc khoa <span class="text-danger">*</span></label>
+                    <select asp-for="MaKhoa" class="form-select" asp-items="ViewBag.MaKhoa" required>
+                        <option value="">-- Chọn khoa quản lý --</option>
+                    </select>
+                    <span asp-validation-for="MaKhoa" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="KhoaHoc" class="form-label">Khóa học</label>
+                    <input asp-for="KhoaHoc" class="form-control" placeholder="Nhập khóa học (VD: K2026)" />
+                    <span asp-validation-for="KhoaHoc" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <a asp-action="Index" class="btn btn-light">Hủy</a>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Lưu lớp học</button>
+        </div>
+    </form>
+</div>

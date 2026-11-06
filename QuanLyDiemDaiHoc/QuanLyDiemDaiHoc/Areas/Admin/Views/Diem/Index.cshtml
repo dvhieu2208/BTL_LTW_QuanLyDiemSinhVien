@@ -1,0 +1,201 @@
+@using QuanLyDiemDaiHoc.Areas.Admin.Models
+@model List<DiemModelItem>
+@{
+    ViewData["Title"] = "Quản lý và nhập điểm";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var highlightSv = ViewBag.HighlightSv as string;
+    bool daChonLopMon = !string.IsNullOrEmpty(ViewBag.SelectedMaLop as string) && !string.IsNullOrEmpty(ViewBag.SelectedMaMon as string);
+    int siSo = Model?.Count ?? 0;
+    int daNhap = Model?.Count(m => m.Diem.HasValue) ?? 0;
+}
+
+<div class="page-header">
+    <div>
+        <div class="page-eyebrow"><i class="fas fa-clipboard-check"></i> Kết quả học tập</div>
+        <h2 class="page-title">Quản lý và nhập điểm sinh viên</h2>
+        <p class="page-subtitle">Chọn lớp, môn học và học kỳ để nhập hoặc cập nhật điểm.</p>
+    </div>
+    <div class="page-actions">
+        <a asp-action="XemBangDiem" asp-route-maLop="@ViewBag.SelectedMaLop" asp-route-maMon="@ViewBag.SelectedMaMon" asp-route-hocKy="@ViewBag.SelectedHocKy" class="btn btn-light">
+            <i class="fas fa-table"></i> Xem bảng điểm
+        </a>
+    </div>
+</div>
+
+<!-- Form Bộ Lọc (GET) -->
+<div class="card filter-bar mb-4">
+    <form asp-action="Index" method="get">
+        <div class="row align-items-end">
+            <div class="col-md-4">
+                <label class="form-label" for="filterLop">Lớp học</label>
+                <select name="maLop" id="filterLop" class="form-select" asp-items="ViewBag.MaLop" required>
+                    <option value="">-- Chọn lớp --</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="filterMon">Môn học</label>
+                <select name="maMon" id="filterMon" class="form-select" asp-items="ViewBag.MaMon" required>
+                    <option value="">-- Chọn môn --</option>
+                </select>
+            </div>
+            <div class="col-md-2 col-6">
+                <label class="form-label" for="filterHocKy">Học kỳ</label>
+                <input type="number" name="hocKy" id="filterHocKy" class="form-control" value="@ViewBag.SelectedHocKy" required />
+            </div>
+            <div class="col-md-2 col-6">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="fas fa-search"></i> Lọc danh sách
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Bảng Nhập Điểm (Chỉ hiển thị khi đã chọn Lớp và Môn) -->
+@if (daChonLopMon)
+{
+    <div class="card table-card">
+        <form asp-action="SaveGrades" method="post" id="gradeForm">
+            @Html.AntiForgeryToken()
+
+            <!-- Truyền ẩn các tham số khóa bộ lọc để Controller nhận diện khi POST -->
+            <input type="hidden" name="maLop" value="@ViewBag.SelectedMaLop" />
+            <input type="hidden" name="maMon" value="@ViewBag.SelectedMaMon" />
+            <input type="hidden" name="hocKy" value="@ViewBag.SelectedHocKy" />
+
+            <div class="card-head">
+                <h5><span class="head-icon"><i class="fas fa-pen-to-square"></i></span>Bảng nhập điểm · Học kỳ @ViewBag.SelectedHocKy</h5>
+                <div class="d-flex gap-2 flex-wrap">
+                    <span class="badge badge-soft-primary">Sĩ số: @siSo</span>
+                    <span class="badge badge-soft-success">Đã nhập: <span id="countDaNhap">@daNhap</span></span>
+                    <span class="badge badge-soft-warning">Chưa nhập: <span id="countChuaNhap">@(siSo - daNhap)</span></span>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0" id="tblNhapDiem">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="px-4" style="width: 70px;">STT</th>
+                            <th>Mã sinh viên</th>
+                            <th>Họ và tên</th>
+                            <th class="text-center" style="width: 170px;">Điểm số (0-10)</th>
+                            <th class="text-center" style="width: 140px;">Lần thi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            int stt = 1;
+                            for (int i = 0; i < Model.Count; i++)
+                            {
+                                bool isHighlight = !string.IsNullOrEmpty(highlightSv) && Model[i].MaSv == highlightSv;
+                                <tr class="@(isHighlight ? "row-highlight" : "")" id="@(isHighlight ? "highlightRow" : null)">
+                                    <td class="px-4 text-muted tabular">@(stt++)</td>
+                                    <td>
+                                        <span class="cell-code">@Model[i].MaSv</span>
+                                        <!-- Hidden inputs để binding đúng danh sách items về Controller -->
+                                        <input type="hidden" name="items[@i].MaSv" value="@Model[i].MaSv" />
+                                        <input type="hidden" name="items[@i].TenSv" value="@Model[i].TenSv" />
+                                    </td>
+                                    <td class="cell-title">@Model[i].TenSv</td>
+                                    <td class="text-center">
+                                        <input type="number" step="0.1" min="0" max="10" name="items[@i].Diem" value="@Model[i].Diem"
+                                               class="form-control score-input" placeholder="0 - 10" aria-label="Điểm của @Model[i].TenSv" />
+                                    </td>
+                                    <td class="text-center">
+                                        <input type="number" min="1" max="5" name="items[@i].LanThi" value="@Model[i].LanThi"
+                                               class="form-control score-input" aria-label="Lần thi của @Model[i].TenSv" />
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr class="empty-row">
+                                <td colspan="5">
+                                    <div class="empty-state">
+                                        <div class="empty-icon"><i class="fas fa-users-slash"></i></div>
+                                        <div class="empty-title">Không có sinh viên</div>
+                                        <p>Không có sinh viên nào thuộc lớp này.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            @if (Model != null && Model.Any())
+            {
+                <div class="form-actions justify-content-between">
+                    <a asp-action="XemBangDiem"
+                       asp-route-maLop="@ViewBag.SelectedMaLop"
+                       asp-route-maMon="@ViewBag.SelectedMaMon"
+                       asp-route-hocKy="@ViewBag.SelectedHocKy"
+                       class="btn btn-outline-primary">
+                        <i class="fas fa-table"></i> Xem bảng điểm tổng hợp
+                    </a>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save"></i> Lưu bảng điểm
+                    </button>
+                </div>
+            }
+        </form>
+    </div>
+}
+else
+{
+    <div class="card">
+        <div class="empty-state">
+            <div class="empty-icon"><i class="fas fa-filter"></i></div>
+            <div class="empty-title">Chọn lớp và môn học để bắt đầu</div>
+            <p>Danh sách sinh viên sẽ hiển thị tại đây để nhập điểm.</p>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var lopSelect = document.querySelector("select[name='maLop']");
+            var monSelect = document.querySelector("select[name='maMon']");
+            if (lopSelect) lopSelect.value = '@ViewBag.SelectedMaLop';
+            if (monSelect) monSelect.value = '@ViewBag.SelectedMaMon';
+
+            // Cuộn tới sinh viên cần sửa điểm (từ trang Xem bảng điểm)
+            var hl = document.getElementById('highlightRow');
+            if (hl) {
+                hl.scrollIntoView({ block: 'center', behavior: UMS.reduceMotion ? 'auto' : 'smooth' });
+                var input = hl.querySelector("input[name$='.Diem']");
+                if (input) { input.focus({ preventScroll: true }); input.select(); }
+            }
+
+            // Đếm số điểm đã nhập + báo lỗi trực quan khi điểm ngoài khoảng 0 - 10
+            var form = document.getElementById('gradeForm');
+            if (!form) { return; }
+            var inputs = form.querySelectorAll("input[name$='.Diem']");
+            var daNhapEl = document.getElementById('countDaNhap');
+            var chuaNhapEl = document.getElementById('countChuaNhap');
+            function update() {
+                var filled = 0;
+                inputs.forEach(function (inp) {
+                    var v = inp.value.trim();
+                    if (v !== '') { filled++; }
+                    inp.classList.toggle('is-invalid', v !== '' && !inp.checkValidity());
+                });
+                if (daNhapEl) { daNhapEl.textContent = filled; }
+                if (chuaNhapEl) { chuaNhapEl.textContent = inputs.length - filled; }
+            }
+            inputs.forEach(function (inp) { inp.addEventListener('input', update); });
+            var warned = false;
+            form.addEventListener('invalid', function () {
+                update();
+                if (warned) { return; }
+                warned = true;
+                setTimeout(function () { warned = false; }, 1500);
+                UMS.toast({ type: 'warning', title: 'Điểm chưa hợp lệ', message: 'Vui lòng kiểm tra các ô được đánh dấu đỏ (điểm từ 0 đến 10, bước 0.1; lần thi từ 1 đến 5).' });
+            }, true);
+        });
+    </script>
+}

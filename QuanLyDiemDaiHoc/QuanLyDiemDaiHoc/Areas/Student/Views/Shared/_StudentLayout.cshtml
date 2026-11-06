@@ -1,0 +1,82 @@
+@{
+    var tenSv = Context.Session.GetString("TenSV") ?? Context.Session.GetString("TenDangNhap") ?? User.Identity?.Name ?? "Sinh viên";
+    var maSv = Context.Session.GetString("MaSV");
+    var lastWord = tenSv.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries).LastOrDefault() ?? "S";
+    var vaiTro = string.IsNullOrEmpty(maSv) ? "Sinh viên" : "Sinh viên · " + maSv;
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1E3A8A" />
+    <title>@ViewData["Title"] - EduScore Cổng Sinh Viên</title>
+
+    <script>
+        try { if (window.innerWidth >= 992 && localStorage.getItem('ums-sidebar-collapsed') === '1') { document.documentElement.classList.add('sidebar-collapsed'); } } catch (e) { }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="~/css/ums-core.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/student-style.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body class="ums area-student">
+    <div class="nav-progress" aria-hidden="true"></div>
+
+    <div class="app-shell">
+        @await Component.InvokeAsync("StudentSidebar")
+        <div class="sidebar-backdrop" data-sidebar-close></div>
+
+        <div class="app-main">
+            <header class="app-topbar">
+                <button type="button" class="topbar-toggle" data-sidebar-toggle aria-controls="appSidebar" aria-expanded="true" aria-label="Thu gọn / mở rộng menu">
+                    <i class="fas fa-bars" aria-hidden="true"></i>
+                </button>
+
+                <div class="topbar-title">
+                    <div class="topbar-crumb">
+                        <span>Cổng thông tin sinh viên</span><i class="fas fa-chevron-right" aria-hidden="true"></i><span>@ViewData["Title"]</span>
+                    </div>
+                    <div class="topbar-heading">@ViewData["Title"]</div>
+                </div>
+
+                <div class="topbar-actions">
+                    <div class="topbar-chip d-none d-lg-flex">
+                        <i class="far fa-calendar" aria-hidden="true"></i>
+                        <span data-today>@DateTime.Now.ToString("dd/MM/yyyy")</span>
+                    </div>
+                    <a asp-area="Student" asp-controller="HoSo" asp-action="Index" class="topbar-user text-reset">
+                        <span class="avatar">@lastWord.Substring(0, 1)</span>
+                        <div class="user-meta">
+                            <div class="user-name">@tenSv</div>
+                            <div class="user-role">@vaiTro</div>
+                        </div>
+                    </a>
+                </div>
+            </header>
+
+            <main class="app-content" id="appContent">
+                @await Html.PartialAsync("~/Views/Shared/_FlashMessages.cshtml")
+                @RenderBody()
+            </main>
+
+            <footer class="app-footer">
+                <span>&copy; @DateTime.Now.Year EduScore · Cổng thông tin sinh viên</span>
+                <span>Hỗ trợ: Phòng Đào tạo</span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/ums-core.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

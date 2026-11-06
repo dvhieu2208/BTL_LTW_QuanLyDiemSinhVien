@@ -1,0 +1,47 @@
+@*
+    Thông báo TempData -> Toast.
+    Hỗ trợ các khóa đang dùng trong Controller: Success, Error, ThongBao (+ Warning, Info dự phòng).
+    HTML được render sẵn dưới dạng alert (hoạt động cả khi tắt JavaScript);
+    ums-core.js sẽ chuyển chúng thành toast góc trên bên phải.
+*@
+@{
+    var flashKeys = new[]
+    {
+        new { Key = "Success", Type = "success", Title = "Thành công" },
+        new { Key = "Error", Type = "error", Title = "Thao tác thất bại" },
+        new { Key = "Warning", Type = "warning", Title = "Lưu ý" },
+        new { Key = "Info", Type = "info", Title = "Thông báo" },
+        new { Key = "ThongBao", Type = "info", Title = "Thông báo" }
+    };
+}
+<div class="flash-fallback">
+    @foreach (var f in flashKeys)
+    {
+        var msg = TempData[f.Key]?.ToString();
+        if (string.IsNullOrWhiteSpace(msg))
+        {
+            continue;
+        }
+
+        var type = f.Type;
+        var title = f.Title;
+        if (f.Key == "ThongBao")
+        {
+            // ThongBao dùng chung cho mọi kết quả -> suy ra sắc thái để chọn màu toast phù hợp
+            var lower = msg.ToLowerInvariant();
+            if (lower.Contains("thành công"))
+            {
+                type = "success"; title = "Thành công";
+            }
+            else if (lower.Contains("không") || lower.Contains("chưa") || lower.Contains("hết") || lower.Contains("lỗi"))
+            {
+                type = "warning"; title = "Lưu ý";
+            }
+        }
+
+        var alertCss = type == "success" ? "success" : type == "error" ? "danger" : type == "warning" ? "warning" : "info";
+        <div class="alert alert-@alertCss mb-3" role="alert" data-flash="@type" data-flash-title="@title">
+            <strong>@title:</strong> <span class="flash-text">@msg</span>
+        </div>
+    }
+</div>

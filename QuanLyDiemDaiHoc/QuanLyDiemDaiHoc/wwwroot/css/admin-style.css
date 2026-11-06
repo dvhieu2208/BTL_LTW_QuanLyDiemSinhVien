@@ -1,0 +1,38 @@
+/* =====================================================================
+   ADMIN AREA — chỉ chứa phần riêng của khu vực quản trị.
+   Toàn bộ design system dùng chung nằm trong ums-core.css.
+   Mọi selector được giới hạn bởi body.area-admin để tránh xung đột với Student.
+   ===================================================================== */
+
+/* Dashboard: biểu đồ */
+.area-admin .chart-box { position: relative; height: 300px; }
+.area-admin .chart-box-sm { position: relative; height: 240px; }
+
+/* Danh sách sinh viên nổi bật */
+.area-admin .rank-list { list-style: none; margin: 0; padding: 6px 0; }
+.area-admin .rank-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 22px;
+    transition: background-color .2s ease;
+}
+.area-admin .rank-item:hover { background: var(--ums-surface-2); }
+.area-admin .rank-no {
+    width: 26px; text-align: center;
+    font-weight: 800; font-size: .8rem;
+    color: var(--ums-subtle);
+    font-variant-numeric: tabular-nums;
+}
+.area-admin .rank-item:nth-child(1) .rank-no { color: #D97706; }
+.area-admin .rank-item:nth-child(2) .rank-no { color: #64748B; }
+.area-admin .rank-item:nth-child(3) .rank-no { color: #B45309; }
+.area-admin .rank-gpa { margin-left: auto; }
+
+/* Bảng nhập điểm */
+.area-admin .grade-summary { display: flex; flex-wrap: wrap; gap: 10px; }
+.area-admin .grade-summary .hero-chip { background: var(--ums-surface-2); color: var(--ums-text-2); border-color: var(--ums-border); }
+
+/* Phân bổ khoa (legend tự tạo) */
+.area-admin .legend-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.area-admin .legend-list li { display: flex; align-items: center; gap: 10px; font-size: .8125rem; }
+.area-admin .legend-list .swatch { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+.area-admin .legend-list .val { margin-left: auto; font-weight: 700; font-variant-numeric: tabular-nums; }

@@ -1,0 +1,220 @@
+@model IEnumerable<QuanLyDiemDaiHoc.Models.TaiKhoan>
+@{
+    ViewData["Title"] = "Quản lý tài khoản";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var ds = Model?.ToList() ?? new List<QuanLyDiemDaiHoc.Models.TaiKhoan>();
+    int soQuanTri = ds.Count(t => t.PhanQuyen == 0);
+    int soSinhVien = ds.Count(t => t.PhanQuyen != 0);
+    int soBiKhoa = ds.Count(t => !t.TrangThai);
+}
+
+<div class="page-header">
+    <div>
+        <div class="page-eyebrow"><i class="fas fa-user-shield"></i> Phòng đào tạo</div>
+        <h2 class="page-title">Quản lý tài khoản</h2>
+        <p class="page-subtitle">Phân quyền và kiểm soát trạng thái truy cập hệ thống</p>
+    </div>
+</div>
+
+<div class="row g-3 mb-4 stagger">
+    <div class="col-6 col-lg-3">
+        <div class="card stat-card">
+            <div class="stat-top"><span class="stat-label">Tổng tài khoản</span><span class="stat-icon tone-primary"><i class="fas fa-users"></i></span></div>
+            <div class="stat-value" data-countup="@ds.Count">@ds.Count</div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card stat-card">
+            <div class="stat-top"><span class="stat-label">Quản trị viên</span><span class="stat-icon tone-navy"><i class="fas fa-user-tie"></i></span></div>
+            <div class="stat-value" data-countup="@soQuanTri">@soQuanTri</div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card stat-card">
+            <div class="stat-top"><span class="stat-label">Sinh viên</span><span class="stat-icon tone-info"><i class="fas fa-user-graduate"></i></span></div>
+            <div class="stat-value" data-countup="@soSinhVien">@soSinhVien</div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card stat-card">
+            <div class="stat-top"><span class="stat-label">Đang bị khóa</span><span class="stat-icon tone-danger"><i class="fas fa-user-lock"></i></span></div>
+            <div class="stat-value" data-countup="@soBiKhoa">@soBiKhoa</div>
+        </div>
+    </div>
+</div>
+
+<!-- Bảng danh sách tài khoản -->
+<div class="card table-card">
+    <div class="card-head">
+        <h5><span class="head-icon"><i class="fas fa-id-badge"></i></span>Danh sách tài khoản</h5>
+        <div class="search-box" style="min-width:260px">
+            <i class="fas fa-search"></i>
+            <input type="text" class="form-control form-control-sm" placeholder="Tìm tên đăng nhập, mã SV..." data-table-filter="#tblTaiKhoan" aria-label="Tìm tài khoản" />
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0" id="tblTaiKhoan" data-paginate="10" data-paginate-label="tài khoản">
+            <thead class="table-light">
+                <tr>
+                    <th class="px-4">Tên đăng nhập</th>
+                    <th>Vai trò</th>
+                    <th>Mã liên kết</th>
+                    <th>Trạng thái</th>
+                    <th class="text-end px-4">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (ds.Any())
+                {
+                    foreach (var tk in ds)
+                    {
+                        <tr>
+                            <td class="px-4">
+                                <div class="d-flex align-items-center gap-3">
+                                    <span class="avatar avatar-sm @(tk.PhanQuyen == 0 ? "tone-navy" : "tone-info")"><i class="fas @(tk.PhanQuyen == 0 ? "fa-user-tie" : "fa-user")"></i></span>
+                                    <span class="cell-title">@tk.TenDangNhap</span>
+                                </div>
+                            </td>
+                            <td>
+                                @if (tk.PhanQuyen == 0)
+                                {
+                                    <span class="badge badge-soft-primary">Quản trị viên</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-soft-info">Sinh viên</span>
+                                }
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(tk.MaSv))
+                                {
+                                    <span class="cell-code">@tk.MaSv</span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">—</span>
+                                }
+                            </td>
+                            <td>
+                                @if (tk.TrangThai)
+                                {
+                                    <span class="badge badge-soft-success badge-soft"><span class="status-dot"></span> Hoạt động</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-soft-danger badge-soft"><span class="status-dot"></span> Đã khóa</span>
+                                }
+                            </td>
+                            <td class="text-end px-4">
+                                <div class="action-group">
+                                    <!-- Form khóa/mở khóa tài khoản -->
+                                    <form asp-action="ToggleStatus" asp-route-id="@tk.TenDangNhap" method="post">
+                                        @Html.AntiForgeryToken()
+                                        @if (tk.TrangThai)
+                                        {
+                                            <button type="button" class="btn btn-sm btn-soft-warning"
+                                                    data-confirm-trigger
+                                                    data-confirm-variant="warning"
+                                                    data-confirm-icon="fa-solid fa-user-lock"
+                                                    data-confirm-title="Khóa tài khoản?"
+                                                    data-confirm-message="Người dùng sẽ không thể đăng nhập cho đến khi được mở khóa."
+                                                    data-confirm-name="@tk.TenDangNhap"
+                                                    data-confirm-ok="Khóa tài khoản">
+                                                <i class="fas fa-lock"></i> Khóa
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button type="submit" class="btn btn-sm btn-soft-success">
+                                                <i class="fas fa-unlock"></i> Mở khóa
+                                            </button>
+                                        }
+                                    </form>
+
+                                    <button type="button" class="btn btn-sm btn-soft-secondary" data-bs-toggle="modal" data-bs-target="#resetPasswordModal" data-tendangnhap="@tk.TenDangNhap">
+                                        <i class="fas fa-key"></i> Đặt lại mật khẩu
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr class="empty-row">
+                        <td colspan="5">
+                            <div class="empty-state">
+                                <div class="empty-icon"><i class="fas fa-user-slash"></i></div>
+                                <div class="empty-title">Chưa có tài khoản</div>
+                                <p>Chưa có tài khoản nào trong hệ thống.</p>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="resetPasswordModal" tabindex="-1" aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form asp-action="ResetPassword" method="post">
+                @Html.AntiForgeryToken()
+                <div class="modal-header">
+                    <h5 class="modal-title d-flex align-items-center gap-2" id="resetPasswordModalLabel">
+                        <span class="stat-icon tone-warning" style="width:36px;height:36px;font-size:.9rem"><i class="fas fa-key"></i></span> Đặt lại mật khẩu tài khoản
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Input ẩn chứa tên đăng nhập tài khoản cần đổi mật khẩu -->
+                    <input type="hidden" id="resetTenDangNhap" name="tenDangNhap" />
+
+                    <div class="mb-3">
+                        <label class="form-label" for="displayTenDangNhap">Tài khoản</label>
+                        <input type="text" id="displayTenDangNhap" class="form-control" disabled />
+                    </div>
+
+                    <div class="mb-1">
+                        <label class="form-label" for="matKhauMoiAdmin">Mật khẩu mới <span class="text-danger">*</span></label>
+                        <div class="password-field">
+                            <input type="password" name="matKhauMoi" id="matKhauMoiAdmin" class="form-control" placeholder="Nhập mật khẩu mới..." autocomplete="new-password" required />
+                            <button type="button" class="password-toggle" data-toggle-password="#matKhauMoiAdmin" aria-label="Hiện mật khẩu"><i class="fas fa-eye"></i></button>
+                        </div>
+                        <div class="form-hint">Mật khẩu nên chứa ít nhất 6 ký tự bao gồm chữ và số.</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-warning">Xác nhận đổi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Script truyền dữ liệu vào Modal khi người dùng bấm nút Đặt lại mật khẩu
+        var resetPasswordModal = document.getElementById('resetPasswordModal');
+        resetPasswordModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var tenDangNhap = button.getAttribute('data-tendangnhap');
+
+            var inputTenDangNhap = resetPasswordModal.querySelector('#resetTenDangNhap');
+            var displayTenDangNhap = resetPasswordModal.querySelector('#displayTenDangNhap');
+
+            inputTenDangNhap.value = tenDangNhap;
+            displayTenDangNhap.value = tenDangNhap;
+        });
+        resetPasswordModal.addEventListener('shown.bs.modal', function () {
+            resetPasswordModal.querySelector('#matKhauMoiAdmin').focus();
+        });
+        resetPasswordModal.addEventListener('hidden.bs.modal', function () {
+            var pwd = resetPasswordModal.querySelector('#matKhauMoiAdmin');
+            pwd.value = '';
+            pwd.type = 'password';
+        });
+    </script>
+}

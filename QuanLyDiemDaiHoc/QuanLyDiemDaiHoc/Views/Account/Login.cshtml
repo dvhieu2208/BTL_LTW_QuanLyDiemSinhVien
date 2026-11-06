@@ -1,0 +1,155 @@
+@{
+    ViewData["Title"] = "Đăng nhập";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+
+    // Thông báo lỗi do AccountController trả về (ViewBag.Error); giữ hỗ trợ ViewBag.ThongBao cũ
+    var loginError = (ViewBag.Error as string) ?? (ViewBag.ThongBao as string);
+    // Giữ lại tên đăng nhập người dùng vừa nhập khi đăng nhập thất bại
+    var tenDangNhapCu = Context.Request.HasFormContentType ? Context.Request.Form["tenDangNhap"].ToString() : "";
+}
+
+<div class="form-header">
+    <span class="form-eyebrow"><i class="bi bi-shield-lock"></i> Cổng đăng nhập</span>
+    <h2>Đăng nhập</h2>
+    <p>Vui lòng nhập thông tin tài khoản của bạn.</p>
+</div>
+
+<form asp-controller="Account"
+      asp-action="Login"
+      method="post"
+      id="loginForm"
+      novalidate>
+
+    @Html.AntiForgeryToken()
+
+    <div asp-validation-summary="ModelOnly"
+         class="text-danger mb-3"></div>
+
+    @if (!string.IsNullOrEmpty(loginError))
+    {
+        <div class="login-alert" role="alert" id="loginError" data-message="@loginError">
+            <i class="bi bi-exclamation-octagon-fill"></i>
+            <span>@loginError</span>
+        </div>
+    }
+
+    <div class="field">
+        <label class="form-label" for="tenDangNhap">
+            Tên đăng nhập
+        </label>
+
+        <div class="input-wrap">
+            <i class="bi bi-person input-icon"></i>
+            <input type="text"
+                   name="tenDangNhap"
+                   id="tenDangNhap"
+                   class="form-control @(string.IsNullOrEmpty(loginError) ? "" : "is-invalid")"
+                   placeholder="Nhập tên đăng nhập"
+                   autocomplete="username"
+                   value="@tenDangNhapCu"
+                   required />
+        </div>
+        <div class="field-error" id="tenDangNhapError" aria-live="polite"></div>
+    </div>
+
+    <!-- Mật khẩu -->
+    <div class="field">
+        <label class="form-label" for="matKhau">
+            Mật khẩu
+        </label>
+
+        <div class="input-wrap">
+            <i class="bi bi-lock input-icon"></i>
+            <input type="password"
+                   name="matKhau"
+                   id="matKhau"
+                   class="form-control @(string.IsNullOrEmpty(loginError) ? "" : "is-invalid")"
+                   placeholder="Nhập mật khẩu"
+                   autocomplete="current-password"
+                   required />
+
+            <button type="button"
+                    class="password-toggle"
+                    data-toggle-password="#matKhau"
+                    aria-label="Hiện mật khẩu"
+                    aria-pressed="false">
+                <i class="bi bi-eye" id="eyeIcon"></i>
+            </button>
+        </div>
+        <div class="field-error" id="matKhauError" aria-live="polite"></div>
+        <div class="caps-hint" id="capsHint" hidden><i class="bi bi-capslock-fill"></i> Caps Lock đang bật</div>
+    </div>
+
+    <!-- Nút đăng nhập -->
+    <button type="submit" class="btn btn-primary btn-login w-100" id="btnLogin">
+        <span>ĐĂNG NHẬP</span>
+        <i class="bi bi-arrow-right"></i>
+    </button>
+
+</form>
+
+<div class="login-foot">
+    <small>
+        © @DateTime.Now.Year University Portal
+        <br />
+        Hệ thống quản lý điểm sinh viên đại học
+    </small>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            var form = document.getElementById('loginForm');
+            var fields = [
+                { input: document.getElementById('tenDangNhap'), error: document.getElementById('tenDangNhapError'), msg: 'Vui lòng nhập tên đăng nhập.' },
+                { input: document.getElementById('matKhau'), error: document.getElementById('matKhauError'), msg: 'Vui lòng nhập mật khẩu.' }
+            ];
+
+            function validate(f) {
+                var empty = !f.input.value.trim();
+                f.input.classList.toggle('is-invalid', empty);
+                f.error.textContent = empty ? f.msg : '';
+                f.error.classList.toggle('show', empty);
+                return !empty;
+            }
+
+            fields.forEach(function (f) {
+                f.input.addEventListener('input', function () {
+                    f.input.classList.remove('is-invalid');
+                    f.error.classList.remove('show');
+                    f.error.textContent = '';
+                });
+                f.input.addEventListener('blur', function () { if (f.input.dataset.touched) { validate(f); } });
+                f.input.addEventListener('change', function () { f.input.dataset.touched = '1'; });
+            });
+
+            // Kiểm tra phía client trước khi gửi; xác thực thật vẫn do AccountController xử lý
+            form.addEventListener('submit', function (e) {
+                var ok = true;
+                fields.forEach(function (f) { if (!validate(f)) { ok = false; } });
+                if (!ok) {
+                    e.preventDefault();
+                    var firstInvalid = fields.filter(function (f) { return f.input.classList.contains('is-invalid'); })[0];
+                    if (firstInvalid) { firstInvalid.input.focus(); }
+                }
+            }, true);
+
+            // Cảnh báo Caps Lock
+            var capsHint = document.getElementById('capsHint');
+            document.getElementById('matKhau').addEventListener('keyup', function (e) {
+                if (e.getModifierState) { capsHint.hidden = !e.getModifierState('CapsLock'); }
+            });
+
+            // Lỗi đăng nhập từ server -> Toast + focus vào ô mật khẩu
+            var err = document.getElementById('loginError');
+            if (err && window.UMS) {
+                UMS.toast({ type: 'error', title: 'Đăng nhập thất bại', message: err.getAttribute('data-message') });
+                var pwd = document.getElementById('matKhau');
+                var user = document.getElementById('tenDangNhap');
+                (user.value ? pwd : user).focus();
+            } else {
+                document.getElementById('tenDangNhap').focus();
+            }
+        })();
+    </script>
+}

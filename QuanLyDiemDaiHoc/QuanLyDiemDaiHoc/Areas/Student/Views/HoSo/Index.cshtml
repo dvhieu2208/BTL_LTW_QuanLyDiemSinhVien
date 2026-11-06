@@ -1,0 +1,155 @@
+﻿@model QuanLyDiemDaiHoc.Models.SinhVien
+
+@{
+    ViewData["Title"] = "Hồ sơ cá nhân";
+    Layout = "~/Areas/Student/Views/Shared/_StudentLayout.cshtml";
+    var chuCai = string.IsNullOrEmpty(Model?.TenSv) ? "SV" : Model.TenSv.Substring(0, 1).ToUpper();
+}
+
+<div class="page-header">
+    <div>
+        <div class="page-eyebrow"><i class="fas fa-user-circle"></i> Cổng sinh viên</div>
+        <h2 class="page-title">Hồ sơ cá nhân</h2>
+        <p class="page-subtitle">Thông tin lý lịch và chi tiết học tập</p>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Cột thông tin avatar và tóm tắt -->
+    <div class="col-lg-4">
+        <div class="card overflow-hidden">
+            <div class="profile-cover"></div>
+            <div class="text-center px-4 pb-4">
+                <span class="avatar avatar-lg profile-avatar mb-3">@chuCai</span>
+                <h4 class="fw-800 mb-1">@(Model?.TenSv ?? "Chưa cập nhật")</h4>
+                <p class="mb-3"><span class="cell-code">@(Model?.MaSv ?? "N/A")</span></p>
+                <span class="badge badge-soft-success badge-soft">
+                    <i class="fas fa-user-graduate"></i> @(Model?.MaChucVuNavigation?.TenChucVu ?? "Sinh viên")
+                </span>
+
+                <dl class="info-list text-start mt-4">
+                    <div class="info-row"><dt>Lớp</dt><dd>@(Model?.MaLopNavigation?.TenLop ?? Model?.MaLop ?? "N/A")</dd></div>
+                    <div class="info-row"><dt>Khoa</dt><dd>@(Model?.MaKhoaNavigation?.TenKhoa ?? Model?.MaKhoa ?? "N/A")</dd></div>
+                    <div class="info-row"><dt>Hệ đào tạo</dt><dd>@(Model?.MaHeDtNavigation?.TenHeDt ?? Model?.MaHeDt ?? "N/A")</dd></div>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cột thông tin chi tiết lý lịch -->
+    <div class="col-lg-8">
+        <div class="card mb-4">
+            <div class="card-head">
+                <h5><span class="head-icon"><i class="fas fa-user-graduate"></i></span>Thông tin chi tiết sinh viên</h5>
+            </div>
+            <div class="card-body-pad">
+                <div class="row g-4">
+                    <div class="col-sm-6 field-display">
+                        <label>Mã sinh viên</label>
+                        <p>@(Model?.MaSv ?? "N/A")</p>
+                    </div>
+                    <div class="col-sm-6 field-display">
+                        <label>Họ và tên</label>
+                        <p>@(Model?.TenSv ?? "N/A")</p>
+                    </div>
+                    <div class="col-sm-6 field-display">
+                        <label>Giới tính</label>
+                        <p>@(Model?.GioiTinh ?? "N/A")</p>
+                    </div>
+                    <div class="col-sm-6 field-display">
+                        <label>Ngày sinh</label>
+                        <p>@(Model?.NgaySinh?.ToString("dd/MM/yyyy") ?? "Chưa cập nhật")</p>
+                    </div>
+                    <div class="col-sm-6 field-display">
+                        <label>Dân tộc</label>
+                        <p>@(Model?.MaDanTocNavigation?.TenDanToc ?? "Kinh")</p>
+                    </div>
+                    <div class="col-sm-6 field-display">
+                        <label>Quê quán</label>
+                        <p>@(Model?.MaQueNavigation?.TenQue ?? "Chưa cập nhật")</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="notice notice-info align-items-center flex-wrap p-4">
+            <span class="notice-icon" style="width:44px;height:44px;font-size:1.1rem"><i class="fas fa-shield-alt"></i></span>
+            <div class="flex-grow-1">
+                <div class="notice-title">Bảo mật tài khoản</div>
+                <span class="text-muted">Đổi mật khẩu định kỳ giúp bảo vệ tài khoản sinh viên của bạn.</span>
+            </div>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalDoiMatKhau">
+                <i class="fas fa-key"></i> Đặt lại mật khẩu
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Đặt lại / Đổi mật khẩu -->
+<div class="modal fade" id="modalDoiMatKhau" tabindex="-1" aria-labelledby="modalDoiMatKhauLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title d-flex align-items-center gap-2" id="modalDoiMatKhauLabel">
+                    <span class="stat-icon tone-primary" style="width:36px;height:36px;font-size:.9rem"><i class="fas fa-key"></i></span> Đổi mật khẩu
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+            </div>
+            <form asp-area="Student" asp-controller="HoSo" asp-action="DoiMatKhau" method="post" id="formDoiMatKhau">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label" for="matKhauHienTai">Mật khẩu hiện tại</label>
+                        <div class="password-field">
+                            <input type="password" name="matKhauHienTai" id="matKhauHienTai" class="form-control" autocomplete="current-password" required />
+                            <button type="button" class="password-toggle" data-toggle-password="#matKhauHienTai" aria-label="Hiện mật khẩu"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="matKhauMoi">Mật khẩu mới</label>
+                        <div class="password-field">
+                            <input type="password" name="matKhauMoi" id="matKhauMoi" class="form-control" autocomplete="new-password" required />
+                            <button type="button" class="password-toggle" data-toggle-password="#matKhauMoi" aria-label="Hiện mật khẩu"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="mb-1">
+                        <label class="form-label" for="xacNhanMatKhau">Xác nhận mật khẩu mới</label>
+                        <div class="password-field">
+                            <input type="password" name="xacNhanMatKhau" id="xacNhanMatKhau" class="form-control" autocomplete="new-password" required />
+                            <button type="button" class="password-toggle" data-toggle-password="#xacNhanMatKhau" aria-label="Hiện mật khẩu"><i class="fas fa-eye"></i></button>
+                        </div>
+                        <div class="field-validation-error d-none" id="xacNhanError">Mật khẩu mới và xác nhận mật khẩu không khớp.</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Lưu thay đổi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            // Kiểm tra trực quan phía client; HoSoController vẫn kiểm tra lại toàn bộ
+            var form = document.getElementById('formDoiMatKhau');
+            var moi = document.getElementById('matKhauMoi');
+            var xacNhan = document.getElementById('xacNhanMatKhau');
+            var err = document.getElementById('xacNhanError');
+            function check() {
+                var mismatch = xacNhan.value !== '' && moi.value !== xacNhan.value;
+                xacNhan.classList.toggle('is-invalid', mismatch);
+                err.classList.toggle('d-none', !mismatch);
+                return !mismatch;
+            }
+            moi.addEventListener('input', check);
+            xacNhan.addEventListener('input', check);
+            form.addEventListener('submit', function (e) {
+                if (!check()) { e.preventDefault(); xacNhan.focus(); }
+            }, true);
+            var modal = document.getElementById('modalDoiMatKhau');
+            modal.addEventListener('shown.bs.modal', function () { document.getElementById('matKhauHienTai').focus(); });
+        })();
+    </script>
+}

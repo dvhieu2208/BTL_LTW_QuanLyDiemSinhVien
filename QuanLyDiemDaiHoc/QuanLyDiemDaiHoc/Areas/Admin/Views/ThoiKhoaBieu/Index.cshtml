@@ -1,0 +1,109 @@
+@model IEnumerable<QuanLyDiemDaiHoc.Models.ThoiKhoaBieu>
+@{
+    ViewData["Title"] = "Thời khóa biểu";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var tongSo = Model?.Count() ?? 0;
+    var soLop = Model?.Select(t => t.MaLop).Distinct().Count() ?? 0;
+}
+
+<div class="page-header">
+    <div>
+        <div class="page-eyebrow"><i class="fas fa-calendar-alt"></i> Phòng đào tạo</div>
+        <h2 class="page-title">Thời khóa biểu</h2>
+        <p class="page-subtitle">Lịch học tuần và phân bổ giảng dạy</p>
+    </div>
+    <div class="page-actions">
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Thêm lịch học
+        </a>
+    </div>
+</div>
+
+<!-- Search Bar (lọc tức thời trên bảng) -->
+<div class="card filter-bar mb-4">
+    <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInput" class="form-control" placeholder="Tìm theo lớp, môn học hoặc phòng học..."
+               aria-label="Tìm lịch học" data-table-filter="#tblTkb" autocomplete="off">
+    </div>
+</div>
+
+<!-- Table Section -->
+<div class="card table-card">
+    <div class="card-head">
+        <h5><span class="head-icon"><i class="fas fa-calendar-week"></i></span>Danh sách lịch học</h5>
+        <div class="d-flex gap-2 flex-wrap">
+            <span class="badge badge-soft-primary">@tongSo lịch học</span>
+            <span class="badge badge-soft-violet">@soLop lớp</span>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0" id="tblTkb" data-paginate="10" data-paginate-label="lịch học">
+            <thead class="table-light">
+                <tr>
+                    <th class="px-4">Lớp</th>
+                    <th>Môn học</th>
+                    <th>Học kỳ</th>
+                    <th>Thứ học</th>
+                    <th>Ca học</th>
+                    <th>Phòng học</th>
+                    <th class="text-end px-4">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="px-4 fw-semibold">@(item.MaLopNavigation != null ? item.MaLopNavigation.TenLop : item.MaLop)</td>
+                            <td>
+                                <div class="cell-title">@(item.MaMonNavigation != null ? item.MaMonNavigation.TenMon : item.MaMon)</div>
+                                <div class="cell-sub">@item.MaMon</div>
+                            </td>
+                            <td><span class="badge badge-outline">Học kỳ @item.HocKy</span></td>
+                            <td><span class="badge badge-soft-primary">Thứ @item.ThuHoc</span></td>
+                            <td class="fw-semibold">Ca @item.CaHoc</td>
+                            <td>
+                                <span class="badge badge-soft-info badge-soft">
+                                    <i class="fas fa-door-open"></i> @(item.MaPhongNavigation != null ? item.MaPhongNavigation.TenPhong : item.MaPhong)
+                                </span>
+                            </td>
+                            <td class="text-end px-4">
+                                <div class="action-group">
+                                    <!-- Nút Sửa truyền đủ 2 khóa chính: maLop và maMon -->
+                                    <a asp-action="Edit" asp-route-maLop="@item.MaLop" asp-route-maMon="@item.MaMon" class="btn btn-icon btn-soft-primary" title="Sửa lịch học">
+                                        <i class="fas fa-pen"></i>
+                                    </a>
+                                    <!-- Form POST xóa truyền đủ maLop và maMon -->
+                                    <form asp-action="Delete" asp-route-maLop="@item.MaLop" asp-route-maMon="@item.MaMon" method="post">
+                                        <button type="button" class="btn btn-icon btn-soft-danger" title="Xóa lịch học"
+                                                data-confirm-trigger
+                                                data-confirm-title="Xóa lịch học?"
+                                                data-confirm-message="Bạn có chắc chắn muốn xóa lịch học này không?"
+                                                data-confirm-name="@(item.MaMonNavigation?.TenMon ?? item.MaMon) — @(item.MaLopNavigation?.TenLop ?? item.MaLop)"
+                                                data-confirm-ok="Xóa lịch học">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr class="empty-row">
+                        <td colspan="7">
+                            <div class="empty-state">
+                                <div class="empty-icon"><i class="fas fa-calendar-xmark"></i></div>
+                                <div class="empty-title">Chưa có thời khóa biểu</div>
+                                <p>Chưa có dữ liệu thời khóa biểu trong hệ thống.</p>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

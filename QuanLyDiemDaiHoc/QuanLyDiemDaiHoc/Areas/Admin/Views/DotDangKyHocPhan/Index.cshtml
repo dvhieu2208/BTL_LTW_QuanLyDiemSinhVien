@@ -1,0 +1,134 @@
+@model QuanLyDiemDaiHoc.Models.CauHinhDangKyHocPhan
+@{
+    ViewData["Title"] = "Thời hạn đăng ký học phần";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var batDau = Model.NgayBatDau.ToString("yyyy-MM-ddTHH:mm");
+    var ketThuc = Model.NgayKetThuc.ToString("yyyy-MM-ddTHH:mm");
+
+    // Trạng thái hiển thị theo cùng quy tắc với trang đăng ký của sinh viên
+    var now = DateTime.Now;
+    bool daCoCauHinh = ViewBag.DaCoCauHinh as bool? ?? true;
+    bool dangMo = now >= Model.NgayBatDau && now < Model.NgayKetThuc.AddMinutes(1);
+    bool daHet = now >= Model.NgayKetThuc.AddMinutes(1);
+}
+
+<div class="page-header">
+    <div>
+        <div class="page-eyebrow"><i class="fas fa-calendar-check"></i> Kết quả học tập</div>
+        <h2 class="page-title">Thời hạn đăng ký học phần</h2>
+        <p class="page-subtitle">Thiết lập thời gian sinh viên được phép đăng ký và hủy học phần.</p>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="card">
+            <form asp-area="Admin" asp-controller="DotDangKyHocPhan" asp-action="Index" method="post" id="dotForm">
+                <div class="form-section">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    <div class="form-section-title"><i class="fas fa-clock"></i> Khoảng thời gian đăng ký</div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label" for="ngayBatDau">Thời điểm bắt đầu</label>
+                            <input id="ngayBatDau" name="ngayBatDau" type="datetime-local" class="form-control" value="@batDau" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="ngayKetThuc">Thời điểm kết thúc</label>
+                            <input id="ngayKetThuc" name="ngayKetThuc" type="datetime-local" class="form-control" value="@ketThuc" required />
+                            <div class="field-validation-error d-none" id="ketThucError">Thời điểm kết thúc phải sau thời điểm bắt đầu.</div>
+                        </div>
+                    </div>
+
+                    <div class="notice notice-info mt-4">
+                        <span class="notice-icon"><i class="fas fa-circle-info"></i></span>
+                        <div>
+                            <div class="notice-title">Lưu ý</div>
+                            Khi đến thời điểm kết thúc, hệ thống tự động khóa cả đăng ký và hủy.
+                            Học phần chưa đăng ký sẽ được ẩn khỏi trang sinh viên; các đăng ký đã có vẫn được giữ trong cơ sở dữ liệu.
+                            Nếu muốn kết thúc vào cuối ngày, hãy chọn giờ 23:59.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Lưu thời hạn
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card h-100">
+            <div class="card-head">
+                <h5><span class="head-icon"><i class="fas fa-signal"></i></span>Trạng thái hiện tại</h5>
+            </div>
+            <div class="card-body-pad">
+                @if (!daCoCauHinh)
+                {
+                    <div class="notice notice-warning mb-3">
+                        <span class="notice-icon"><i class="fas fa-calendar-xmark"></i></span>
+                        <div><div class="notice-title">Chưa thiết lập</div>Sinh viên chưa thể đăng ký. Giá trị bên cạnh là gợi ý mặc định, hãy bấm “Lưu thời hạn” để áp dụng.</div>
+                    </div>
+                }
+                else if (dangMo)
+                {
+                    <div class="notice notice-success mb-3">
+                        <span class="notice-icon"><i class="fas fa-door-open"></i></span>
+                        <div><div class="notice-title">Đang mở đăng ký</div>Sinh viên có thể đăng ký và hủy học phần.</div>
+                    </div>
+                }
+                else if (daHet)
+                {
+                    <div class="notice notice-danger mb-3">
+                        <span class="notice-icon"><i class="fas fa-lock"></i></span>
+                        <div><div class="notice-title">Đã kết thúc</div>Đăng ký và hủy học phần đang bị khóa.</div>
+                    </div>
+                }
+                else
+                {
+                    <div class="notice notice-warning mb-3">
+                        <span class="notice-icon"><i class="fas fa-hourglass-half"></i></span>
+                        <div><div class="notice-title">Chưa đến thời gian mở</div>Đợt đăng ký sẽ tự động mở khi đến giờ bắt đầu.</div>
+                    </div>
+                }
+                @if (daCoCauHinh)
+                {
+                <dl class="info-list">
+                    <div class="info-row"><dt>Bắt đầu</dt><dd>@Model.NgayBatDau.ToString("dd/MM/yyyy HH:mm")</dd></div>
+                    <div class="info-row"><dt>Kết thúc</dt><dd>@Model.NgayKetThuc.ToString("dd/MM/yyyy HH:mm")</dd></div>
+                    <div class="info-row"><dt>Thời lượng</dt><dd>@Math.Max(0, (int)Math.Ceiling((Model.NgayKetThuc - Model.NgayBatDau).TotalDays)) ngày</dd></div>
+                </dl>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            // Kiểm tra trực quan phía client; Controller vẫn kiểm tra lại khi lưu
+            var form = document.getElementById('dotForm');
+            var bd = document.getElementById('ngayBatDau');
+            var kt = document.getElementById('ngayKetThuc');
+            var err = document.getElementById('ketThucError');
+            function check() {
+                var invalid = bd.value && kt.value && kt.value <= bd.value;
+                kt.classList.toggle('is-invalid', !!invalid);
+                err.classList.toggle('d-none', !invalid);
+                return !invalid;
+            }
+            bd.addEventListener('change', check);
+            kt.addEventListener('change', check);
+            form.addEventListener('submit', function (e) {
+                if (!check()) {
+                    e.preventDefault();
+                    UMS.toast({ type: 'warning', title: 'Thời gian chưa hợp lệ', message: 'Thời điểm kết thúc phải sau thời điểm bắt đầu.' });
+                }
+            }, true);
+        })();
+    </script>
+}

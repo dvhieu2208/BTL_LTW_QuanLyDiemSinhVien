@@ -1,0 +1,44 @@
+@model QuanLyDiemDaiHoc.Models.PhongHoc
+@{
+    ViewData["Title"] = "Thêm mới phòng học";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb ums-breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index">Quản lý phòng học</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Thêm mới</li>
+            </ol>
+        </nav>
+        <h2 class="page-title">Thêm mới phòng học</h2>
+        <p class="page-subtitle">Nhập thông tin phòng học mới.</p>
+    </div>
+</div>
+
+<div class="card">
+    <form asp-action="Create" method="post">
+        <div class="form-section">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <div class="form-section-title"><i class="fas fa-door-open"></i> Thông tin phòng học</div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="MaPhong" class="form-label">Mã phòng <span class="text-danger">*</span></label>
+                    <input asp-for="MaPhong" class="form-control" placeholder="Nhập mã phòng (VD: A101)" required />
+                    <span asp-validation-for="MaPhong" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="TenPhong" class="form-label">Tên phòng <span class="text-danger">*</span></label>
+                    <input asp-for="TenPhong" class="form-control" placeholder="Nhập tên phòng đầy đủ (VD: Phòng A101)" required />
+                    <span asp-validation-for="TenPhong" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <a asp-action="Index" class="btn btn-light">Hủy</a>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Lưu phòng học</button>
+        </div>
+    </form>
+</div>

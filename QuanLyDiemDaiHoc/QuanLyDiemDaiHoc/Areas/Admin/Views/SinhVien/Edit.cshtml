@@ -1,0 +1,164 @@
+@model QuanLyDiemDaiHoc.Models.SinhVien
+@{
+    ViewData["Title"] = "Chỉnh sửa thông tin sinh viên";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb ums-breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index">Danh sách sinh viên</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Chỉnh sửa thông tin</li>
+            </ol>
+        </nav>
+        <h2 class="page-title">Cập nhật thông tin sinh viên</h2>
+        <p class="page-subtitle">Mã sinh viên <span class="cell-code">@Model.MaSv</span> là khóa chính và không thể thay đổi.</p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <form asp-action="Edit" method="post">
+        <div class="form-section pb-0">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+        </div>
+
+        <!-- Khóa chính ẩn (Không cho sửa Mã Sinh Viên) -->
+        <input type="hidden" asp-for="MaSv" />
+
+        <div class="form-section">
+            <div class="form-section-title"><i class="fas fa-id-card"></i> Thông tin cơ bản</div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Mã sinh viên</label>
+                    <input class="form-control" value="@Model.MaSv" disabled />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="TenSv" class="form-label">Họ và tên <span class="text-danger">*</span></label>
+                    <input asp-for="TenSv" class="form-control" required />
+                    <span asp-validation-for="TenSv" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="NgaySinh" class="form-label">Ngày sinh</label>
+                    <input asp-for="NgaySinh" type="date" class="form-control" />
+                    <span asp-validation-for="NgaySinh" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="GioiTinh" class="form-label">Giới tính</label>
+                    <select asp-for="GioiTinh" class="form-select">
+                        <option value="">-- Chọn giới tính --</option>
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
+                    </select>
+                    <span asp-validation-for="GioiTinh" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phân cấp Khoa, Lớp, Chuyên ngành -->
+        <div class="form-section">
+            <div class="form-section-title"><i class="fas fa-building-columns"></i> Thông tin đào tạo</div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="MaKhoa" class="form-label">Khoa <span class="text-danger">*</span></label>
+                    <select asp-for="MaKhoa" id="ddlKhoa" class="form-select" asp-items="ViewBag.MaKhoa" required>
+                        <option value="">-- Chọn khoa --</option>
+                    </select>
+                    <span asp-validation-for="MaKhoa" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="MaLop" class="form-label">Lớp <span class="text-danger">*</span></label>
+                    <select asp-for="MaLop" id="ddlLop" class="form-select" asp-items="ViewBag.MaLop" required>
+                        <option value="">-- Chọn lớp --</option>
+                    </select>
+                    <span asp-validation-for="MaLop" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="MaChuyenNganh" class="form-label">Chuyên ngành</label>
+                    <select asp-for="MaChuyenNganh" id="ddlChuyenNganh" class="form-select" asp-items="ViewBag.MaChuyenNganh">
+                        <option value="">-- Chọn chuyên ngành --</option>
+                    </select>
+                    <span asp-validation-for="MaChuyenNganh" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="MaHeDt" class="form-label">Hệ đào tạo</label>
+                    <select asp-for="MaHeDt" class="form-select" asp-items="ViewBag.MaHeDt">
+                        <option value="">-- Chọn hệ đào tạo --</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <div class="form-section-title"><i class="fas fa-address-book"></i> Lý lịch</div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="MaQue" class="form-label">Quê quán</label>
+                    <select asp-for="MaQue" class="form-select" asp-items="ViewBag.MaQue">
+                        <option value="">-- Chọn quê quán --</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="MaDanToc" class="form-label">Dân tộc</label>
+                    <select asp-for="MaDanToc" class="form-select" asp-items="ViewBag.MaDanToc">
+                        <option value="">-- Chọn dân tộc --</option>
+                    </select>
+                </div>
+                @* Controller đã chuẩn bị ViewBag.MaChucVu; hiển thị trường này để khi lưu không làm mất chức vụ hiện có *@
+                <div class="col-md-6">
+                    <label asp-for="MaChucVu" class="form-label">Chức vụ</label>
+                    <select asp-for="MaChucVu" class="form-select" asp-items="ViewBag.MaChucVu">
+                        <option value="">-- Chọn chức vụ (nếu có) --</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <a asp-action="Index" class="btn btn-light">Hủy</a>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Lưu thay đổi</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        // Tương tự form Create: Xử lý thay đổi Khoa thì load lại Lớp và Chuyên Ngành tương ứng
+        document.getElementById('ddlKhoa').addEventListener('change', function () {
+            var maKhoa = this.value;
+            var ddlLop = document.getElementById('ddlLop');
+            var ddlChuyenNganh = document.getElementById('ddlChuyenNganh');
+
+            ddlLop.innerHTML = '<option value="">-- Chọn lớp --</option>';
+            ddlChuyenNganh.innerHTML = '<option value="">-- Chọn chuyên ngành --</option>';
+
+            if (!maKhoa) return;
+
+            // Gọi API lấy Lớp
+            fetch(`/Admin/SinhVien/GetLopByKhoa?maKhoa=${maKhoa}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(item => {
+                        var option = document.createElement('option');
+                        option.value = item.maLop;
+                        option.text = item.tenLop;
+                        ddlLop.appendChild(option);
+                    });
+                });
+
+            // Gọi API lấy Chuyên Ngành
+            fetch(`/Admin/SinhVien/GetChuyenNganhByKhoa?maKhoa=${maKhoa}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(item => {
+                        var option = document.createElement('option');
+                        option.value = item.maChuyenNganh;
+                        option.text = item.tenChuyenNganh;
+                        ddlChuyenNganh.appendChild(option);
+                    });
+                });
+        });
+    </script>
+}

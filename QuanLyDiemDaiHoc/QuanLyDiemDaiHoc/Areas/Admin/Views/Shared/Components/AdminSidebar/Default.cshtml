@@ -1,0 +1,60 @@
+@{
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+    Func<string, string> active = c => string.Equals(currentController, c, StringComparison.OrdinalIgnoreCase) ? "active" : "";
+    Func<string, string?> current = c => string.Equals(currentController, c, StringComparison.OrdinalIgnoreCase) ? "page" : null;
+    var tenDangNhap = Context.Session.GetString("TenDangNhap") ?? "admin";
+}
+<aside class="app-sidebar" id="appSidebar" aria-label="Điều hướng quản trị">
+    <div class="sidebar-brand">
+        <div class="brand-mark"><i class="fas fa-graduation-cap" aria-hidden="true"></i></div>
+        <div class="brand-text">
+            <span class="brand-name">UNIVERSITY</span>
+            <span class="brand-sub">Cổng quản trị đào tạo</span>
+        </div>
+    </div>
+
+    <nav class="sidebar-nav">
+        <div class="nav-section">Tổng quan</div>
+        <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="side-link @active("Home")" aria-current="@current("Home")">
+            <span class="nav-icon"><i class="fas fa-th-large"></i></span><span class="nav-label">Tổng quan</span>
+        </a>
+
+        <div class="nav-section">Đào tạo</div>
+        <a asp-area="Admin" asp-controller="SinhVien" asp-action="Index" class="side-link @active("SinhVien")" aria-current="@current("SinhVien")">
+            <span class="nav-icon"><i class="fas fa-user-graduate"></i></span><span class="nav-label">Sinh viên</span>
+        </a>
+        <a asp-area="Admin" asp-controller="Khoalop" asp-action="Index" class="side-link @active("Khoalop")" aria-current="@current("Khoalop")">
+            <span class="nav-icon"><i class="fas fa-university"></i></span><span class="nav-label">Khoa &amp; Lớp</span>
+        </a>
+        <a asp-area="Admin" asp-controller="MonHoc" asp-action="Index" class="side-link @active("MonHoc")" aria-current="@current("MonHoc")">
+            <span class="nav-icon"><i class="fas fa-book"></i></span><span class="nav-label">Môn học</span>
+        </a>
+        <a asp-area="Admin" asp-controller="PhongHoc" asp-action="Index" class="side-link @active("PhongHoc")" aria-current="@current("PhongHoc")">
+            <span class="nav-icon"><i class="fas fa-door-open"></i></span><span class="nav-label">Phòng học</span>
+        </a>
+        <a asp-area="Admin" asp-controller="ThoiKhoaBieu" asp-action="Index" class="side-link @active("ThoiKhoaBieu")" aria-current="@current("ThoiKhoaBieu")">
+            <span class="nav-icon"><i class="fas fa-calendar-alt"></i></span><span class="nav-label">Thời khóa biểu</span>
+        </a>
+
+        <div class="nav-section">Kết quả học tập</div>
+        <a asp-area="Admin" asp-controller="Diem" asp-action="Index" class="side-link @active("Diem")" aria-current="@current("Diem")">
+            <span class="nav-icon"><i class="fas fa-clipboard-check"></i></span><span class="nav-label">Quản lý điểm</span>
+        </a>
+        <a asp-area="Admin" asp-controller="DotDangKyHocPhan" asp-action="Index" class="side-link @active("DotDangKyHocPhan")" aria-current="@current("DotDangKyHocPhan")">
+            <span class="nav-icon"><i class="fas fa-calendar-check"></i></span><span class="nav-label">Thời hạn đăng ký</span>
+        </a>
+
+        <div class="nav-section">Hệ thống</div>
+        <a asp-area="Admin" asp-controller="TaiKhoan" asp-action="Index" class="side-link @active("TaiKhoan")" aria-current="@current("TaiKhoan")">
+            <span class="nav-icon"><i class="fas fa-user-shield"></i></span><span class="nav-label">Tài khoản</span>
+        </a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <span class="avatar avatar-light">@(tenDangNhap.Length > 0 ? tenDangNhap.Substring(0, 1) : "A")</span>
+        <div class="user-meta">
+            <div class="user-name">@tenDangNhap</div>
+            <div class="user-role">Quản trị hệ thống · Phòng đào tạo</div>
+        </div>
+    </div>
+</aside>

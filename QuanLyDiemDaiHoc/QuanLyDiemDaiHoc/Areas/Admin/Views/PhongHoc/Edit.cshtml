@@ -1,0 +1,45 @@
+@model QuanLyDiemDaiHoc.Models.PhongHoc
+@{
+    ViewData["Title"] = "Chỉnh sửa phòng học";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb ums-breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index">Danh sách phòng học</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Chỉnh sửa thông tin</li>
+            </ol>
+        </nav>
+        <h2 class="page-title">Chỉnh sửa phòng học</h2>
+        <p class="page-subtitle">Mã phòng <span class="cell-code">@Model.MaPhong</span> không thể thay đổi.</p>
+    </div>
+</div>
+
+<div class="card">
+    <form asp-action="Edit" method="post">
+        <div class="form-section">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <input type="hidden" asp-for="MaPhong" />
+            <div class="form-section-title"><i class="fas fa-door-open"></i> Thông tin phòng học</div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Mã phòng</label>
+                    <input class="form-control" value="@Model.MaPhong" disabled />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="TenPhong" class="form-label">Tên phòng <span class="text-danger">*</span></label>
+                    <input asp-for="TenPhong" class="form-control" required />
+                    <span asp-validation-for="TenPhong" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <a asp-action="Index" class="btn btn-light">Hủy</a>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Lưu thay đổi</button>
+        </div>
+    </form>
+</div>

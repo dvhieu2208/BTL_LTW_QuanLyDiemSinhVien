@@ -1,0 +1,50 @@
+@{
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+    Func<string, string> active = c => string.Equals(currentController, c, StringComparison.OrdinalIgnoreCase) ? "active" : "";
+    Func<string, string?> current = c => string.Equals(currentController, c, StringComparison.OrdinalIgnoreCase) ? "page" : null;
+    var tenSv = Context.Session.GetString("TenSV") ?? Context.Session.GetString("TenDangNhap") ?? "Sinh viên";
+    var lastWord = tenSv.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries).LastOrDefault() ?? "S";
+}
+<aside class="app-sidebar" id="appSidebar" aria-label="Điều hướng sinh viên">
+    <div class="sidebar-brand">
+        <div class="brand-mark"><i class="fas fa-graduation-cap" aria-hidden="true"></i></div>
+        <div class="brand-text">
+            <span class="brand-name">UNIVERSITY</span>
+            <span class="brand-sub">Student Portal</span>
+        </div>
+    </div>
+
+    <nav class="sidebar-nav">
+        <div class="nav-section">Tổng quan</div>
+        <a asp-area="Student" asp-controller="Home" asp-action="Index" class="side-link @active("Home")" aria-current="@current("Home")">
+            <span class="nav-icon"><i class="fas fa-home"></i></span><span class="nav-label">Trang chủ</span>
+        </a>
+
+        <div class="nav-section">Học tập</div>
+        <a asp-area="Student" asp-controller="Diem" asp-action="Index" class="side-link @active("Diem")" aria-current="@current("Diem")">
+            <span class="nav-icon"><i class="fas fa-graduation-cap"></i></span><span class="nav-label">Xem bảng điểm</span>
+        </a>
+        <a asp-area="Student" asp-controller="ThoiKhoaBieu" asp-action="Index" class="side-link @active("ThoiKhoaBieu")" aria-current="@current("ThoiKhoaBieu")">
+            <span class="nav-icon"><i class="fas fa-calendar-alt"></i></span><span class="nav-label">Thời khóa biểu</span>
+        </a>
+        <a asp-area="Student" asp-controller="MonHoc" asp-action="Index" class="side-link @active("MonHoc")" aria-current="@current("MonHoc")">
+            <span class="nav-icon"><i class="fas fa-book"></i></span><span class="nav-label">Đăng ký học phần</span>
+        </a>
+
+        <div class="nav-section">Cá nhân</div>
+        <a asp-area="Student" asp-controller="HoSo" asp-action="Index" class="side-link @active("HoSo")" aria-current="@current("HoSo")">
+            <span class="nav-icon"><i class="fas fa-user-circle"></i></span><span class="nav-label">Hồ sơ cá nhân</span>
+        </a>
+        <a asp-area="" asp-controller="Account" asp-action="Logout" class="side-link">
+            <span class="nav-icon"><i class="fas fa-sign-out-alt"></i></span><span class="nav-label">Đăng xuất</span>
+        </a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <span class="avatar avatar-light">@lastWord.Substring(0, 1)</span>
+        <div class="user-meta">
+            <div class="user-name">@tenSv</div>
+            <div class="user-role">Sinh viên</div>
+        </div>
+    </div>
+</aside>

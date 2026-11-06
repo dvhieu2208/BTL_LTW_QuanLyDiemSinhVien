@@ -1,0 +1,214 @@
+﻿@model QuanLyDiemDaiHoc.Models.DangKyHocPhanViewModel
+
+@{
+    ViewData["Title"] = "Đăng ký học phần";
+    Layout = "~/Areas/Student/Views/Shared/_StudentLayout.cshtml";
+    int soDaDangKy = Model.DanhSachHocPhan.Count(h => Model.MaMonDaDangKy.Contains(h.MaMon));
+    int tinChiDaDangKy = Model.DanhSachHocPhan.Where(h => Model.MaMonDaDangKy.Contains(h.MaMon)).Sum(h => h.MaMonNavigation?.Dvht ?? 0);
+}
+
+<div class="page-header">
+    <div>
+        <div class="page-eyebrow"><i class="fas fa-book"></i> Cổng sinh viên</div>
+        <h2 class="page-title">Đăng ký học phần</h2>
+        <p class="page-subtitle">Danh sách môn học được mở theo lớp của bạn.</p>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-lg-8">
+        <div class="card h-100">
+            <div class="card-head">
+                <h5><span class="head-icon"><i class="fas fa-hourglass-half"></i></span>Thời hạn đăng ký học phần</h5>
+                @if (Model.DangTrongThoiHan)
+                {
+                    <span class="badge badge-soft-success badge-soft"><span class="status-dot"></span> Đang mở</span>
+                }
+                else if (Model.DaHetHan)
+                {
+                    <span class="badge badge-soft-danger badge-soft"><span class="status-dot"></span> Đã kết thúc</span>
+                }
+                else
+                {
+                    <span class="badge badge-soft-warning badge-soft"><span class="status-dot"></span> Chưa mở</span>
+                }
+            </div>
+            <div class="card-body-pad">
+                @if (!Model.DaCoCauHinh)
+                {
+                    <div class="notice notice-warning">
+                        <span class="notice-icon"><i class="fas fa-calendar-xmark"></i></span>
+                        <div>Nhà trường chưa thiết lập thời hạn đăng ký. Hiện tại bạn chưa thể đăng ký hoặc hủy học phần.</div>
+                    </div>
+                }
+                else
+                {
+                    <div class="row g-3 mb-3">
+                        <div class="col-sm-6">
+                            <div class="field-display">
+                                <label>Bắt đầu</label>
+                                <p><i class="far fa-calendar text-primary me-1"></i> @Model.NgayBatDau?.ToString("dd/MM/yyyy HH:mm")</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="field-display">
+                                <label>Kết thúc</label>
+                                <p><i class="far fa-calendar-check text-primary me-1"></i> @Model.NgayKetThuc?.ToString("dd/MM/yyyy HH:mm")</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (Model.DangTrongThoiHan)
+                    {
+                        <div class="notice notice-success">
+                            <span class="notice-icon"><i class="fas fa-circle-check"></i></span>
+                            <div>Đang trong thời hạn đăng ký. Bạn có thể đăng ký hoặc hủy học phần.</div>
+                        </div>
+                    }
+                    else if (Model.DaHetHan)
+                    {
+                        <div class="notice notice-danger">
+                            <span class="notice-icon"><i class="fas fa-lock"></i></span>
+                            <div>Đã hết thời hạn đăng ký. Các học phần chưa đăng ký đã được ẩn và bạn không thể hủy học phần đã đăng ký.</div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="notice notice-warning">
+                            <span class="notice-icon"><i class="fas fa-hourglass-start"></i></span>
+                            <div>Chưa đến thời gian mở đăng ký. Bạn chưa thể đăng ký hoặc hủy học phần.</div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="row g-3 h-100 stagger">
+            <div class="col-6 col-lg-12">
+                <div class="card stat-card">
+                    <div class="stat-top"><span class="stat-label">Đã đăng ký</span><span class="stat-icon tone-success"><i class="fas fa-clipboard-check"></i></span></div>
+                    <div class="stat-value"><span data-countup="@soDaDangKy">@soDaDangKy</span><small>/ @Model.DanhSachHocPhan.Count học phần</small></div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-12">
+                <div class="card stat-card">
+                    <div class="stat-top"><span class="stat-label">Tín chỉ đã đăng ký</span><span class="stat-icon tone-primary"><i class="fas fa-layer-group"></i></span></div>
+                    <div class="stat-value"><span data-countup="@tinChiDaDangKy">@tinChiDaDangKy</span><small>ĐVHT</small></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card table-card">
+    <div class="card-head">
+        <h5><span class="head-icon"><i class="fas fa-list-check"></i></span>Danh sách học phần</h5>
+        <div class="search-box" style="min-width:240px">
+            <i class="fas fa-search"></i>
+            <input type="text" class="form-control form-control-sm" placeholder="Tìm môn học..." data-table-filter="#tblHocPhan" aria-label="Tìm học phần" />
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0" id="tblHocPhan">
+            <thead class="table-light">
+                <tr>
+                    <th class="px-4">Mã môn</th>
+                    <th>Tên môn học</th>
+                    <th class="text-center">Tín chỉ</th>
+                    <th class="text-center">Học kỳ</th>
+                    <th>Lịch học</th>
+                    <th>Phòng học</th>
+                    <th>Trạng thái</th>
+                    <th class="text-end px-4">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.DanhSachHocPhan.Any())
+                {
+                    foreach (var item in Model.DanhSachHocPhan)
+                    {
+                        bool daDangKy = Model.MaMonDaDangKy.Contains(item.MaMon);
+                        <tr>
+                            <td class="px-4"><span class="cell-code">@item.MaMon</span></td>
+                            <td class="cell-title">@item.MaMonNavigation?.TenMon</td>
+                            <td class="text-center">@item.MaMonNavigation?.Dvht</td>
+                            <td class="text-center">@item.HocKy</td>
+                            <td class="text-nowrap"><i class="far fa-clock text-muted me-1"></i> Thứ @item.ThuHoc - Ca @item.CaHoc</td>
+                            <td>@(item.MaPhongNavigation?.TenPhong ?? item.MaPhong ?? "Chưa xếp")</td>
+                            <td>
+                                @if (daDangKy)
+                                {
+                                    <span class="badge badge-soft-success badge-soft"><i class="fas fa-check"></i> Đã đăng ký</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-soft-secondary">Chưa đăng ký</span>
+                                }
+                            </td>
+                            <td class="text-end px-4">
+                                @if (Model.DangTrongThoiHan && daDangKy &&
+                                     Model.MaMonDuocHuy.Contains(item.MaMon))
+                                {
+                                    <form asp-area="Student" asp-controller="MonHoc"
+                                          asp-action="HuyDangKy" method="post" class="d-inline">
+                                        <input type="hidden" name="maMon" value="@item.MaMon" />
+                                        <button type="button" class="btn btn-soft-danger btn-sm"
+                                                data-confirm-trigger
+                                                data-confirm-title="Hủy đăng ký học phần?"
+                                                data-confirm-message="Bạn có chắc muốn hủy học phần này?"
+                                                data-confirm-name="@(item.MaMonNavigation?.TenMon ?? item.MaMon) (@item.MaMon)"
+                                                data-confirm-ok="Hủy đăng ký">
+                                            <i class="fas fa-xmark"></i> Hủy đăng ký
+                                        </button>
+                                    </form>
+                                }
+                                else if (Model.DangTrongThoiHan && !daDangKy)
+                                {
+                                    <form asp-area="Student" asp-controller="MonHoc"
+                                          asp-action="DangKy" method="post" class="d-inline">
+                                        <input type="hidden" name="maMon" value="@item.MaMon" />
+                                        <button type="submit" class="btn btn-primary btn-sm">
+                                            <i class="fas fa-plus"></i> Đăng ký
+                                        </button>
+                                    </form>
+                                }
+                                else if (daDangKy)
+                                {
+                                    <button type="button" class="btn btn-light btn-sm" disabled>
+                                        <i class="fas fa-lock"></i> Đã khóa hủy
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-light btn-sm" disabled>
+                                        <i class="fas fa-lock"></i> Chưa mở đăng ký
+                                    </button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr class="empty-row">
+                        <td colspan="8">
+                            <div class="empty-state">
+                                <div class="empty-icon"><i class="fas fa-book-open"></i></div>
+                                @if (Model.DaHetHan)
+                                {
+                                    <div class="empty-title">Bạn chưa đăng ký học phần nào trong đợt này.</div>
+                                }
+                                else
+                                {
+                                    <div class="empty-title">Chưa có học phần nào trong thời khóa biểu.</div>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

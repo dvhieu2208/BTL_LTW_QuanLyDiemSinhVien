@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1E3A8A" />
+    <title>@ViewData["Title"] - EduScore Admin</title>
+
+    @* Khôi phục trạng thái thu gọn sidebar trước khi vẽ trang (tránh nhấp nháy) *@
+    <script>
+        try { if (window.innerWidth >= 992 && localStorage.getItem('ums-sidebar-collapsed') === '1') { document.documentElement.classList.add('sidebar-collapsed'); } } catch (e) { }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="~/css/ums-core.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin-style.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body class="ums area-admin">
+    <div class="nav-progress" aria-hidden="true"></div>
+
+    <div class="app-shell">
+        @await Component.InvokeAsync("AdminSidebar")
+        <div class="sidebar-backdrop" data-sidebar-close></div>
+
+        <div class="app-main">
+            @await Component.InvokeAsync("AdminTopbar")
+
+            <main class="app-content" id="appContent">
+                @await Html.PartialAsync("~/Views/Shared/_FlashMessages.cshtml")
+                @RenderBody()
+            </main>
+
+            <footer class="app-footer">
+                <span>&copy; @DateTime.Now.Year EduScore · Hệ thống quản lý điểm sinh viên đại học</span>
+                <span>Phòng Đào tạo</span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/ums-core.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

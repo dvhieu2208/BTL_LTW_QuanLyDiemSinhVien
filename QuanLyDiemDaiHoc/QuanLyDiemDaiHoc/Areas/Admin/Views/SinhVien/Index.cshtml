@@ -1,0 +1,168 @@
+﻿@model IEnumerable<QuanLyDiemDaiHoc.Models.SinhVien>
+@{
+    ViewData["Title"] = "Quản lý sinh viên";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var tongSo = Model?.Count() ?? 0;
+    bool dangLoc = !string.IsNullOrEmpty(ViewBag.CurrentFilter as string) || !string.IsNullOrEmpty(ViewBag.SelectedLop as string);
+}
+
+<div class="page-header">
+    <div>
+        <div class="page-eyebrow"><i class="fas fa-user-graduate"></i> Phòng đào tạo</div>
+        <h2 class="page-title">Quản lý danh sách sinh viên</h2>
+        <p class="page-subtitle">Quản lý hồ sơ, thông tin cá nhân và lớp học của sinh viên</p>
+    </div>
+    <div class="page-actions">
+        <a asp-area="Admin" asp-controller="SinhVien" asp-action="Create" class="btn btn-primary">
+            <i class="fas fa-user-plus"></i> Thêm sinh viên mới
+        </a>
+    </div>
+</div>
+
+<!-- Thanh tìm kiếm và bộ lọc -->
+<div class="card filter-bar mb-4">
+    <form method="get" asp-action="Index" id="searchForm" class="row align-items-center">
+        <div class="col-lg-5 col-md-6">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" name="searchString" id="searchString" class="form-control" value="@ViewBag.CurrentFilter"
+                       placeholder="Tìm theo mã hoặc tên sinh viên..." autocomplete="off" aria-label="Tìm sinh viên" data-autofocus-end />
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+            <div class="search-box">
+                <i class="fas fa-filter"></i>
+                <select name="maLop" id="lopFilter" class="form-select" asp-items="ViewBag.MaLop" aria-label="Lọc theo lớp">
+                    <option value="">-- Tất cả các lớp --</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-3 d-flex gap-2">
+            <button type="submit" class="btn btn-primary flex-grow-1">
+                <i class="fas fa-filter"></i> Lọc
+            </button>
+            <a asp-action="Index" class="btn btn-light" title="Đặt lại bộ lọc" data-tooltip>
+                <i class="fas fa-rotate-left"></i>
+            </a>
+        </div>
+    </form>
+</div>
+
+<!-- Bảng danh sách sinh viên -->
+<div class="card table-card mb-4">
+    <div class="card-head">
+        <h5><span class="head-icon"><i class="fas fa-list"></i></span>Danh sách sinh viên</h5>
+        <div class="d-flex align-items-center gap-2">
+            @if (dangLoc)
+            {
+                <span class="badge badge-soft-warning badge-soft"><i class="fas fa-filter"></i> Đang lọc</span>
+            }
+            <span class="badge badge-soft-primary">@tongSo sinh viên</span>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0" id="tblSinhVien" data-paginate="10" data-paginate-label="sinh viên">
+            <thead class="table-light">
+                <tr>
+                    <th class="ps-4">Mã SV</th>
+                    <th>Họ và tên</th>
+                    <th>Ngày sinh</th>
+                    <th>Giới tính</th>
+                    <th>Lớp</th>
+                    <th>Khoa</th>
+                    <th>Quê quán</th>
+                    <th class="text-end pe-4">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        var tenCuoi = item.TenSv.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries).LastOrDefault() ?? "";
+                        <tr>
+                            <td class="ps-4"><span class="cell-code">@item.MaSv</span></td>
+                            <td>
+                                <div class="d-flex align-items-center gap-3">
+                                    <span class="avatar avatar-sm">@(tenCuoi.Length > 0 ? tenCuoi.Substring(0, 1) : "S")</span>
+                                    <div class="cell-title">@item.TenSv</div>
+                                </div>
+                            </td>
+                            <td class="text-nowrap">@(item.NgaySinh.HasValue ? item.NgaySinh.Value.ToString("dd/MM/yyyy") : "")</td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.GioiTinh))
+                                {
+                                    <span class="badge @(item.GioiTinh == "Nam" ? "badge-soft-info" : "badge-soft-violet")">@item.GioiTinh</span>
+                                }
+                            </td>
+                            <td><span class="badge badge-outline">@(item.MaLopNavigation?.TenLop ?? item.MaLop)</span></td>
+                            <td>@(item.MaKhoaNavigation?.TenKhoa ?? item.MaKhoa)</td>
+                            <td class="text-muted">@(item.MaQueNavigation?.TenQue ?? item.MaQue)</td>
+                            <td class="text-end pe-4">
+                                <div class="action-group">
+                                    <a asp-action="Edit" asp-route-id="@item.MaSv" class="btn btn-icon btn-soft-primary" title="Sửa thông tin">
+                                        <i class="fas fa-pen"></i>
+                                    </a>
+                                    <form asp-action="Delete" asp-route-id="@item.MaSv" method="post">
+                                        <button type="button" class="btn btn-icon btn-soft-danger" title="Xóa sinh viên"
+                                                data-confirm-trigger
+                                                data-confirm-title="Xóa sinh viên?"
+                                                data-confirm-message="Bạn có chắc chắn muốn xóa sinh viên này không?"
+                                                data-confirm-name="@item.TenSv (@item.MaSv)"
+                                                data-confirm-note="Toàn bộ điểm và tài khoản đăng nhập của sinh viên cũng sẽ bị xóa. Thao tác không thể hoàn tác."
+                                                data-confirm-ok="Xóa sinh viên">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr class="empty-row">
+                        <td colspan="8">
+                            <div class="empty-state">
+                                <div class="empty-icon"><i class="fas fa-user-slash"></i></div>
+                                <div class="empty-title">Không tìm thấy sinh viên nào</div>
+                                <p>@(dangLoc ? "Thử thay đổi từ khóa hoặc bộ lọc lớp." : "Hãy thêm sinh viên đầu tiên vào hệ thống.")</p>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchForm = document.getElementById('searchForm');
+            const searchInput = document.getElementById('searchString');
+            const lopFilter = document.getElementById('lopFilter');
+
+            let timeout = null;
+
+            // 1. Tự động tìm kiếm khi gõ phím (Debounce 400ms)
+            if (searchInput && searchForm) {
+                searchInput.addEventListener('input', function () {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(function () {
+                        document.documentElement.classList.add('is-navigating');
+                        searchForm.submit();
+                    }, 400);
+                });
+            }
+
+            // 2. Tự động lọc ngay lập tức khi thay đổi lựa chọn lớp học trong dropdown
+            if (lopFilter && searchForm) {
+                lopFilter.addEventListener('change', function () {
+                    document.documentElement.classList.add('is-navigating');
+                    searchForm.submit();
+                });
+            }
+        });
+    </script>
+}

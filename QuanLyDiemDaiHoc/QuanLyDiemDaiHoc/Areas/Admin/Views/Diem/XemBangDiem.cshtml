@@ -1,0 +1,185 @@
+@model IEnumerable<QuanLyDiemDaiHoc.Areas.Admin.Models.DiemModelItem>
+@{
+    ViewData["Title"] = "Xem bảng điểm sinh viên";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+
+    // Quy tắc hiển thị giữ nguyên như bản gốc của trang này: Đạt khi điểm >= 4.0
+    var ds = Model?.ToList() ?? new List<QuanLyDiemDaiHoc.Areas.Admin.Models.DiemModelItem>();
+    int coDiem = ds.Count(x => x.Diem.HasValue);
+    int dat = ds.Count(x => x.Diem.HasValue && x.Diem.Value >= 4.0m);
+    int chuaDat = ds.Count(x => x.Diem.HasValue && x.Diem.Value < 4.0m);
+    decimal? diemTb = coDiem > 0 ? ds.Where(x => x.Diem.HasValue).Average(x => x.Diem!.Value) : (decimal?)null;
+}
+
+<div class="page-header">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb ums-breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index">Quản lý điểm</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Bảng điểm sinh viên</li>
+            </ol>
+        </nav>
+        <h2 class="page-title">Xem bảng điểm chi tiết</h2>
+        <p class="page-subtitle">Tra cứu kết quả theo lớp, môn học và học kỳ.</p>
+    </div>
+</div>
+
+<!-- Form bộ lọc chọn Lớp và Môn học -->
+<div class="card filter-bar mb-4">
+    <form method="get" asp-action="XemBangDiem" class="row align-items-end">
+        <div class="col-md-4">
+            <label class="form-label" for="xbdLop">Lớp học</label>
+            <select name="maLop" id="xbdLop" class="form-select" asp-items="ViewBag.MaLop">
+                <option value="">-- Chọn lớp học --</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label" for="xbdMon">Môn học</label>
+            <select name="maMon" id="xbdMon" class="form-select" asp-items="ViewBag.MaMon">
+                <option value="">-- Chọn môn học --</option>
+            </select>
+        </div>
+        <div class="col-md-2 col-6">
+            <label class="form-label" for="xbdHocKy">Học kỳ</label>
+            <input type="number" name="hocKy" id="xbdHocKy" class="form-control" value="@ViewBag.SelectedHocKy" min="1" max="3" />
+        </div>
+        <div class="col-md-2 col-6">
+            <button type="submit" class="btn btn-primary w-100">
+                <i class="fas fa-search"></i> Xem bảng điểm
+            </button>
+        </div>
+    </form>
+</div>
+
+@if (ds.Any())
+{
+    <div class="row g-3 mb-4 stagger">
+        <div class="col-6 col-lg-3">
+            <div class="card stat-card">
+                <div class="stat-top"><span class="stat-label">Sĩ số</span><span class="stat-icon tone-primary"><i class="fas fa-users"></i></span></div>
+                <div class="stat-value" data-countup="@ds.Count">@ds.Count</div>
+                <div class="stat-foot">@coDiem đã có điểm</div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="card stat-card">
+                <div class="stat-top"><span class="stat-label">Điểm trung bình</span><span class="stat-icon tone-info"><i class="fas fa-chart-line"></i></span></div>
+                <div class="stat-value">@(diemTb.HasValue ? diemTb.Value.ToString("0.00") : "—")</div>
+                <div class="stat-foot">Trên các sinh viên có điểm</div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="card stat-card">
+                <div class="stat-top"><span class="stat-label">Đạt</span><span class="stat-icon tone-success"><i class="fas fa-circle-check"></i></span></div>
+                <div class="stat-value" data-countup="@dat">@dat</div>
+                <div class="stat-foot">Điểm ≥ 4.0</div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="card stat-card">
+                <div class="stat-top"><span class="stat-label">Chưa đạt</span><span class="stat-icon tone-danger"><i class="fas fa-circle-xmark"></i></span></div>
+                <div class="stat-value" data-countup="@chuaDat">@chuaDat</div>
+                <div class="stat-foot">@(ds.Count - coDiem) chưa có điểm</div>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Bảng hiển thị kết quả -->
+<div class="card table-card">
+    <div class="card-head">
+        <h5><span class="head-icon"><i class="fas fa-table-list"></i></span>Bảng điểm</h5>
+        <div class="search-box" style="min-width:240px">
+            <i class="fas fa-search"></i>
+            <input type="text" class="form-control form-control-sm" placeholder="Tìm sinh viên..." data-table-filter="#tblBangDiem" aria-label="Tìm sinh viên trong bảng điểm" />
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0" id="tblBangDiem" data-paginate="15" data-paginate-label="sinh viên">
+            <thead class="table-light">
+                <tr>
+                    <th class="px-4">STT</th>
+                    <th>Mã sinh viên</th>
+                    <th>Họ và tên</th>
+                    <th class="text-center">Điểm số (0-10)</th>
+                    <th class="text-center">Lần thi</th>
+                    <th>Trạng thái</th>
+                    <th class="text-center">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (ds.Any())
+                {
+                    int stt = 1;
+                    foreach (var item in ds)
+                    {
+                        <tr>
+                            <td class="px-4 text-muted tabular">@(stt++)</td>
+                            <td><span class="cell-code">@item.MaSv</span></td>
+                            <td class="cell-title">@item.TenSv</td>
+                            <td class="text-center">
+                                @if (item.Diem.HasValue)
+                                {
+                                    <span class="score @(item.Diem.Value >= 8.0m ? "score-high" : item.Diem.Value >= 4.0m ? "score-mid" : "score-low")">@item.Diem.Value.ToString("0.0")</span>
+                                }
+                                else
+                                {
+                                    <span class="score score-none">-</span>
+                                }
+                            </td>
+                            <td class="text-center">@item.LanThi</td>
+                            <td>
+                                @if (!item.Diem.HasValue)
+                                {
+                                    <span class="badge badge-soft-secondary">Chưa có điểm</span>
+                                }
+                                else if (item.Diem.Value >= 4.0m)
+                                {
+                                    <span class="badge badge-soft-success badge-soft"><i class="fas fa-check"></i> Đạt</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-soft-danger badge-soft"><i class="fas fa-xmark"></i> Chưa đạt</span>
+                                }
+                            </td>
+                            <td class="text-center">
+                                <a asp-action="Index"
+                                   asp-route-maLop="@ViewBag.SelectedMaLop"
+                                   asp-route-maMon="@ViewBag.SelectedMaMon"
+                                   asp-route-hocKy="@ViewBag.SelectedHocKy"
+                                   asp-route-highlightSv="@item.MaSv"
+                                   class="btn btn-sm btn-soft-primary"
+                                   title="Chỉnh sửa điểm sinh viên này">
+                                    <i class="fas fa-pen"></i> Sửa điểm
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr class="empty-row">
+                        <td colspan="7">
+                            <div class="empty-state">
+                                <div class="empty-icon"><i class="fas fa-table"></i></div>
+                                <div class="empty-title">Chưa có dữ liệu</div>
+                                <p>Vui lòng chọn lớp và môn học để xem bảng điểm.</p>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var lopSelect = document.querySelector("select[name='maLop']");
+            var monSelect = document.querySelector("select[name='maMon']");
+            if (lopSelect) lopSelect.value = '@ViewBag.SelectedMaLop';
+            if (monSelect) monSelect.value = '@ViewBag.SelectedMaMon';
+        });
+    </script>
+}

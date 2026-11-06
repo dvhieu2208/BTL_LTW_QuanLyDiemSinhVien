@@ -1,0 +1,81 @@
+@model QuanLyDiemDaiHoc.Models.ThoiKhoaBieu
+@{
+    ViewData["Title"] = "Thêm lịch học";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb ums-breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index">Thời khóa biểu</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Thêm lịch học</li>
+            </ol>
+        </nav>
+        <h2 class="page-title">Thêm mới lịch học</h2>
+        <p class="page-subtitle">Hệ thống sẽ kiểm tra trùng lịch theo dữ liệu hiện có.</p>
+    </div>
+</div>
+
+<div class="card">
+    <form asp-action="Create" method="post">
+        <div class="form-section">
+            <!-- Hiển thị lỗi Model nếu có -->
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+            <div class="form-section-title"><i class="fas fa-calendar-plus"></i> Thông tin lịch học</div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="MaLop" class="form-label">Lớp học <span class="text-danger">*</span></label>
+                    <select asp-for="MaLop" class="form-select" asp-items="ViewBag.MaLop" required>
+                        <option value="">-- Chọn lớp học --</option>
+                    </select>
+                    <span asp-validation-for="MaLop" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="MaMon" class="form-label">Môn học <span class="text-danger">*</span></label>
+                    <select asp-for="MaMon" class="form-select" asp-items="ViewBag.MaMon" required>
+                        <option value="">-- Chọn môn học --</option>
+                    </select>
+                    <span asp-validation-for="MaMon" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="HocKy" class="form-label">Học kỳ <span class="text-danger">*</span></label>
+                    <input asp-for="HocKy" type="number" class="form-control" placeholder="Nhập học kỳ (VD: 1)" required />
+                    <span asp-validation-for="HocKy" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="ThuHoc" class="form-label">Thứ học <span class="text-danger">*</span></label>
+                    <input asp-for="ThuHoc" type="number" class="form-control" placeholder="Nhập thứ trong tuần (VD: 2, 3, 4...)" required />
+                    <span asp-validation-for="ThuHoc" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <div class="form-section-title"><i class="fas fa-clock"></i> Ca học &amp; phòng học</div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="CaHoc" class="form-label">Ca học <span class="text-danger">*</span></label>
+                    <input asp-for="CaHoc" type="number" class="form-control" placeholder="Nhập ca học (VD: 1, 2, 3...)" required />
+                    <span asp-validation-for="CaHoc" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="MaPhong" class="form-label">Phòng học <span class="text-danger">*</span></label>
+                    <select asp-for="MaPhong" class="form-select" asp-items="ViewBag.MaPhong" required>
+                        <option value="">-- Chọn phòng học --</option>
+                    </select>
+                    <span asp-validation-for="MaPhong" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <a asp-action="Index" class="btn btn-light">Hủy</a>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Lưu lịch học</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

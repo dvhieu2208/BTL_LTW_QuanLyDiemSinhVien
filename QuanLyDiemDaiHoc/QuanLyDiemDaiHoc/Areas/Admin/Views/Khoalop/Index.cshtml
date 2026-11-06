@@ -1,0 +1,140 @@
+@model IEnumerable<QuanLyDiemDaiHoc.Models.Lop>
+@{
+    ViewData["Title"] = "Quản lý Khoa & Lớp học";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var selectedKhoa = ViewBag.SelectedKhoa as string;
+    var tongSo = Model?.Count() ?? 0;
+    var tongSiSo = Model?.Sum(l => l.SiSo ?? 0) ?? 0;
+}
+
+<div class="page-header">
+    <div>
+        <div class="page-eyebrow"><i class="fas fa-university"></i> Phòng đào tạo</div>
+        <h2 class="page-title">Khoa &amp; lớp học</h2>
+        <p class="page-subtitle">Quản lý lớp hành chính và đơn vị đào tạo</p>
+    </div>
+    <div class="page-actions">
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Thêm lớp mới
+        </a>
+    </div>
+</div>
+
+<!-- Search and Filter Bar -->
+<form asp-action="Index" method="get" class="card filter-bar mb-4">
+    <div class="row align-items-center">
+        <div class="col-md-8">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" name="searchString" value="@Context.Request.Query["searchString"]" class="form-control"
+                       placeholder="Tìm theo mã lớp hoặc tên lớp... (Enter để tìm trên máy chủ)" aria-label="Tìm lớp" data-table-filter="#tblLop" autocomplete="off">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="search-box">
+                <i class="fas fa-building-columns"></i>
+                <select name="maKhoaFilter" class="form-select" onchange="this.form.submit()" aria-label="Lọc theo khoa">
+                    <option value="">Tất cả khoa</option>
+                    @if (ViewBag.KhoaList != null)
+                    {
+                        foreach (var khoa in ViewBag.KhoaList)
+                        {
+                            string maKhoa = khoa.MaKhoa;
+                            if (maKhoa == selectedKhoa)
+                            {
+                                <option value="@khoa.MaKhoa" selected>@khoa.TenKhoa</option>
+                            }
+                            else
+                            {
+                                <option value="@khoa.MaKhoa">@khoa.TenKhoa</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- Table Section -->
+<div class="card table-card">
+    <div class="card-head">
+        <h5><span class="head-icon"><i class="fas fa-chalkboard-user"></i></span>Danh sách lớp học</h5>
+        <div class="d-flex gap-2 flex-wrap">
+            <span class="badge badge-soft-primary">@tongSo lớp</span>
+            <span class="badge badge-soft-success">@tongSiSo sinh viên</span>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0" id="tblLop" data-paginate="10" data-paginate-label="lớp">
+            <thead class="table-light">
+                <tr>
+                    <th class="px-4">Mã lớp</th>
+                    <th>Tên lớp</th>
+                    <th>Khoa</th>
+                    <th>Khóa học</th>
+                    <th>Sĩ số</th>
+                    <th class="text-end px-4">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    int index = 1;
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="px-4"><span class="cell-code">@item.MaLop</span></td>
+                            <td>
+                                <div class="d-flex align-items-center gap-3">
+                                    <span class="avatar avatar-sm avatar-square tone-primary">@("L" + index++)</span>
+                                    <div>
+                                        <div class="cell-title">@item.TenLop</div>
+                                        <div class="cell-sub">@item.MaLop</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><span class="badge badge-outline">@(item.MaKhoaNavigation != null ? item.MaKhoaNavigation.TenKhoa : item.MaKhoa)</span></td>
+                            <td class="text-muted">@item.KhoaHoc</td>
+                            <td>
+                                <span class="badge @((item.SiSo ?? 0) > 0 ? "badge-soft-success" : "badge-soft-secondary") badge-soft">
+                                    <i class="fas fa-users"></i> @(item.SiSo ?? 0)
+                                </span>
+                            </td>
+                            <td class="text-end px-4">
+                                <div class="action-group">
+                                    <a asp-action="Edit" asp-route-id="@item.MaLop" class="btn btn-icon btn-soft-primary" title="Sửa lớp">
+                                        <i class="fas fa-pen"></i>
+                                    </a>
+                                    <form asp-action="Delete" asp-route-id="@item.MaLop" method="post">
+                                        <button type="button" class="btn btn-icon btn-soft-danger" title="Xóa lớp"
+                                                data-confirm-trigger
+                                                data-confirm-title="Xóa lớp học?"
+                                                data-confirm-message="Bạn có chắc chắn muốn xóa lớp này không?"
+                                                data-confirm-name="@item.TenLop (@item.MaLop)"
+                                                data-confirm-note="Lớp vẫn còn sinh viên sẽ không thể xóa."
+                                                data-confirm-ok="Xóa lớp">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr class="empty-row">
+                        <td colspan="6">
+                            <div class="empty-state">
+                                <div class="empty-icon"><i class="fas fa-chalkboard"></i></div>
+                                <div class="empty-title">Chưa có dữ liệu lớp học</div>
+                                <p>Không có lớp nào phù hợp trong cơ sở dữ liệu.</p>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

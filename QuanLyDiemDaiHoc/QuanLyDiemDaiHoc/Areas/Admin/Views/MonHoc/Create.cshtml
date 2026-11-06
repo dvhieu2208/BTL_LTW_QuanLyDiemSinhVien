@@ -1,0 +1,49 @@
+@model QuanLyDiemDaiHoc.Models.MonHoc
+@{
+    ViewData["Title"] = "Thêm mới môn học";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb ums-breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index">Quản lý môn học</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Thêm mới</li>
+            </ol>
+        </nav>
+        <h2 class="page-title">Thêm mới môn học</h2>
+        <p class="page-subtitle">Nhập thông tin học phần trong chương trình đào tạo.</p>
+    </div>
+</div>
+
+<div class="card">
+    <form asp-action="Create" method="post">
+        <div class="form-section">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <div class="form-section-title"><i class="fas fa-book"></i> Thông tin môn học</div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="MaMon" class="form-label">Mã môn <span class="text-danger">*</span></label>
+                    <input asp-for="MaMon" class="form-control" placeholder="Nhập mã môn (VD: JAVA)" required />
+                    <span asp-validation-for="MaMon" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="TenMon" class="form-label">Tên môn học <span class="text-danger">*</span></label>
+                    <input asp-for="TenMon" class="form-control" placeholder="Nhập tên môn học đầy đủ" required />
+                    <span asp-validation-for="TenMon" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Dvht" class="form-label">Đơn vị học trình (ĐVHT) / Tín chỉ <span class="text-danger">*</span></label>
+                    <input asp-for="Dvht" type="number" class="form-control" placeholder="Nhập số tín chỉ (VD: 3)" required />
+                    <span asp-validation-for="Dvht" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <a asp-action="Index" class="btn btn-light">Hủy</a>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Lưu môn học</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,427 @@
+﻿@using QuanLyDiemDaiHoc.Areas.Admin.Models
+@{
+    ViewData["Title"] = "Tổng quan đào tạo";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+
+    // ----- Số liệu thực tế từ HomeController -----
+    int tongSinhVien = ViewBag.TongSinhVien ?? 0;
+    int tongLop = ViewBag.TongLop ?? 0;
+    int tongMonHoc = ViewBag.TongMonHoc ?? 0;
+    int tongKhoa = ViewBag.TongKhoa ?? 0;
+    int tongPhongHoc = ViewBag.TongPhongHoc ?? 0;
+    int tongChuyenNganh = ViewBag.TongChuyenNganh ?? 0;
+    int tongLichHoc = ViewBag.TongLichHoc ?? 0;
+    int tongDangKy = ViewBag.TongDangKy ?? 0;
+    int tongBanGhiDiem = ViewBag.TongBanGhiDiem ?? 0;
+    int taiKhoanHoatDong = ViewBag.TaiKhoanHoatDong ?? 0;
+    int taiKhoanBiKhoa = ViewBag.TaiKhoanBiKhoa ?? 0;
+
+    int countXuatSac = ViewBag.CountXuatSac ?? 0;
+    int countGioi = ViewBag.CountGioi ?? 0;
+    int countKha = ViewBag.CountKha ?? 0;
+    int countTrungBinh = ViewBag.CountTrungBinh ?? 0;
+    int countYeu = ViewBag.CountYeu ?? 0;
+    int countChuaCoDiem = ViewBag.CountChuaCoDiem ?? 0;
+    int countCoDiem = tongSinhVien - countChuaCoDiem;
+
+    var sinhVienTheoKhoa = ViewBag.SinhVienTheoKhoa as List<ThongKeNhomItem> ?? new List<ThongKeNhomItem>();
+    var hoatDong = ViewBag.HoatDongGanDay as List<HoatDongGanDayItem> ?? new List<HoatDongGanDayItem>();
+    var listSV = ViewBag.SinhVienNoiBat;
+
+    // ----- Năm học / học kỳ theo lịch (hệ thống chưa có bảng cấu hình học kỳ) -----
+    var now = DateTime.Now;
+    int namBatDau = now.Month >= 9 ? now.Year : now.Year - 1;
+    string namHoc = namBatDau + " - " + (namBatDau + 1);
+    string hocKyTheoLich = (now.Month >= 9 || now.Month == 1) ? "Học kỳ 1" : (now.Month <= 6 ? "Học kỳ 2" : "Học kỳ hè");
+
+    // ----- Đợt đăng ký học phần (cùng quy tắc với MonHocController của Student) -----
+    DateTime? dotBatDau = ViewBag.DotDangKyBatDau as DateTime?;
+    DateTime? dotKetThuc = ViewBag.DotDangKyKetThuc as DateTime?;
+    bool coCauHinhDot = dotBatDau.HasValue && dotKetThuc.HasValue;
+    bool dotDangMo = coCauHinhDot && now >= dotBatDau!.Value && now < dotKetThuc!.Value.AddMinutes(1);
+    bool dotDaHet = coCauHinhDot && now >= dotKetThuc!.Value.AddMinutes(1);
+
+    Func<DateTime, string> thoiGianTuongDoi = t =>
+    {
+        var diff = now - t;
+        if (diff.TotalMinutes < 1) return "Vừa xong";
+        if (diff.TotalMinutes < 60) return (int)diff.TotalMinutes + " phút trước";
+        if (diff.TotalHours < 24) return (int)diff.TotalHours + " giờ trước";
+        if (diff.TotalDays < 7) return (int)diff.TotalDays + " ngày trước";
+        return t.ToString("dd/MM/yyyy HH:mm");
+    };
+
+    var stats = new[]
+    {
+        new { Label = "Tổng sinh viên", Value = tongSinhVien, Icon = "fa-user-graduate", Tone = "tone-primary", Foot = countCoDiem + " SV đã có điểm", Url = Url.Action("Index", "SinhVien", new { area = "Admin" }) },
+        new { Label = "Khoa", Value = tongKhoa, Icon = "fa-building-columns", Tone = "tone-navy", Foot = tongChuyenNganh + " chuyên ngành", Url = Url.Action("Index", "Khoalop", new { area = "Admin" }) },
+        new { Label = "Lớp học", Value = tongLop, Icon = "fa-chalkboard-user", Tone = "tone-warning", Foot = "Lớp hành chính", Url = Url.Action("Index", "Khoalop", new { area = "Admin" }) },
+        new { Label = "Môn học", Value = tongMonHoc, Icon = "fa-book-open", Tone = "tone-success", Foot = "Học phần trong chương trình", Url = Url.Action("Index", "MonHoc", new { area = "Admin" }) },
+        new { Label = "Phòng học", Value = tongPhongHoc, Icon = "fa-door-open", Tone = "tone-info", Foot = "Phòng đang quản lý", Url = Url.Action("Index", "PhongHoc", new { area = "Admin" }) },
+        new { Label = "Lịch học", Value = tongLichHoc, Icon = "fa-calendar-days", Tone = "tone-violet", Foot = "Buổi học trên thời khóa biểu", Url = Url.Action("Index", "ThoiKhoaBieu", new { area = "Admin" }) },
+        new { Label = "Lượt đăng ký HP", Value = tongDangKy, Icon = "fa-clipboard-list", Tone = "tone-primary", Foot = "Tổng lượt đăng ký học phần", Url = Url.Action("Index", "DotDangKyHocPhan", new { area = "Admin" }) },
+        new { Label = "Bản ghi điểm", Value = tongBanGhiDiem, Icon = "fa-square-poll-vertical", Tone = "tone-danger", Foot = "Điểm đã nhập vào hệ thống", Url = Url.Action("Index", "Diem", new { area = "Admin" }) }
+    };
+
+    string[] khoaColors = { "#2563EB", "#16A34A", "#F59E0B", "#7C3AED", "#0891B2", "#DC2626", "#1E3A8A", "#DB2777", "#65A30D", "#475569" };
+}
+
+<!-- Header -->
+<div class="page-header">
+    <div>
+        <div class="page-eyebrow"><i class="fas fa-building-columns"></i> Phòng đào tạo</div>
+        <h2 class="page-title">Tổng quan đào tạo</h2>
+        <p class="page-subtitle">Số liệu được tổng hợp trực tiếp từ cơ sở dữ liệu hệ thống.</p>
+    </div>
+    <div class="page-actions">
+        <a asp-area="Admin" asp-controller="SinhVien" asp-action="Create" class="btn btn-light">
+            <i class="fas fa-user-plus"></i> Thêm sinh viên
+        </a>
+        <a asp-area="Admin" asp-controller="Diem" asp-action="Index" class="btn btn-primary">
+            <i class="fas fa-pen-to-square"></i> Nhập điểm nhanh
+        </a>
+    </div>
+</div>
+
+<!-- Hero: năm học, học kỳ, ngày -->
+<div class="hero-card mb-4">
+    <div class="row g-3 align-items-center position-relative" style="z-index:1">
+        <div class="col-lg-6">
+            <div class="hero-sub fs-7 mb-1">Năm học hiện tại</div>
+            <h3 class="fw-800 mb-2">Năm học @namHoc</h3>
+            <div class="d-flex flex-wrap gap-2">
+                <span class="hero-chip" title="Ước tính theo lịch năm học (tháng 9 – tháng 8). Hệ thống chưa có bảng cấu hình học kỳ." data-tooltip>
+                    <i class="fas fa-layer-group"></i> @hocKyTheoLich <span class="opacity-75">(theo lịch)</span>
+                </span>
+                <span class="hero-chip"><i class="far fa-calendar"></i> <span data-today>@now.ToString("dd/MM/yyyy")</span></span>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="d-flex flex-wrap gap-2 justify-content-lg-end">
+                <span class="hero-chip">
+                    <i class="fas fa-calendar-check"></i>
+                    @if (dotDangMo)
+                    {
+                        <span>Đợt đăng ký HP đang mở đến @(dotKetThuc?.ToString("dd/MM HH:mm"))</span>
+                    }
+                    else if (!coCauHinhDot)
+                    {
+                        <span>Chưa cấu hình đợt đăng ký HP</span>
+                    }
+                    else if (dotDaHet)
+                    {
+                        <span>Đợt đăng ký HP đã kết thúc</span>
+                    }
+                    else
+                    {
+                        <span>Đợt đăng ký HP mở lúc @(dotBatDau?.ToString("dd/MM HH:mm"))</span>
+                    }
+                </span>
+                <span class="hero-chip"><i class="fas fa-user-check"></i> @taiKhoanHoatDong tài khoản hoạt động</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Thẻ thống kê -->
+<div class="row g-3 g-xl-4 mb-4 stagger">
+    @foreach (var s in stats)
+    {
+        <div class="col-6 col-md-4 col-xl-3">
+            <a href="@s.Url" class="card stat-card text-reset">
+                <div class="stat-top">
+                    <span class="stat-label">@s.Label</span>
+                    <span class="stat-icon @s.Tone"><i class="fas @s.Icon"></i></span>
+                </div>
+                <div class="stat-value" data-countup="@s.Value">@s.Value</div>
+                <div class="stat-foot">@s.Foot</div>
+            </a>
+        </div>
+    }
+</div>
+
+<!-- Biểu đồ -->
+<div class="row g-4 mb-4">
+    <div class="col-xl-8">
+        <div class="card h-100">
+            <div class="card-head">
+                <h5><span class="head-icon"><i class="fas fa-chart-column"></i></span>Phân bổ kết quả học tập</h5>
+                <span class="card-hint">Theo điểm trung bình hệ 10 của từng sinh viên</span>
+            </div>
+            <div class="card-body-pad">
+                <div class="chart-box">
+                    <canvas id="gradeDistributionChart" aria-label="Biểu đồ phân bổ kết quả học tập" role="img"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-4">
+        <div class="card h-100">
+            <div class="card-head">
+                <h5><span class="head-icon"><i class="fas fa-chart-pie"></i></span>Sinh viên theo khoa</h5>
+                <span class="card-hint">@tongKhoa khoa</span>
+            </div>
+            <div class="card-body-pad">
+                @if (sinhVienTheoKhoa.Any(k => k.SoLuong > 0))
+                {
+                    <div class="chart-box-sm mb-3">
+                        <canvas id="khoaChart" aria-label="Biểu đồ sinh viên theo khoa" role="img"></canvas>
+                    </div>
+                    <ul class="legend-list">
+                        @for (int i = 0; i < sinhVienTheoKhoa.Count && i < 6; i++)
+                        {
+                            <li>
+                                <span class="swatch" style="background:@khoaColors[i % khoaColors.Length]"></span>
+                                <span class="text-truncate">@sinhVienTheoKhoa[i].Ten</span>
+                                <span class="val">@sinhVienTheoKhoa[i].SoLuong</span>
+                            </li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <div class="empty-state">
+                        <div class="empty-icon"><i class="fas fa-chart-pie"></i></div>
+                        <div class="empty-title">Chưa có dữ liệu</div>
+                        <p>Chưa có sinh viên nào thuộc khoa.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sinh viên nổi bật · Hoạt động · Thông báo -->
+<div class="row g-4">
+    <div class="col-xl-4 col-lg-6">
+        <div class="card h-100">
+            <div class="card-head">
+                <h5><span class="head-icon"><i class="fas fa-trophy"></i></span>Sinh viên nổi bật</h5>
+                <span class="card-hint">Top 5 · ĐTB hệ 10</span>
+            </div>
+            @{
+                int index = 1;
+                bool coSinhVienNoiBat = false;
+            }
+            <ul class="rank-list">
+                @if (listSV != null)
+                {
+                    foreach (var sv in listSV)
+                    {
+                        coSinhVienNoiBat = true;
+                        string ten = sv.TenSv;
+                        string tenCuoi = ten.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries).LastOrDefault() ?? "";
+                        string chuCai = tenCuoi.Length > 0 ? tenCuoi.Substring(0, 1) : "SV";
+                        double gpa = sv.Gpa;
+                        <li class="rank-item">
+                            <span class="rank-no">@(index < 10 ? "0" + index : index.ToString())</span>
+                            <span class="avatar avatar-square">@chuCai</span>
+                            <div class="min-w-0">
+                                <div class="fw-semibold text-truncate">@sv.TenSv</div>
+                                <div class="fs-8 text-muted">@sv.MaSv • @sv.MaLop</div>
+                            </div>
+                            <span class="rank-gpa score @(gpa >= 8 ? "score-high" : gpa >= 5 ? "score-mid" : "score-low")">@gpa.ToString("0.00")</span>
+                        </li>
+                        index++;
+                    }
+                }
+            </ul>
+            @if (!coSinhVienNoiBat)
+            {
+                <div class="empty-state">
+                    <div class="empty-icon"><i class="fas fa-user-graduate"></i></div>
+                    <div class="empty-title">Chưa có dữ liệu</div>
+                    <p>Chưa có sinh viên nào được nhập điểm.</p>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="col-xl-4 col-lg-6">
+        <div class="card h-100">
+            <div class="card-head">
+                <h5><span class="head-icon"><i class="fas fa-clock-rotate-left"></i></span>Hoạt động gần đây</h5>
+                <span class="card-hint">Đăng ký học phần</span>
+            </div>
+            @if (hoatDong.Any())
+            {
+                <ul class="activity-list py-2">
+                    @foreach (var hd in hoatDong)
+                    {
+                        <li class="activity-item">
+                            <span class="activity-icon tone-primary"><i class="fas fa-file-signature"></i></span>
+                            <div class="min-w-0">
+                                <div class="activity-title text-truncate">@hd.TenSv đăng ký <span class="text-primary">@hd.TenMon</span></div>
+                                <div class="activity-meta">@hd.MaSv · Lớp @hd.MaLop · <span title="@hd.ThoiGian.ToString("dd/MM/yyyy HH:mm")">@thoiGianTuongDoi(hd.ThoiGian)</span></div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <div class="empty-state">
+                    <div class="empty-icon"><i class="fas fa-inbox"></i></div>
+                    <div class="empty-title">Chưa có hoạt động</div>
+                    <p>Chưa có lượt đăng ký học phần nào.</p>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="col-xl-4">
+        <div class="card h-100">
+            <div class="card-head">
+                <h5><span class="head-icon"><i class="fas fa-bell"></i></span>Thông báo quan trọng</h5>
+            </div>
+            <div class="card-body-pad">
+                @if (!coCauHinhDot)
+                {
+                    <div class="notice notice-warning">
+                        <span class="notice-icon"><i class="fas fa-calendar-xmark"></i></span>
+                        <div>
+                            <div class="notice-title">Chưa thiết lập đợt đăng ký</div>
+                            Sinh viên chưa thể đăng ký học phần. <a asp-area="Admin" asp-controller="DotDangKyHocPhan" asp-action="Index" class="fw-semibold">Thiết lập ngay</a>
+                        </div>
+                    </div>
+                }
+                else if (dotDangMo)
+                {
+                    <div class="notice notice-success">
+                        <span class="notice-icon"><i class="fas fa-calendar-check"></i></span>
+                        <div>
+                            <div class="notice-title">Đợt đăng ký học phần đang mở</div>
+                            Từ @(dotBatDau?.ToString("dd/MM/yyyy HH:mm")) đến @(dotKetThuc?.ToString("dd/MM/yyyy HH:mm")).
+                        </div>
+                    </div>
+                }
+                else if (dotDaHet)
+                {
+                    <div class="notice notice-info">
+                        <span class="notice-icon"><i class="fas fa-calendar-minus"></i></span>
+                        <div>
+                            <div class="notice-title">Đợt đăng ký đã kết thúc</div>
+                            Kết thúc lúc @(dotKetThuc?.ToString("dd/MM/yyyy HH:mm")). <a asp-area="Admin" asp-controller="DotDangKyHocPhan" asp-action="Index" class="fw-semibold">Mở đợt mới</a>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="notice notice-info">
+                        <span class="notice-icon"><i class="fas fa-hourglass-start"></i></span>
+                        <div>
+                            <div class="notice-title">Sắp mở đăng ký học phần</div>
+                            Bắt đầu lúc @(dotBatDau?.ToString("dd/MM/yyyy HH:mm")).
+                        </div>
+                    </div>
+                }
+
+                @if (countChuaCoDiem > 0)
+                {
+                    <div class="notice notice-warning">
+                        <span class="notice-icon"><i class="fas fa-file-circle-exclamation"></i></span>
+                        <div>
+                            <div class="notice-title">@countChuaCoDiem sinh viên chưa có điểm</div>
+                            Kiểm tra và cập nhật bảng điểm tại <a asp-area="Admin" asp-controller="Diem" asp-action="Index" class="fw-semibold">Quản lý điểm</a>.
+                        </div>
+                    </div>
+                }
+
+                @if (taiKhoanBiKhoa > 0)
+                {
+                    <div class="notice notice-danger">
+                        <span class="notice-icon"><i class="fas fa-user-lock"></i></span>
+                        <div>
+                            <div class="notice-title">@taiKhoanBiKhoa tài khoản đang bị khóa</div>
+                            Xem lại tại <a asp-area="Admin" asp-controller="TaiKhoan" asp-action="Index" class="fw-semibold">Quản lý tài khoản</a>.
+                        </div>
+                    </div>
+                }
+
+                @if (countChuaCoDiem == 0 && taiKhoanBiKhoa == 0)
+                {
+                    <div class="notice notice-success">
+                        <span class="notice-icon"><i class="fas fa-circle-check"></i></span>
+                        <div>
+                            <div class="notice-title">Dữ liệu ổn định</div>
+                            Tất cả sinh viên đã có điểm và không có tài khoản bị khóa.
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script>
+        (function () {
+            if (!window.Chart) { return; }
+            UMS.applyChartTheme(Chart);
+
+            // Biểu đồ phân bổ kết quả học tập (dữ liệu từ Controller)
+            var gradeCanvas = document.getElementById('gradeDistributionChart');
+            if (gradeCanvas) {
+                new Chart(gradeCanvas, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Xuất sắc (≥ 8.5)', 'Giỏi (7.0 – 8.4)', 'Khá (5.5 – 6.9)', 'Trung bình (4.0 – 5.4)', 'Yếu (< 4.0)', 'Chưa có điểm'],
+                        datasets: [{
+                            label: 'Số sinh viên',
+                            data: [@countXuatSac, @countGioi, @countKha, @countTrungBinh, @countYeu, @countChuaCoDiem],
+                            backgroundColor: ['#16A34A', '#2563EB', '#0891B2', '#F59E0B', '#DC2626', '#CBD5E1'],
+                            hoverBackgroundColor: ['#15803D', '#1D4ED8', '#0E7490', '#D97706', '#B91C1C', '#94A3B8'],
+                            borderRadius: 8,
+                            borderSkipped: false,
+                            maxBarThickness: 56
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: { beginAtZero: true, ticks: { precision: 0 }, grid: { color: '#EEF2F7' }, border: { display: false } },
+                            x: { grid: { display: false }, border: { display: false } }
+                        },
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { callbacks: { label: function (ctx) { return ' ' + ctx.parsed.y + ' sinh viên'; } } }
+                        }
+                    }
+                });
+            }
+
+            // Biểu đồ sinh viên theo khoa
+            var khoaCanvas = document.getElementById('khoaChart');
+            if (khoaCanvas) {
+                var colors = @Json.Serialize(khoaColors);
+                var labels = @Json.Serialize(sinhVienTheoKhoa.Select(k => k.Ten));
+                var values = @Json.Serialize(sinhVienTheoKhoa.Select(k => k.SoLuong));
+                new Chart(khoaCanvas, {
+                    type: 'doughnut',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: values,
+                            backgroundColor: labels.map(function (_, i) { return colors[i % colors.length]; }),
+                            borderColor: '#fff',
+                            borderWidth: 3,
+                            hoverOffset: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '68%',
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { callbacks: { label: function (ctx) { return ' ' + ctx.label + ': ' + ctx.parsed + ' SV'; } } }
+                        }
+                    }
+                });
+            }
+        })();
+    </script>
+}

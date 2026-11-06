@@ -1,0 +1,51 @@
+@model QuanLyDiemDaiHoc.Models.MonHoc
+@{
+    ViewData["Title"] = "Chỉnh sửa môn học";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb ums-breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index">Danh sách môn học</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Chỉnh sửa thông tin</li>
+            </ol>
+        </nav>
+        <h2 class="page-title">Chỉnh sửa môn học</h2>
+        <p class="page-subtitle">Mã môn <span class="cell-code">@Model.MaMon</span> không thể thay đổi.</p>
+    </div>
+</div>
+
+<div class="card">
+    <form asp-action="Edit" method="post">
+        <div class="form-section">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <input type="hidden" asp-for="MaMon" />
+
+            <div class="form-section-title"><i class="fas fa-book"></i> Thông tin môn học</div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Mã môn</label>
+                    <input class="form-control" value="@Model.MaMon" disabled />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="TenMon" class="form-label">Tên môn học <span class="text-danger">*</span></label>
+                    <input asp-for="TenMon" class="form-control" required />
+                    <span asp-validation-for="TenMon" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Dvht" class="form-label">Đơn vị học trình (ĐVHT) <span class="text-danger">*</span></label>
+                    <input asp-for="Dvht" type="number" class="form-control" required />
+                    <span asp-validation-for="Dvht" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <a asp-action="Index" class="btn btn-light">Hủy</a>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Lưu thay đổi</button>
+        </div>
+    </form>
+</div>
