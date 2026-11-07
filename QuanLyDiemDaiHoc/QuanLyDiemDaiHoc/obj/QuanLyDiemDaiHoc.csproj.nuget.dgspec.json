@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\My Laptop\\Downloads\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj": {}
+    "D:\\BTL_LTW_Nhóm 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj": {}
   },
   "projects": {
-    "C:\\Users\\My Laptop\\Downloads\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj": {
+    "D:\\BTL_LTW_Nhóm 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\My Laptop\\Downloads\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj",
+        "projectUniqueName": "D:\\BTL_LTW_Nhóm 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj",
         "projectName": "QuanLyDiemDaiHoc",
-        "projectPath": "C:\\Users\\My Laptop\\Downloads\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj",
+        "projectPath": "D:\\BTL_LTW_Nhóm 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj",
         "packagesPath": "C:\\Users\\My Laptop\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\My Laptop\\Downloads\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\obj\\",
+        "outputPath": "D:\\BTL_LTW_Nhóm 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

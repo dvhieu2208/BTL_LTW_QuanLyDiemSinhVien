@@ -11,6 +11,8 @@ public partial class MonHoc
 
     public int? Dvht { get; set; }
 
+    public int? SoLuongToiDa { get; set; }
+
     public virtual ICollection<Diem> Diems { get; set; } = new List<Diem>();
 
     public virtual ICollection<ThoiKhoaBieu> ThoiKhoaBieus { get; set; } = new List<ThoiKhoaBieu>();

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "URYqZ7jJ7Qw=",
+  "dgSpecHash": "dIk+kYG4UJI=",
   "success": true,
-  "projectFilePath": "C:\\Users\\My Laptop\\Downloads\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj",
+  "projectFilePath": "D:\\BTL_LTW_Nhóm 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\My Laptop\\.nuget\\packages\\azure.core\\1.50.0\\azure.core.1.50.0.nupkg.sha512",
     "C:\\Users\\My Laptop\\.nuget\\packages\\azure.identity\\1.17.1\\azure.identity.1.17.1.nupkg.sha512",

@@ -140,6 +140,21 @@ namespace QuanLyDiemDaiHoc.Areas.Student.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
+            var chiTietMon = await _context.MonHocs.FirstOrDefaultAsync(m => m.MaMon == maMon);
+            if (chiTietMon != null && chiTietMon.SoLuongToiDa > 0)
+            {
+                // Đếm số lượng sinh viên đã đăng ký học phần này
+                int soLuongHienTai = await _context.DangKyHocPhans
+                    .CountAsync(d => d.MaMon == maMon);
+
+                if (soLuongHienTai >= chiTietMon.SoLuongToiDa)
+                {
+                    TempData["ThongBao"] = $"Học phần này đã đủ số lượng tối đa ({chiTietMon.SoLuongToiDa} sinh viên). Không thể đăng ký thêm.";
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+         
+
             bool daCoDiem = await _context.Diems.AnyAsync(d =>
                 d.MaSv == maSv && d.MaLop == sinhVien.MaLop && d.MaMon == maMon);
 

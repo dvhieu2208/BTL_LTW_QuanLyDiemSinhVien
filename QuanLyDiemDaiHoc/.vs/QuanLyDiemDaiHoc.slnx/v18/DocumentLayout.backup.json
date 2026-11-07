@@ -1,17 +1,29 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\My Laptop\\Downloads\\QuanLyDiemDaiHoc\\",
+  "WorkspaceRootPath": "D:\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|c:\\users\\my laptop\\downloads\\quanlydiemdaihoc\\quanlydiemdaihoc\\areas\\admin\\views\\phonghoc\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|d:\\btl_ltw_nh\u00F3m 6\\quanlydiemdaihoc\\quanlydiemdaihoc\\models\\quanlydiemsinhviendaihoccontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|solutionrelative:quanlydiemdaihoc\\models\\quanlydiemsinhviendaihoccontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|d:\\btl_ltw_nh\u00F3m 6\\quanlydiemdaihoc\\quanlydiemdaihoc\\models\\monhoc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|solutionrelative:quanlydiemdaihoc\\models\\monhoc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|d:\\btl_ltw_nh\u00F3m 6\\quanlydiemdaihoc\\quanlydiemdaihoc\\areas\\student\\controllers\\monhoccontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|solutionrelative:quanlydiemdaihoc\\areas\\student\\controllers\\monhoccontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|d:\\btl_ltw_nh\u00F3m 6\\quanlydiemdaihoc\\quanlydiemdaihoc\\areas\\admin\\views\\phonghoc\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|solutionrelative:quanlydiemdaihoc\\areas\\admin\\views\\phonghoc\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|c:\\users\\my laptop\\downloads\\quanlydiemdaihoc\\quanlydiemdaihoc\\areas\\admin\\controllers\\phonghoccontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|d:\\btl_ltw_nh\u00F3m 6\\quanlydiemdaihoc\\quanlydiemdaihoc\\areas\\admin\\controllers\\phonghoccontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|solutionrelative:quanlydiemdaihoc\\areas\\admin\\controllers\\phonghoccontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|c:\\users\\my laptop\\downloads\\quanlydiemdaihoc\\quanlydiemdaihoc\\models\\thoikhoabieu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|d:\\btl_ltw_nh\u00F3m 6\\quanlydiemdaihoc\\quanlydiemdaihoc\\models\\thoikhoabieu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{15AB2455-7B10-D1FB-DEB8-F382B2DE7422}|QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc.csproj|solutionrelative:quanlydiemdaihoc\\models\\thoikhoabieu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -31,41 +43,78 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "QuanLyDiemSinhVienDaiHocContext.cs",
+              "DocumentMoniker": "D:\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Models\\QuanLyDiemSinhVienDaiHocContext.cs",
+              "RelativeDocumentMoniker": "QuanLyDiemDaiHoc\\Models\\QuanLyDiemSinhVienDaiHocContext.cs",
+              "ToolTip": "D:\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Models\\QuanLyDiemSinhVienDaiHocContext.cs",
+              "RelativeToolTip": "QuanLyDiemDaiHoc\\Models\\QuanLyDiemSinhVienDaiHocContext.cs",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAYwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-07T02:13:43.017Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MonHoc.cs",
+              "DocumentMoniker": "D:\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Models\\MonHoc.cs",
+              "RelativeDocumentMoniker": "QuanLyDiemDaiHoc\\Models\\MonHoc.cs",
+              "ToolTip": "D:\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Models\\MonHoc.cs",
+              "RelativeToolTip": "QuanLyDiemDaiHoc\\Models\\MonHoc.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-07T02:11:56.378Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MonHocController.cs",
+              "DocumentMoniker": "D:\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Student\\Controllers\\MonHocController.cs",
+              "RelativeDocumentMoniker": "QuanLyDiemDaiHoc\\Areas\\Student\\Controllers\\MonHocController.cs",
+              "ToolTip": "D:\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Student\\Controllers\\MonHocController.cs",
+              "RelativeToolTip": "QuanLyDiemDaiHoc\\Areas\\Student\\Controllers\\MonHocController.cs",
+              "ViewState": "AgIAAIcAAAAAAAAAAADwv40AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-07T01:53:54.572Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\My Laptop\\Downloads\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Admin\\Views\\PhongHoc\\Index.cshtml",
+              "DocumentMoniker": "D:\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Admin\\Views\\PhongHoc\\Index.cshtml",
               "RelativeDocumentMoniker": "QuanLyDiemDaiHoc\\Areas\\Admin\\Views\\PhongHoc\\Index.cshtml",
-              "ToolTip": "C:\\Users\\My Laptop\\Downloads\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Admin\\Views\\PhongHoc\\Index.cshtml",
+              "ToolTip": "D:\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Admin\\Views\\PhongHoc\\Index.cshtml",
               "RelativeToolTip": "QuanLyDiemDaiHoc\\Areas\\Admin\\Views\\PhongHoc\\Index.cshtml",
-              "ViewState": "AgIAACcAAAAAAAAAAAAUwJQAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAJQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-11-06T04:51:02.004Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "ThoiKhoaBieu.cs",
-              "DocumentMoniker": "C:\\Users\\My Laptop\\Downloads\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Models\\ThoiKhoaBieu.cs",
+              "DocumentMoniker": "D:\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Models\\ThoiKhoaBieu.cs",
               "RelativeDocumentMoniker": "QuanLyDiemDaiHoc\\Models\\ThoiKhoaBieu.cs",
-              "ToolTip": "C:\\Users\\My Laptop\\Downloads\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Models\\ThoiKhoaBieu.cs",
+              "ToolTip": "D:\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Models\\ThoiKhoaBieu.cs",
               "RelativeToolTip": "QuanLyDiemDaiHoc\\Models\\ThoiKhoaBieu.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-06T04:50:24.453Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-06T04:50:24.453Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "PhongHocController.cs",
-              "DocumentMoniker": "C:\\Users\\My Laptop\\Downloads\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Admin\\Controllers\\PhongHocController.cs",
+              "DocumentMoniker": "D:\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Admin\\Controllers\\PhongHocController.cs",
               "RelativeDocumentMoniker": "QuanLyDiemDaiHoc\\Areas\\Admin\\Controllers\\PhongHocController.cs",
-              "ToolTip": "C:\\Users\\My Laptop\\Downloads\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Admin\\Controllers\\PhongHocController.cs",
+              "ToolTip": "D:\\BTL_LTW_Nh\u00F3m 6\\QuanLyDiemDaiHoc\\QuanLyDiemDaiHoc\\Areas\\Admin\\Controllers\\PhongHocController.cs",
               "RelativeToolTip": "QuanLyDiemDaiHoc\\Areas\\Admin\\Controllers\\PhongHocController.cs",
               "ViewState": "AgIAAH4AAAAAAAAAAAAQwD8AAABEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-06T04:48:30.736Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-06T04:48:30.736Z"
             }
           ]
         }
