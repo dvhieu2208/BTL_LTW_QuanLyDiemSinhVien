@@ -18,7 +18,7 @@ namespace QuanLyDiemDaiHoc.Areas.Student.Controllers
         public async Task<IActionResult> Index()
         {
             // Lấy mã sinh viên từ Session đã lưu khi đăng nhập
-            string maSv = HttpContext.Session.GetString("MaSV");
+            string? maSv = HttpContext.Session.GetString("MaSV");
 
             if (string.IsNullOrEmpty(maSv))
             {

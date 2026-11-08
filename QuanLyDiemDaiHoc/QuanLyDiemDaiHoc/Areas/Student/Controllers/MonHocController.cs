@@ -143,7 +143,6 @@ namespace QuanLyDiemDaiHoc.Areas.Student.Controllers
             var chiTietMon = await _context.MonHocs.FirstOrDefaultAsync(m => m.MaMon == maMon);
             if (chiTietMon != null && chiTietMon.SoLuongToiDa > 0)
             {
-                // Đếm số lượng sinh viên đã đăng ký học phần này
                 int soLuongHienTai = await _context.DangKyHocPhans
                     .CountAsync(d => d.MaMon == maMon);
 

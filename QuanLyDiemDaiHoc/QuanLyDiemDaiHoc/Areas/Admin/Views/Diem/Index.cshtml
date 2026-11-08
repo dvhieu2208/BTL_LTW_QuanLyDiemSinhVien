@@ -100,8 +100,13 @@
                                     </td>
                                     <td class="cell-title">@Model[i].TenSv</td>
                                     <td class="text-center">
-                                        <input type="number" step="0.1" min="0" max="10" name="items[@i].Diem" value="@Model[i].Diem"
-                                               class="form-control score-input" placeholder="0 - 10" aria-label="Điểm của @Model[i].TenSv" />
+                                        <input type="text"
+                                               inputmode="decimal"
+                                               name="items[@i].DiemNhap"
+                                               value="@Model[i].DiemNhap"
+                                               class="form-control score-input"
+                                               placeholder="0 - 10"
+                                               aria-label="Điểm của @Model[i].TenSv" />
                                     </td>
                                     <td class="text-center">
                                         <input type="number" min="1" max="5" name="items[@i].LanThi" value="@Model[i].LanThi"
@@ -167,14 +172,14 @@ else
             var hl = document.getElementById('highlightRow');
             if (hl) {
                 hl.scrollIntoView({ block: 'center', behavior: UMS.reduceMotion ? 'auto' : 'smooth' });
-                var input = hl.querySelector("input[name$='.Diem']");
+                var input = hl.querySelector("input[name$='.DiemNhap']");
                 if (input) { input.focus({ preventScroll: true }); input.select(); }
             }
 
             // Đếm số điểm đã nhập + báo lỗi trực quan khi điểm ngoài khoảng 0 - 10
             var form = document.getElementById('gradeForm');
             if (!form) { return; }
-            var inputs = form.querySelectorAll("input[name$='.Diem']");
+            var inputs = form.querySelectorAll("input[name$='.DiemNhap']");
             var daNhapEl = document.getElementById('countDaNhap');
             var chuaNhapEl = document.getElementById('countChuaNhap');
             function update() {
